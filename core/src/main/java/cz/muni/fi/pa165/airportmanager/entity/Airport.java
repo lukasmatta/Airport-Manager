@@ -2,6 +2,9 @@ package cz.muni.fi.pa165.airportmanager.entity;
 
 import javax.persistence.*;
 
+/**
+ * Author: Lukas Matta
+ */
 @Entity
 public class Airport {
     @Id
