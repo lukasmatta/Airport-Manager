@@ -1,5 +1,7 @@
 package cz.muni.fi.pa165.airportmanager.entity;
 
+import com.sun.istack.NotNull;
+
 import javax.persistence.*;
 
 /**
@@ -7,12 +9,18 @@ import javax.persistence.*;
  */
 @Entity
 public class Airport {
+    public Long getId() {
+        return id;
+    }
+
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    private Integer id;
+    private Long id;
 
+    @NotNull
     private String city;
 
+    @NotNull
     private String country;
 
     public String getCity() {
