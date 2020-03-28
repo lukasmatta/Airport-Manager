@@ -6,16 +6,17 @@ import org.springframework.stereotype.Repository;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import java.time.ZonedDateTime;
-import java.util.ArrayList;
 import java.util.Collection;
+
+/**
+ * Implementation of AirplaneDao interface
+ *
+ * @author Tomáš Janíček
+ */
 
 @Repository
 public class AirplaneDaoImpl implements AirplaneDao{
 
-    /**
-     * Implementation of AirplaneDao interface
-     * @author Tomáš Janíček
-     */
     @PersistenceContext
     private EntityManager em;
 

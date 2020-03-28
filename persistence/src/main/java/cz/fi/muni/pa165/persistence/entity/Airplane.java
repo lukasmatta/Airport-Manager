@@ -9,16 +9,22 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
+import java.util.Objects;
 
+/**
+ * Class representation of Airplane
+ *
+ * @author Tomáš Janíček
+ */
 @Entity
 public class Airplane {
     @Id
     @GeneratedValue(strategy= GenerationType.IDENTITY)
     private Long id;
 
-    @OneToMany
-    @NotNull
-    private Flight flight;
+//    @OneToMany
+//    @NotNull
+//    private Set<Flight> flight;
 
     @NotNull
     private String name;
@@ -34,17 +40,13 @@ public class Airplane {
         return id;
     }
 
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-    public Flight getFlight() {
-        return flight;
-    }
-
-    public void setFlight(Flight flight) {
-        this.flight = flight;
-    }
+//    public Flight getFlight() {
+//        return flight;
+//    }
+//
+//    public void setFlight(Flight flight) {
+//        this.flight = flight;
+//    }
 
     public String getName() {
         return name;
@@ -68,5 +70,21 @@ public class Airplane {
 
     public void setCapacity(int capacity) {
         this.capacity = capacity;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Airplane airplane = (Airplane) o;
+        return capacity == airplane.capacity &&
+                id.equals(airplane.id) &&
+                name.equals(airplane.name) &&
+                type == airplane.type;
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id, name, type, capacity);
     }
 }
