@@ -1,5 +1,6 @@
 package cz.muni.fi.pa165.airportmanager.dao;
 
+import cz.muni.fi.pa165.airportmanager.entity.Airport;
 import org.hibernate.jpa.HibernatePersistenceProvider;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
@@ -20,7 +21,6 @@ import javax.sql.DataSource;
 
 @Configuration
 @EnableTransactionManagement
-@EnableJpaRepositories
 @ComponentScan("cz.muni.fi.pa165.airportmanager.dao")
 public class PersistenceSampleApplicationContext {
 
