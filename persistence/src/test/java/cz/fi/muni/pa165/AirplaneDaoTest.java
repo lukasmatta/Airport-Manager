@@ -23,12 +23,15 @@ public class AirplaneDaoTest extends AbstractTestNGSpringContextTests {
     private EntityManager em;
 
     @Autowired
-    public AirplaneDao airplane;
+    public AirplaneDao airplaneDao;
 
     @Test
     public void find() {
         Airplane airplane = new Airplane();
         airplane.setName("CoolOne");
+
+        airplaneDao.insertAirplane(airplane);
+
     }
 
 }
