@@ -1,7 +1,7 @@
-package cz.fi.muni.pa165.persistence.entity;
+package cz.muni.fi.pa165.airportmanager.entity;
 
 import com.sun.istack.NotNull;
-import cz.fi.muni.pa165.persistence.enums.AirplaneType;
+import cz.muni.fi.pa165.airportmanager.enums.AirplaneType;
 
 import javax.persistence.Entity;
 import javax.persistence.Enumerated;

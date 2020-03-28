@@ -1,4 +1,4 @@
-package cz.fi.muni.pa165.persistence.enums;
+package cz.muni.fi.pa165.airportmanager.enums;
 
 public enum AirplaneType {
     First, Second, Atd

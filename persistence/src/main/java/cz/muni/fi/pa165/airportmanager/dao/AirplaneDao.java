@@ -1,6 +1,8 @@
-package cz.fi.muni.pa165.persistence.dao;
+package cz.muni.fi.pa165.airportmanager.dao;
 
-import cz.fi.muni.pa165.persistence.entity.Airplane;
+
+
+import cz.muni.fi.pa165.airportmanager.entity.Airplane;
 
 import java.time.ZonedDateTime;
 import java.util.Collection;
