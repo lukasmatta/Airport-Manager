@@ -42,7 +42,7 @@ public interface AirplaneDao {
      *
      * @param airplane Airplane object to create
      */
-    void insertAirplane(Airplane airplane);
+    Long insertAirplane(Airplane airplane);
 
     /**
      * Updates airplane in DB
