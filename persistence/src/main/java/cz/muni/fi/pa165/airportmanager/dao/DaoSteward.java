@@ -1,4 +1,17 @@
 package cz.muni.fi.pa165.airportmanager.dao;
 
-public class DaoSteward {
+import cz.muni.fi.pa165.airportmanager.entity.Steward;
+
+import java.time.ZonedDateTime;
+import java.util.List;
+
+public interface DaoSteward {
+    Long insertSteward(Steward steward);
+    void updateSteward(Steward steward);
+    void deleteSteward(Steward steward);
+
+    Steward findById(Long id);
+    List<Steward> findAll();
+
+    Steward findFreeStewardInTimeInterval(ZonedDateTime from, ZonedDateTime to);
 }
