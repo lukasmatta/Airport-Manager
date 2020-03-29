@@ -31,7 +31,7 @@ public class StewardDaoTest extends AbstractTestNGSpringContextTests {
 
 
     @Test
-    public void insertAirport() {
+    public void insertSteward() {
         Steward steward = new Steward();
         steward.setFirstName("Peter");
         steward.setLastName("Kantek");
@@ -46,7 +46,7 @@ public class StewardDaoTest extends AbstractTestNGSpringContextTests {
     }
 
     @Test
-    void updateAirport() {
+    void updateSteward() {
         Steward steward = new Steward();
         steward.setFirstName("Peter");
         steward.setLastName("Kantek");
@@ -59,7 +59,7 @@ public class StewardDaoTest extends AbstractTestNGSpringContextTests {
     }
 
     @Test
-    void deleteAirport() {
+    void deleteSteward() {
         Steward steward = new Steward();
         steward.setFirstName("Peter");
         steward.setLastName("Kantek");

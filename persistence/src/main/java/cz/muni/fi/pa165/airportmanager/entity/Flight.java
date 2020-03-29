@@ -5,6 +5,7 @@ import cz.muni.fi.pa165.airportmanager.exceptions.OverlappingTimeException;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
+import java.time.ZonedDateTime;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.Set;
@@ -29,10 +30,10 @@ public class Flight {
     private Airport destination;
 
     @NotNull
-    private LocalDateTime departure;
+    private ZonedDateTime departure;
 
     @NotNull
-    private LocalDateTime arrival;
+    private ZonedDateTime arrival;
 
     @ManyToOne
     private Airplane plane;
@@ -64,19 +65,19 @@ public class Flight {
         this.destination = destination;
     }
 
-    public LocalDateTime getDeparture() {
+    public ZonedDateTime getDeparture() {
         return departure;
     }
 
-    public void setDeparture(LocalDateTime departure) {
+    public void setDeparture(ZonedDateTime departure) {
         this.departure = departure;
     }
 
-    public LocalDateTime getArrival() {
+    public ZonedDateTime getArrival() {
         return arrival;
     }
 
-    public void setArrival(LocalDateTime arrival) {
+    public void setArrival(ZonedDateTime arrival) {
         this.arrival = arrival;
     }
 
@@ -126,7 +127,7 @@ public class Flight {
         }
     }
 
-    private boolean isOverlapping(LocalDateTime departure, LocalDateTime arrival) {
+    private boolean isOverlapping(ZonedDateTime departure, ZonedDateTime arrival) {
         return this.departure.isBefore(arrival) && this.arrival.isBefore(departure);
     }
 

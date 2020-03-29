@@ -6,7 +6,9 @@ import org.springframework.stereotype.Repository;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import java.time.ZonedDateTime;
+import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Optional;
 
 /**
  * Implementation of AirplaneDao interface
@@ -21,13 +23,14 @@ public class AirplaneDaoImpl implements AirplaneDao{
     private EntityManager em;
 
     @Override
-    public Airplane findFreePlaneInTimeInterval(ZonedDateTime from, ZonedDateTime to) {
-//        ArrayList<Airplane> allAirplanes = (ArrayList<Airplane>) this.findAll();
-//        allAirplanes.stream()
-//                .filter(
-//                        airplane -> airplane.getFlight()
-//                )
-        return null;
+    public Optional<Airplane> findFreePlaneInTimeInterval(ZonedDateTime from, ZonedDateTime to) {
+        ArrayList<Airplane> allAirplanes = (ArrayList<Airplane>) this.findAll();
+        return allAirplanes.stream()
+                .filter(
+                        airplane -> airplane.getFlights()
+                                .stream().anyMatch(flight -> flight.getDeparture().compareTo(from) < 0 && flight.getArrival().compareTo(from) < 0 ||
+                                        flight.getDeparture().compareTo(to) > 0)
+                ).findFirst();
     }
 
     @Override

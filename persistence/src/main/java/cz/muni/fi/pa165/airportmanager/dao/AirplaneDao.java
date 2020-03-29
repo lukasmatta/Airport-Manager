@@ -6,6 +6,7 @@ import cz.muni.fi.pa165.airportmanager.entity.Airplane;
 
 import java.time.ZonedDateTime;
 import java.util.Collection;
+import java.util.Optional;
 
 /**
  * DAO for Airplane
@@ -20,7 +21,7 @@ public interface AirplaneDao {
      * @param to upper bound
      * @return unused airplane
      */
-    Airplane findFreePlaneInTimeInterval(ZonedDateTime from, ZonedDateTime to);
+    Optional<Airplane> findFreePlaneInTimeInterval(ZonedDateTime from, ZonedDateTime to);
 
     /**
      * Finds Airplane by id
