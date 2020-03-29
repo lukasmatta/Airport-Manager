@@ -7,11 +7,11 @@ import java.util.List;
 
 public interface StewardDao {
 
-    void insertSteward(Steward steward);
+    Long insertSteward(Steward steward);
     void updateSteward(Steward steward);
     void deleteSteward(Steward steward);
 
-    Steward findById(Integer id);
+    Steward findById(Long id);
     List<Steward> findAll();
 
     Steward findFreeStewardInTimeInterval(ZonedDateTime from, ZonedDateTime to);
