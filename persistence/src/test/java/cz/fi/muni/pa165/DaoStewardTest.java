@@ -3,7 +3,6 @@ package cz.fi.muni.pa165;
 import cz.muni.fi.pa165.airportmanager.PersistenceSampleApplicationContext;
 import cz.muni.fi.pa165.airportmanager.dao.AirportDao;
 import cz.muni.fi.pa165.airportmanager.dao.DaoSteward;
-import cz.muni.fi.pa165.airportmanager.entity.Airport;
 import cz.muni.fi.pa165.airportmanager.entity.Steward;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
@@ -81,8 +80,8 @@ public class DaoStewardTest extends AbstractTestNGSpringContextTests {
         steward1.setFirstName("Tony");
         steward1.setLastName("Stark");
         Steward steward2 = new Steward();
-        steward1.setFirstName("Leo");
-        steward1.setLastName("Messi");
+        steward2.setFirstName("Leo");
+        steward2.setLastName("Messi");
 
         daoSteward.insertSteward(steward1);
         daoSteward.insertSteward(steward2);

@@ -13,7 +13,7 @@ public interface FlightDao {
      * Inserts flight into DB
      * @param entity flight entity
      */
-    void create(Flight entity);
+    Long create(Flight entity);
 
     /**
      * Deletes flight from DB
