@@ -43,8 +43,9 @@ public class AirplaneDaoImpl implements AirplaneDao{
     }
 
     @Override
-    public void insertAirplane(Airplane airplane) {
+    public Long insertAirplane(Airplane airplane) {
         em.persist(airplane);
+        return airplane.getId();
     }
 
     @Override
