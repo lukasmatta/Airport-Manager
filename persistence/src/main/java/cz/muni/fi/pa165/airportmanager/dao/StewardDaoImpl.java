@@ -1,5 +1,6 @@
 package cz.muni.fi.pa165.airportmanager.dao;
 
+import cz.muni.fi.pa165.airportmanager.entity.Airport;
 import cz.muni.fi.pa165.airportmanager.entity.Steward;
 import org.springframework.stereotype.Repository;
 
@@ -29,8 +30,9 @@ public class StewardDaoImpl implements StewardDao {
     }
 
     @Override
-    public void insertSteward(Steward steward) {
+    public Long insertSteward(Steward steward) {
         em.persist(steward);
+        return steward.getId();
     }
 
     @Override
@@ -44,9 +46,8 @@ public class StewardDaoImpl implements StewardDao {
     }
 
     @Override
-    public Steward findById(Integer id) {
-        return em.createQuery("select steward from Steward steward where u.id = :id", Steward.class)
-                .setParameter("id", id).getSingleResult();
+    public Steward findById(Long id) {
+        return em.find(Steward.class, id);
     }
 }
 
