@@ -17,6 +17,7 @@ public class DaoStewardImpl implements DaoSteward {
 
     @Override
     public Steward findFreeStewardInTimeInterval(ZonedDateTime from, ZonedDateTime to) {
+        Steward s = new Steward();
         return null;
     }
 
