@@ -61,5 +61,21 @@ public class Steward {
     public void removeFlight(Flight flight) {
         flights.remove(flight);
     }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Steward steward = (Steward) o;
+        return Objects.equals(id, steward.id) &&
+                Objects.equals(firstName, steward.firstName) &&
+                Objects.equals(lastName, steward.lastName) &&
+                Objects.equals(flights, steward.flights);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id, firstName, lastName, flights);
+    }
 }
 
