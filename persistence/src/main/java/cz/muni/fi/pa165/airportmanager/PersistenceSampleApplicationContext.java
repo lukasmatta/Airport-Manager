@@ -1,4 +1,4 @@
-package cz.muni.fi.pa165.airportmanager.dao;
+package cz.muni.fi.pa165.airportmanager;
 
 import cz.muni.fi.pa165.airportmanager.entity.Airport;
 import org.hibernate.jpa.HibernatePersistenceProvider;

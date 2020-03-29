@@ -8,7 +8,7 @@ import javax.persistence.PersistenceContext;
 import java.util.List;
 
 @Repository
-public class AirportDAOImpl implements AirportDAO {
+public class AirportDaoImpl implements AirportDao {
 
     @PersistenceContext
     private EntityManager em;

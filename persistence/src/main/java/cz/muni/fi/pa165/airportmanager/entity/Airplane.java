@@ -9,7 +9,9 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
+import java.util.HashSet;
 import java.util.Objects;
+import java.util.Set;
 
 /**
  * Class representation of Airplane
@@ -22,9 +24,9 @@ public class Airplane {
     @GeneratedValue(strategy= GenerationType.IDENTITY)
     private Long id;
 
-//    @OneToMany
-//    @NotNull
-//    private Set<Flight> flight;
+    @OneToMany
+    @NotNull
+    private Set<Flight> flight = new HashSet<>();
 
     @NotNull
     private String name;
@@ -40,13 +42,13 @@ public class Airplane {
         return id;
     }
 
-//    public Flight getFlight() {
-//        return flight;
-//    }
-//
-//    public void setFlight(Flight flight) {
-//        this.flight = flight;
-//    }
+    public Set<Flight> getFlights() {
+        return flight;
+    }
+
+    public void setFlights(Set<Flight> flight) {
+        this.flight = flight;
+    }
 
     public String getName() {
         return name;
@@ -78,13 +80,14 @@ public class Airplane {
         if (o == null || getClass() != o.getClass()) return false;
         Airplane airplane = (Airplane) o;
         return capacity == airplane.capacity &&
-                id.equals(airplane.id) &&
-                name.equals(airplane.name) &&
+                Objects.equals(id, airplane.id) &&
+                Objects.equals(flight, airplane.flight) &&
+                Objects.equals(name, airplane.name) &&
                 type == airplane.type;
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, name, type, capacity);
+        return Objects.hash(id, flight, name, type, capacity);
     }
 }

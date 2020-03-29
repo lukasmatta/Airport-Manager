@@ -3,6 +3,7 @@ package cz.muni.fi.pa165.airportmanager.entity;
 import com.sun.istack.NotNull;
 
 import javax.persistence.*;
+import java.util.Objects;
 
 /**
  * Author: Lukas Matta
@@ -37,5 +38,20 @@ public class Airport {
 
     public void setCountry(String country) {
         this.country = country;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Airport airport = (Airport) o;
+        return Objects.equals(id, airport.id) &&
+                Objects.equals(city, airport.city) &&
+                Objects.equals(country, airport.country);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id, city, country);
     }
 }

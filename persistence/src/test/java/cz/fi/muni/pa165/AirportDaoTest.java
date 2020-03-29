@@ -1,7 +1,7 @@
 package cz.fi.muni.pa165;
 
-import cz.muni.fi.pa165.airportmanager.dao.AirportDAO;
-import cz.muni.fi.pa165.airportmanager.dao.PersistenceSampleApplicationContext;
+import cz.muni.fi.pa165.airportmanager.dao.AirportDao;
+import cz.muni.fi.pa165.airportmanager.PersistenceSampleApplicationContext;
 import cz.muni.fi.pa165.airportmanager.entity.Airport;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.InvalidDataAccessApiUsageException;
@@ -23,7 +23,7 @@ import static org.testng.AssertJUnit.*;
 public class AirportDaoTest extends AbstractTestNGSpringContextTests {
 
     @Autowired
-    private AirportDAO airportDAO;
+    private AirportDao airportDAO;
 
     @PersistenceContext
     private EntityManager em;

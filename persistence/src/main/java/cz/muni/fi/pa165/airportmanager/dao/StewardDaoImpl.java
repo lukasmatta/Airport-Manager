@@ -1,17 +1,15 @@
-package dao.Impl;
+package cz.muni.fi.pa165.airportmanager.dao;
 
-import dao.DaoSteward;
-import entity.Steward;
+import cz.muni.fi.pa165.airportmanager.entity.Steward;
 import org.springframework.stereotype.Repository;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import java.time.ZonedDateTime;
-import java.util.Collection;
 import java.util.List;
 
 @Repository
-public class DaoStewardImpl implements DaoSteward {
+public class StewardDaoImpl implements StewardDao {
 
 
     @PersistenceContext

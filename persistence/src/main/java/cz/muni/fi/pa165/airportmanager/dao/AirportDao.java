@@ -7,7 +7,7 @@ import java.util.List;
 /**
  * Author: Lukas Matta
  */
-public interface AirportDAO {
+public interface AirportDao {
     /**
      * Creates new airport
      * @param airport

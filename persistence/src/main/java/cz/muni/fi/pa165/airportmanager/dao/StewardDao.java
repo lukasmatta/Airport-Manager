@@ -1,11 +1,11 @@
-package dao;
+package cz.muni.fi.pa165.airportmanager.dao;
 
-import entity.Steward;
+import cz.muni.fi.pa165.airportmanager.entity.Steward;
 
 import java.time.ZonedDateTime;
 import java.util.List;
 
-public interface DaoSteward {
+public interface StewardDao {
 
     void insertSteward(Steward steward);
     void updateSteward(Steward steward);

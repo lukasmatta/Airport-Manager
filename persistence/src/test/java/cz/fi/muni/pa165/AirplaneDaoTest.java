@@ -1,7 +1,7 @@
 package cz.fi.muni.pa165;
 
 import cz.muni.fi.pa165.airportmanager.dao.AirplaneDao;
-import cz.muni.fi.pa165.airportmanager.dao.PersistenceSampleApplicationContext;
+import cz.muni.fi.pa165.airportmanager.PersistenceSampleApplicationContext;
 import cz.muni.fi.pa165.airportmanager.entity.Airplane;
 import cz.muni.fi.pa165.airportmanager.enums.AirplaneType;
 import org.springframework.beans.factory.annotation.Autowired;
