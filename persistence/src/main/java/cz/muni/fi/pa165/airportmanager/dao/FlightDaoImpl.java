@@ -17,8 +17,9 @@ public class FlightDaoImpl implements FlightDao {
     private EntityManager entityManager;
 
     @Override
-    public void create(Flight entity) {
+    public Long create(Flight entity) {
         entityManager.persist(entity);
+        return entity.getId();
     }
 
     @Override
