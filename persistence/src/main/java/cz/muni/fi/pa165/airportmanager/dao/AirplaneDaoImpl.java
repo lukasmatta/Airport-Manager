@@ -6,8 +6,7 @@ import org.springframework.stereotype.Repository;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import java.time.ZonedDateTime;
-import java.util.ArrayList;
-import java.util.Collection;
+import java.util.List;
 import java.util.Optional;
 
 /**
@@ -24,7 +23,7 @@ public class AirplaneDaoImpl implements AirplaneDao{
 
     @Override
     public Airplane findFreePlaneInTimeInterval(ZonedDateTime from, ZonedDateTime to) {
-        ArrayList<Airplane> allAirplanes = (ArrayList<Airplane>) this.findAll();
+        List<Airplane> allAirplanes = this.findAll();
         Optional<Airplane> result = allAirplanes.stream()
                 .filter(
                         airplane -> airplane.getFlights()
@@ -40,7 +39,7 @@ public class AirplaneDaoImpl implements AirplaneDao{
     }
 
     @Override
-    public Collection<Airplane> findAll() {
+    public List<Airplane> findAll() {
         return em.createQuery(
                 "SELECT airplane FROM Airplane airplane", Airplane.class
         ).getResultList();
