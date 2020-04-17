@@ -21,7 +21,7 @@ public interface AirplaneDao {
      * @param to upper bound
      * @return unused airplane
      */
-    Optional<Airplane> findFreePlaneInTimeInterval(ZonedDateTime from, ZonedDateTime to);
+    Airplane findFreePlaneInTimeInterval(ZonedDateTime from, ZonedDateTime to);
 
     /**
      * Finds Airplane by id
@@ -29,7 +29,7 @@ public interface AirplaneDao {
      * @param id of airplane
      * @return found Airplane
      */
-    Optional<Airplane> findById(Long id);
+    Airplane findById(Long id);
 
     /**
      * Finds all airplanes
