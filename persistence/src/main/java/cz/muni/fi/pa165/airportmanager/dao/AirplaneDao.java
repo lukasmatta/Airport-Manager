@@ -29,7 +29,7 @@ public interface AirplaneDao {
      * @param id of airplane
      * @return found Airplane
      */
-    Airplane findById(Long id);
+    Optional<Airplane> findById(Long id);
 
     /**
      * Finds all airplanes

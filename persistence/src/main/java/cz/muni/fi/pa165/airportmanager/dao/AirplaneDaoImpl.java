@@ -34,8 +34,8 @@ public class AirplaneDaoImpl implements AirplaneDao{
     }
 
     @Override
-    public Airplane findById(Long id) {
-        return em.find(Airplane.class, id);
+    public Optional<Airplane> findById(Long id) {
+        return Optional.ofNullable(em.find(Airplane.class, id));
     }
 
     @Override
