@@ -45,7 +45,7 @@ public class AirplaneDaoTest extends AbstractTestNGSpringContextTests {
     void findById() {
         Airplane pl = new Airplane();
         pl.setName("Boeing");
-        pl.setType(AirplaneType.First);
+        pl.setType(AirplaneType.PRIVATE);
         pl.setCapacity(300);
         Long plId = airplaneDao.insertAirplane(pl);
         assertEquals(airplaneDao.findById(plId).getId(), plId);
@@ -60,7 +60,7 @@ public class AirplaneDaoTest extends AbstractTestNGSpringContextTests {
         assertEquals(airplaneDao.findAll().size(), 15);
         Airplane pl = new Airplane();
         pl.setName("Boeing");
-        pl.setType(AirplaneType.First);
+        pl.setType(AirplaneType.PRIVATE);
         pl.setCapacity(200);
         airplaneDao.insertAirplane(pl);
         assertEquals(airplaneDao.findAll().size(), 16);
@@ -71,7 +71,7 @@ public class AirplaneDaoTest extends AbstractTestNGSpringContextTests {
         airplaneDao.insertAirplane(new Airplane());
         assertEquals(airplaneDao.findAll().size(), 16);
         Airplane pl = new Airplane();
-        pl.setType(AirplaneType.Second);
+        pl.setType(AirplaneType.COMMERCIAL);
         pl.setCapacity(300);
         pl.setName("Airbus");
         Long plId = airplaneDao.insertAirplane(pl);
@@ -87,15 +87,15 @@ public class AirplaneDaoTest extends AbstractTestNGSpringContextTests {
     void updateAirplane() {
         Airplane pl = new Airplane();
         pl.setName("Boeing");
-        pl.setType(AirplaneType.Second);
+        pl.setType(AirplaneType.COMMERCIAL);
         pl.setCapacity(500);
         Long plId = airplaneDao.insertAirplane(pl);
         pl.setName("Airbus");
-        pl.setType(AirplaneType.First);
+        pl.setType(AirplaneType.PRIVATE);
         pl.setCapacity(400);
         airplaneDao.updateAirplane(pl);
         assertEquals(airplaneDao.findById(plId).getName(), "Airbus");
-        assertEquals(airplaneDao.findById(plId).getType(), AirplaneType.First);
+        assertEquals(airplaneDao.findById(plId).getType(), AirplaneType.PRIVATE);
         assertEquals(airplaneDao.findById(plId).getCapacity(), 400);
     }
 
@@ -103,7 +103,7 @@ public class AirplaneDaoTest extends AbstractTestNGSpringContextTests {
     void deleteAirplane() {
         Airplane pl = new Airplane();
         pl.setName("Airbus");
-        pl.setType(AirplaneType.Second);
+        pl.setType(AirplaneType.COMMERCIAL);
         pl.setCapacity(100);
         Long plId = airplaneDao.insertAirplane(pl);
         assertNotNull(airplaneDao.findById(plId));

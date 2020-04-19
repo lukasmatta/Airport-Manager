@@ -59,7 +59,7 @@ public class FlightDaoTest extends AbstractTestNGSpringContextTests {
 
         Airplane pl = new Airplane();
         pl.setName("Airbus");
-        pl.setType(AirplaneType.Second);
+        pl.setType(AirplaneType.COMMERCIAL);
         pl.setCapacity(100);
 
         flight.setPlane(pl);
@@ -105,7 +105,7 @@ public class FlightDaoTest extends AbstractTestNGSpringContextTests {
 
         Airplane pl = new Airplane();
         pl.setName("Airbus");
-        pl.setType(AirplaneType.Second);
+        pl.setType(AirplaneType.COMMERCIAL);
         pl.setCapacity(100);
 
         flight.setPlane(pl);
@@ -152,7 +152,7 @@ public class FlightDaoTest extends AbstractTestNGSpringContextTests {
 
         Airplane pl = new Airplane();
         pl.setName("Airbus");
-        pl.setType(AirplaneType.Second);
+        pl.setType(AirplaneType.COMMERCIAL);
         pl.setCapacity(100);
 
         flight.setPlane(pl);
@@ -200,7 +200,7 @@ public class FlightDaoTest extends AbstractTestNGSpringContextTests {
 
         Airplane pl = new Airplane();
         pl.setName("Airbus");
-        pl.setType(AirplaneType.Second);
+        pl.setType(AirplaneType.COMMERCIAL);
         pl.setCapacity(100);
 
         flight.setPlane(pl);
@@ -235,7 +235,7 @@ public class FlightDaoTest extends AbstractTestNGSpringContextTests {
         flight.setDeparture(departure_new);
 
         pl.setName("Boeing");
-        pl.setType(AirplaneType.First);
+        pl.setType(AirplaneType.PRIVATE);
         pl.setCapacity(70);
 
         flight.setPlane(pl);
@@ -286,7 +286,7 @@ public class FlightDaoTest extends AbstractTestNGSpringContextTests {
 
         Airplane pl = new Airplane();
         pl.setName("Airbus");
-        pl.setType(AirplaneType.Second);
+        pl.setType(AirplaneType.COMMERCIAL);
         pl.setCapacity(100);
 
         flight.setPlane(pl);
@@ -334,7 +334,7 @@ public class FlightDaoTest extends AbstractTestNGSpringContextTests {
 
         Airplane pl = new Airplane();
         pl.setName("Airbus");
-        pl.setType(AirplaneType.Second);
+        pl.setType(AirplaneType.COMMERCIAL);
         pl.setCapacity(100);
 
         flight.setPlane(pl);
@@ -373,7 +373,7 @@ public class FlightDaoTest extends AbstractTestNGSpringContextTests {
 
         Airplane pl1 = new Airplane();
         pl1.setName("Boeing");
-        pl1.setType(AirplaneType.Second);
+        pl1.setType(AirplaneType.COMMERCIAL);
         pl1.setCapacity(70);
 
         flight1.setPlane(pl1);
