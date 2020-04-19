@@ -1,6 +1,6 @@
 package cz.muni.fi.pa165.airportmanager.dao;
 
-import cz.muni.fi.pa165.airportmanager.entity.Airport;
+import cz.muni.fi.pa165.airportmanager.entity.Flight;
 import cz.muni.fi.pa165.airportmanager.entity.Steward;
 import org.springframework.stereotype.Repository;
 
@@ -17,16 +17,21 @@ public class StewardDaoImpl implements StewardDao {
     private EntityManager em;
 
     @Override
-    public Steward findFreeStewardInTimeInterval(ZonedDateTime from, ZonedDateTime to) {
-        return null;
-    }
-
-
-    @Override
     public List<Steward> findAll() {
         return em.createQuery(
                 "SELECT steward FROM Steward steward", Steward.class
         ).getResultList();
+    }
+
+    /**
+     * TODO: Implement this in the next milestone
+     * @param from
+     * @param to
+     * @return
+     */
+    @Override
+    public Steward findFreeStewardInTimeInterval(ZonedDateTime from, ZonedDateTime to) {
+        return null;
     }
 
     @Override
@@ -50,4 +55,3 @@ public class StewardDaoImpl implements StewardDao {
         return em.find(Steward.class, id);
     }
 }
-

@@ -8,6 +8,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToMany;
 import javax.persistence.OneToMany;
+import java.util.HashSet;
 import java.util.Objects;
 import java.util.Set;
 
@@ -24,7 +25,7 @@ public class Steward {
     private String lastName;
 
     @OneToMany
-    private Set<Flight> flights;
+    private Set<Flight> flights = new HashSet<Flight>();
 
     public Long getId() {
         return id;

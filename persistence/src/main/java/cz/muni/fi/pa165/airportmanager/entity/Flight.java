@@ -8,6 +8,7 @@ import java.time.LocalDateTime;
 import java.time.ZonedDateTime;
 import java.util.Collection;
 import java.util.Collections;
+import java.util.HashSet;
 import java.util.Set;
 
 /**
@@ -39,7 +40,7 @@ public class Flight {
     private Airplane plane;
 
     @ManyToMany
-    private Set<Steward> stewards;
+    private Set<Steward> stewards = new HashSet<Steward>();
 
     public Long getId() {
         return id;
