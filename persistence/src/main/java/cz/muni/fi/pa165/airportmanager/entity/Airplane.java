@@ -3,12 +3,16 @@ package cz.muni.fi.pa165.airportmanager.entity;
 import com.sun.istack.NotNull;
 import cz.muni.fi.pa165.airportmanager.enums.AirplaneType;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
 import javax.persistence.OneToMany;
+import javax.persistence.Table;
+import java.io.Serializable;
 import java.util.HashSet;
 import java.util.Objects;
 import java.util.Set;
@@ -18,24 +22,25 @@ import java.util.Set;
  *
  * @author Tomáš Janíček
  */
-@Entity
-public class Airplane {
+@Entity(name = "Airplane")
+@Table(name = "airplane")
+public class Airplane implements Serializable {
     @Id
     @GeneratedValue(strategy= GenerationType.IDENTITY)
     private Long id;
 
     @OneToMany
-    @NotNull
+    @JoinColumn(name = "flight_id")
     private Set<Flight> flight = new HashSet<>();
 
-    @NotNull
+    @Column(name = "name")
     private String name;
 
-    @NotNull
     @Enumerated
+    @Column(name = "type")
     private AirplaneType type;
 
-    @NotNull
+    @Column(name = "capacity")
     private int capacity;
 
     public Long getId() {
@@ -75,14 +80,25 @@ public class Airplane {
     }
 
     @Override
+    public String toString() {
+        return "Airplane{" +
+                "id=" + id +
+                ", flight=" + flight +
+                ", name='" + name + '\'' +
+                ", type=" + type +
+                ", capacity=" + capacity +
+                '}';
+    }
+
+    @Override
     public boolean equals(Object o) {
         if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
+        if (!(o instanceof Airplane)) return false;
         Airplane airplane = (Airplane) o;
         return capacity == airplane.capacity &&
-                Objects.equals(id, airplane.id) &&
-                Objects.equals(flight, airplane.flight) &&
-                Objects.equals(name, airplane.name) &&
+                id.equals(airplane.id) &&
+                flight.equals(airplane.flight) &&
+                name.equals(airplane.name) &&
                 type == airplane.type;
     }
 
