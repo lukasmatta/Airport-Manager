@@ -1,10 +1,9 @@
 package cz.muni.fi.pa165.airportmanager;
 
-import javax.inject.Inject;
-
-import cz.muni.fi.pa165.airportmanager.dao.AirplaneDao;
+import cz.muni.fi.pa165.airportmanager.dao.AirportDao;
 import cz.muni.fi.pa165.airportmanager.entity.Airport;
 
+import javax.inject.Inject;
 import java.util.List;
 
 /**
@@ -15,30 +14,31 @@ import java.util.List;
 
 public class AirportServiceImpl implements AirportService {
     @Inject
-    private AirplaneDao airplaneDao;
+    private AirportDao airportDao;
 
     @Override
     public Airport findById(Long id) {
-        return null;
+        return airportDao.findById(id);
     }
 
     @Override
     public void createAirport(Airport airport) {
-
+        airportDao.insertAirport(airport);
     }
 
     @Override
     public void deleteAirport(Long id) {
-
+        Airport toDelete = airportDao.findById(id);
+        airportDao.deleteAirport(toDelete);
     }
 
     @Override
     public void updateAirport(Airport airport) {
-
+        airportDao.updateAirport(airport);
     }
 
     @Override
     public List<Airport> findAllAirports() {
-        return null;
+        return airportDao.findAll();
     }
 }

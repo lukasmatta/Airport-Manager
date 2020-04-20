@@ -1,6 +1,5 @@
 package cz.muni.fi.pa165.airportmanager;
 
-import cz.muni.fi.pa165.airportmanager.BeanMappingService;
 import org.dozer.Mapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
