@@ -139,7 +139,6 @@ public class Flight {
 
         Flight flight = (Flight) o;
 
-        if (!getId().equals(flight.getId())) return false;
         if (!getPlane().equals(flight.getPlane())) return false;
         if (!getOrigin().equals(flight.getOrigin())) return false;
         if (!getDestination().equals(flight.getDestination())) return false;

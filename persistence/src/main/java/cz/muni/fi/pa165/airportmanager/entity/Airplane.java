@@ -94,16 +94,19 @@ public class Airplane implements Serializable {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (!(o instanceof Airplane)) return false;
+
         Airplane airplane = (Airplane) o;
-        return capacity == airplane.capacity &&
-                id.equals(airplane.id) &&
-                flight.equals(airplane.flight) &&
-                name.equals(airplane.name) &&
-                type == airplane.type;
+
+        if (getCapacity() != airplane.getCapacity()) return false;
+        if (!getName().equals(airplane.getName())) return false;
+        return getType() == airplane.getType();
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, flight, name, type, capacity);
+        int result = getName().hashCode();
+        result = 31 * result + getType().hashCode();
+        result = 31 * result + getCapacity();
+        return result;
     }
 }

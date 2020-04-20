@@ -77,17 +77,21 @@ public class Steward {
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
+        if (!(o instanceof Steward)) return false;
+
         Steward steward = (Steward) o;
-        return Objects.equals(id, steward.id) &&
-                Objects.equals(firstName, steward.firstName) &&
-                Objects.equals(lastName, steward.lastName) &&
-                Objects.equals(flights, steward.flights);
+
+        if (!getFirstName().equals(steward.getFirstName())) return false;
+        if (!getLastName().equals(steward.getLastName())) return false;
+        return getFlights() != null ? getFlights().equals(steward.getFlights()) : steward.getFlights() == null;
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, firstName, lastName, flights);
+        int result = getFirstName().hashCode();
+        result = 31 * result + getLastName().hashCode();
+        result = 31 * result + (getFlights() != null ? getFlights().hashCode() : 0);
+        return result;
     }
 }
 
