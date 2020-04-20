@@ -8,6 +8,7 @@ import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import java.time.ZonedDateTime;
 import java.util.List;
+import java.util.Optional;
 
 @Repository
 public class StewardDaoImpl implements StewardDao {
@@ -31,7 +32,14 @@ public class StewardDaoImpl implements StewardDao {
      */
     @Override
     public Steward findFreeStewardInTimeInterval(ZonedDateTime from, ZonedDateTime to) {
-        return null;
+        List<Steward> allStewards = this.findAll();
+        Optional<Steward> result = allStewards.stream()
+                .filter(
+                        steward -> steward.getFlights()
+                                .stream().anyMatch(flight -> flight.getDeparture().compareTo(from) < 0 && flight.getArrival().compareTo(from) < 0 ||
+                                        flight.getDeparture().compareTo(to) > 0)
+                ).findFirst();
+        return result.orElse(null);
     }
 
     @Override

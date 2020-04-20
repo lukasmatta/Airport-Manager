@@ -2,29 +2,31 @@ package cz.muni.fi.pa165.airportmanager.entity;
 
 import com.sun.istack.NotNull;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.ManyToMany;
-import javax.persistence.OneToMany;
+import javax.persistence.*;
 import java.util.HashSet;
 import java.util.Objects;
 import java.util.Set;
 
-@Entity
+/**
+ * @author Almas Shakirtkhanov
+ */
+@Entity(name = "Steward")
+@Table(name = "steward")
 public class Steward {
     @Id
     @GeneratedValue(strategy= GenerationType.IDENTITY)
     private Long id;
 
     @NotNull
+    @Column(name = "firstName")
     private String firstName;
 
     @NotNull
+    @Column(name = "secondName")
     private String lastName;
 
     @OneToMany
+    @JoinColumn(name = "flight_id")
     private Set<Flight> flights = new HashSet<Flight>();
 
     public Long getId() {
@@ -61,6 +63,15 @@ public class Steward {
 
     public void removeFlight(Flight flight) {
         flights.remove(flight);
+    }
+
+    @Override
+    public String toString() {
+        return "Steward{" +
+                "id=" + id +
+                ", First Name:=" + firstName +
+                ", Last Name:='" + lastName + '\'' +
+                '}';
     }
 
     @Override
