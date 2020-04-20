@@ -1,13 +1,15 @@
-package cz.muni.fi.pa165.airportmanager.dao;
+package cz.muni.fi.pa165.airportmanager;
 
 import cz.muni.fi.pa165.airportmanager.entity.Flight;
 
 import java.util.List;
 
 /**
+ * Service interface for Flight
+ *
  * @author Petr Kantek
  */
-public interface FlightDao {
+public interface FlightService {
 
     /**
      * Inserts flight into DB
@@ -31,7 +33,7 @@ public interface FlightDao {
     /**
      * Update attributes of given entity in DB
      * @param entity flight entity
-     * @return update flight
+     * @return updated flight
      */
     Flight update(Flight entity);
 
@@ -47,4 +49,5 @@ public interface FlightDao {
      * @return all flights in DB
      */
     List<Flight> findAll();
+
 }

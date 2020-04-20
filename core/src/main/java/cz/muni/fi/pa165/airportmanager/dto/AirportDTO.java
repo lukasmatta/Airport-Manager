@@ -8,7 +8,7 @@ import java.util.Objects;
  * @author Tomáš Janíček
  */
 
-public class AirportDto {
+public class AirportDTO {
     private Long id;
     private String city;
     private String country;
@@ -40,8 +40,8 @@ public class AirportDto {
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
-        if (!(o instanceof AirportDto)) return false;
-        AirportDto that = (AirportDto) o;
+        if (!(o instanceof AirportDTO)) return false;
+        AirportDTO that = (AirportDTO) o;
         return id.equals(that.id) &&
                 city.equals(that.city) &&
                 country.equals(that.country);

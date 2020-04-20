@@ -1,26 +1,27 @@
-package cz.muni.fi.pa165.airportmanager.dao;
+package cz.muni.fi.pa165.airportmanager.facade;
 
-import cz.muni.fi.pa165.airportmanager.entity.Flight;
-
+import cz.muni.fi.pa165.airportmanager.dto.FlightDTO;
 import java.util.List;
 
 /**
+ * Flight facade interface
+ *
  * @author Petr Kantek
  */
-public interface FlightDao {
+public interface FlightFacade {
 
     /**
      * Inserts flight into DB
      * @param entity flight entity
      * @return created flight ID
      */
-    Long create(Flight entity);
+    Long create(FlightDTO entity);
 
     /**
      * Deletes flight from DB
      * @param entity flight entity
      */
-    void delete(Flight entity);
+    void delete(FlightDTO entity);
 
     /**
      * Deletes flight with the given ID from DB
@@ -31,20 +32,22 @@ public interface FlightDao {
     /**
      * Update attributes of given entity in DB
      * @param entity flight entity
-     * @return update flight
+     * @return updated flight
      */
-    Flight update(Flight entity);
+    FlightDTO update(FlightDTO entity);
 
     /**
      * Finds a flight in DB by its ID
      * @param id ID of the flight to be searched for
      * @return searched flight
      */
-    Flight findById(long id);
+    FlightDTO findById(long id);
 
     /**
      * Finds all flights in DB
      * @return all flights in DB
      */
-    List<Flight> findAll();
+    List<FlightDTO> findAll();
+
+
 }

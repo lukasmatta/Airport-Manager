@@ -1,6 +1,6 @@
 package cz.muni.fi.pa165.airportmanager.facade;
 
-import cz.muni.fi.pa165.airportmanager.dto.AirportDto;
+import cz.muni.fi.pa165.airportmanager.dto.AirportDTO;
 
 import java.util.List;
 
@@ -17,7 +17,7 @@ public interface AirportFacade {
      * @param id of Airport
      * @return found Airport
      */
-    AirportDto findById(Long id);
+    AirportDTO findById(Long id);
 
     /**
      * Delete airport with given id
@@ -31,19 +31,19 @@ public interface AirportFacade {
      *
      * @param airport object Airport
      */
-    void createAirport(AirportDto airport);
+    void createAirport(AirportDTO airport);
 
     /**
      * Update airport
      *
      * @param airport to be updated
      */
-    void updateAirport(AirportDto airport);
+    void updateAirport(AirportDTO airport);
 
     /**
      * Find all airports
      *
      * @return List of Airports
      */
-    List<AirportDto> findAllAirports();
+    List<AirportDTO> findAllAirports();
 }
