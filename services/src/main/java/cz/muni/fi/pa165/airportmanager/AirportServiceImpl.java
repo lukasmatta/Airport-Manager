@@ -2,6 +2,7 @@ package cz.muni.fi.pa165.airportmanager;
 
 import cz.muni.fi.pa165.airportmanager.dao.AirportDao;
 import cz.muni.fi.pa165.airportmanager.entity.Airport;
+import org.springframework.stereotype.Service;
 
 import javax.inject.Inject;
 import java.util.List;
@@ -12,6 +13,7 @@ import java.util.List;
  * @author Tomáš Janíček
  */
 
+@Service
 public class AirportServiceImpl implements AirportService {
     @Inject
     private AirportDao airportDao;
