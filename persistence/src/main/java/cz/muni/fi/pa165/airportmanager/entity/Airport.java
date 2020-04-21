@@ -43,15 +43,18 @@ public class Airport {
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
+        if (!(o instanceof Airport)) return false;
+
         Airport airport = (Airport) o;
-        return Objects.equals(id, airport.id) &&
-                Objects.equals(city, airport.city) &&
-                Objects.equals(country, airport.country);
+
+        if (!getCity().equals(airport.getCity())) return false;
+        return getCountry().equals(airport.getCountry());
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, city, country);
+        int result = getCity().hashCode();
+        result = 31 * result + getCountry().hashCode();
+        return result;
     }
 }

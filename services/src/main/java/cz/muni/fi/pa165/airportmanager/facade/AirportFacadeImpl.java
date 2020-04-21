@@ -2,7 +2,7 @@ package cz.muni.fi.pa165.airportmanager.facade;
 
 import cz.muni.fi.pa165.airportmanager.AirportService;
 import cz.muni.fi.pa165.airportmanager.BeanMappingService;
-import cz.muni.fi.pa165.airportmanager.dto.AirportDto;
+import cz.muni.fi.pa165.airportmanager.dto.AirportDTO;
 import cz.muni.fi.pa165.airportmanager.entity.Airport;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -27,9 +27,9 @@ public class AirportFacadeImpl implements AirportFacade {
 
 
     @Override
-    public AirportDto findById(Long id) {
+    public AirportDTO findById(Long id) {
         Airport airport = airportService.findById(id);
-        return (airport == null) ? null : beanMappingService.mapTo(airport, AirportDto.class);
+        return (airport == null) ? null : beanMappingService.mapTo(airport, AirportDTO.class);
     }
 
     @Override
@@ -38,20 +38,20 @@ public class AirportFacadeImpl implements AirportFacade {
     }
 
     @Override
-    public void createAirport(AirportDto airport) {
+    public void createAirport(AirportDTO airport) {
         Airport newAirport = beanMappingService.mapTo(airport, Airport.class);
         airportService.createAirport(newAirport);
     }
 
     @Override
-    public void updateAirport(AirportDto airport) {
+    public void updateAirport(AirportDTO airport) {
         Airport newAirport = beanMappingService.mapTo(airport, Airport.class);
         airportService.updateAirport(newAirport);
     }
 
     @Override
-    public List<AirportDto> findAllAirports() {
+    public List<AirportDTO> findAllAirports() {
         List<Airport> airports = airportService.findAllAirports();
-        return beanMappingService.mapToList(airports, AirportDto.class);
+        return beanMappingService.mapToList(airports, AirportDTO.class);
     }
 }
