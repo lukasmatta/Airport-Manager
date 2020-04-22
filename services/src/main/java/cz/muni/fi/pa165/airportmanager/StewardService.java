@@ -1,16 +1,17 @@
-package cz.muni.fi.pa165.airportmanager.dao;
+package cz.muni.fi.pa165.airportmanager;
 
 import cz.muni.fi.pa165.airportmanager.entity.Steward;
 
-import java.time.LocalDateTime;
 import java.time.ZonedDateTime;
 import java.util.List;
 
 /**
- * Author: Almas Shakirtkhanov
+ * Service Interface for Steward
+ *
+ * @author Almas Shakirtkhanov
  */
 
-public interface StewardDao {
+public interface StewardService {
     /**
      * Creates new steward
      * @param steward
@@ -27,9 +28,9 @@ public interface StewardDao {
 
     /**
      * Removes existing steward
-     * @param steward
+     * @param id of Steward
      */
-    void deleteSteward(Steward steward);
+    void deleteSteward(Long id);
 
     /**
      * Find steward by it's ID
