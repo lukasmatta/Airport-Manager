@@ -22,18 +22,6 @@ public class AirplaneDaoImpl implements AirplaneDao{
     private EntityManager em;
 
     @Override
-    public Airplane findFreePlaneInTimeInterval(ZonedDateTime from, ZonedDateTime to) {
-        List<Airplane> allAirplanes = this.findAll();
-        Optional<Airplane> result = allAirplanes.stream()
-                .filter(
-                        airplane -> airplane.getFlights()
-                                .stream().anyMatch(flight -> flight.getDeparture().compareTo(from) < 0 && flight.getArrival().compareTo(from) < 0 ||
-                                        flight.getDeparture().compareTo(to) > 0)
-                ).findFirst();
-        return result.orElse(null);
-    }
-
-    @Override
     public Airplane findById(Long id) {
         return em.find(Airplane.class, id);
     }

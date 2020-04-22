@@ -2,6 +2,7 @@ package cz.muni.fi.pa165.airportmanager;
 
 import cz.muni.fi.pa165.airportmanager.entity.Airplane;
 
+import java.time.ZonedDateTime;
 import java.util.Collection;
 
 /**
@@ -46,4 +47,12 @@ public interface AirplaneService {
      * @return List of Airplanes
      */
     Collection<Airplane> findAllAirplanes();
+
+    /**
+     * Finds an airplane in a time interval which not scheduled to any flight
+     * @param from Lower-bound of the timr interval
+     * @param to Upper-bound of the timr interval
+     * @return Free airplane
+     */
+    Airplane findFreePlaneInTimeInterval(ZonedDateTime from, ZonedDateTime to);
 }

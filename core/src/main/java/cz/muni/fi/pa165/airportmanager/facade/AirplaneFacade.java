@@ -2,6 +2,7 @@ package cz.muni.fi.pa165.airportmanager.facade;
 
 import cz.muni.fi.pa165.airportmanager.dto.AirplaneDTO;
 
+import java.time.ZonedDateTime;
 import java.util.List;
 
 /**
@@ -46,4 +47,12 @@ public interface AirplaneFacade {
      * @return List of Airplanes
      */
     List<AirplaneDTO> findAllAirplanes();
+
+    /**
+     * Finds an airplane in a time interval which not scheduled to any flight
+     * @param from Lower-bound of the timr interval
+     * @param to Upper-bound of the timr interval
+     * @return Free airplane
+     */
+    AirplaneDTO findFreePlaneInTimeInterval(ZonedDateTime from, ZonedDateTime to);
 }
