@@ -49,9 +49,4 @@ public class StewardServiceImpl implements StewardService {
         return stewardDao.findAll();
     }
 
-    @Override
-    @Transactional
-    public Steward findFreeStewardInTimeInterval(ZonedDateTime from, ZonedDateTime to) {
-        return stewardDao.findFreeStewardInTimeInterval(from,to);
-    }
 }

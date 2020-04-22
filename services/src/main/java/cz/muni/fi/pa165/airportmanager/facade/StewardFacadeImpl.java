@@ -55,10 +55,4 @@ public class StewardFacadeImpl implements StewardFacade{
         Collection<Steward> stewards = stewardService.findAll();
         return beanMappingService.mapToList(stewards, StewardDTO.class);
     }
-
-    @Override
-    public StewardDTO findFreeStewardInTimeInterval(ZonedDateTime from, ZonedDateTime to) {
-        Steward newSteward = stewardService.findFreeStewardInTimeInterval(from,to);
-        return beanMappingService.mapTo(newSteward,StewardDTO.class);
-    }
 }

@@ -24,24 +24,6 @@ public class StewardDaoImpl implements StewardDao {
         ).getResultList();
     }
 
-    /**
-     * TODO: Implement this in the next milestone
-     * @param from
-     * @param to
-     * @return
-     */
-    @Override
-    public Steward findFreeStewardInTimeInterval(ZonedDateTime from, ZonedDateTime to) {
-        List<Steward> allStewards = this.findAll();
-        Optional<Steward> result = allStewards.stream()
-                .filter(
-                        steward -> steward.getFlights()
-                                .stream().anyMatch(flight -> flight.getDeparture().compareTo(from) < 0 && flight.getArrival().compareTo(from) < 0 ||
-                                        flight.getDeparture().compareTo(to) > 0)
-                ).findFirst();
-        return result.orElse(null);
-    }
-
     @Override
     public Long insertSteward(Steward steward) {
         em.persist(steward);
