@@ -26,6 +26,12 @@ import java.util.List;
 
 import static org.testng.AssertJUnit.*;
 
+
+/**
+ * Tests for Flight class
+ *
+ * @author  Almas Shakirtkhanov
+ */
 @ContextConfiguration(classes = PersistenceSampleApplicationContext.class)
 @TestExecutionListeners(TransactionalTestExecutionListener.class)
 @Transactional
