@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.time.ZonedDateTime;
 import java.util.Collection;
 import java.util.List;
 
@@ -53,5 +54,11 @@ public class AirplaneFacadeImpl implements AirplaneFacade {
     public List<AirplaneDTO> findAllAirplanes() {
         Collection<Airplane> airplanes = airplaneService.findAllAirplanes();
         return beanMappingService.mapToList(airplanes, AirplaneDTO.class);
+    }
+
+    @Override
+    public AirplaneDTO findFreePlaneInTimeInterval(ZonedDateTime from, ZonedDateTime to) {
+        Airplane airplane = airplaneService.findFreePlaneInTimeInterval(from, to);
+        return (airplane == null) ? null : beanMappingService.mapTo(airplane, AirplaneDTO.class);
     }
 }
