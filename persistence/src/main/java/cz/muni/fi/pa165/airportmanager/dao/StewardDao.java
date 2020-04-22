@@ -43,10 +43,4 @@ public interface StewardDao {
      * @return  List of Stewards
      */
     List<Steward> findAll();
-
-    /**
-     * Returns steward who is available for the flight
-     * @return entity Steward
-     */
-    Steward findFreeStewardInTimeInterval(ZonedDateTime from, ZonedDateTime to);
 }
