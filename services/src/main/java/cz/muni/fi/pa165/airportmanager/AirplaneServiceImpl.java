@@ -2,10 +2,15 @@ package cz.muni.fi.pa165.airportmanager;
 
 import cz.muni.fi.pa165.airportmanager.dao.AirplaneDao;
 import cz.muni.fi.pa165.airportmanager.entity.Airplane;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import javax.inject.Inject;
+import java.time.ZonedDateTime;
 import java.util.Collection;
+import java.util.List;
+import java.util.Optional;
+import java.util.Set;
 
 /**
  * Service for Airplane
@@ -15,7 +20,7 @@ import java.util.Collection;
 
 @Service
 public class AirplaneServiceImpl implements AirplaneService {
-    @Inject
+    @Autowired
     private AirplaneDao airplaneDao;
 
     @Override
@@ -42,5 +47,17 @@ public class AirplaneServiceImpl implements AirplaneService {
     @Override
     public Collection<Airplane> findAllAirplanes() {
         return airplaneDao.findAll();
+    }
+
+    @Override
+    public Airplane findFreePlaneInTimeInterval(ZonedDateTime from, ZonedDateTime to) {
+        List<Airplane> allAirplanes = airplaneDao.findAll();
+        Optional<Airplane> result = allAirplanes.stream()
+                .filter(
+                        airplane -> airplane.getFlights()
+                                .stream().anyMatch(flight -> flight.getDeparture().compareTo(from) < 0 && flight.getArrival().compareTo(from) < 0 ||
+                                        flight.getDeparture().compareTo(to) > 0)
+                ).findFirst();
+        return result.orElse(null);
     }
 }

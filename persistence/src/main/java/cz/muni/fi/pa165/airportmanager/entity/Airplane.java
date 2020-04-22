@@ -23,25 +23,31 @@ import java.util.Set;
  * @author Tomáš Janíček
  */
 @Entity(name = "Airplane")
-@Table(name = "airplane")
+//@Table(name = "airplane")
 public class Airplane implements Serializable {
     @Id
     @GeneratedValue(strategy= GenerationType.IDENTITY)
     private Long id;
 
     @OneToMany
-    @JoinColumn(name = "flight_id")
+//    @JoinColumn(name = "flight_id")
     private Set<Flight> flight = new HashSet<>();
 
-    @Column(name = "name")
+//    @Column(name = "name")
     private String name;
 
     @Enumerated
-    @Column(name = "type")
+//    @Column(name = "type")
     private AirplaneType type;
 
-    @Column(name = "capacity")
+//    @Column(name = "capacity")
     private int capacity;
+
+    public Airplane() {}
+
+    public Airplane(Long id) {
+        this.id = id;
+    }
 
     public Long getId() {
         return id;
