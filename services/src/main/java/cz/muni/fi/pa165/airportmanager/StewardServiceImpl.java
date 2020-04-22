@@ -3,6 +3,7 @@ package cz.muni.fi.pa165.airportmanager;
 import cz.muni.fi.pa165.airportmanager.dao.StewardDao;
 import cz.muni.fi.pa165.airportmanager.entity.Steward;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
 import java.time.ZonedDateTime;
@@ -13,6 +14,8 @@ import java.util.List;
  *
  * @author Almas Shakirtkhanov
  */
+
+@Service
 public class StewardServiceImpl implements StewardService {
 
     @Autowired

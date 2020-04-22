@@ -19,7 +19,6 @@ import java.util.List;
  */
 
 @Service
-@Transactional
 public class StewardFacadeImpl implements StewardFacade{
     @Autowired
     private StewardService stewardService;
