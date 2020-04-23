@@ -39,5 +39,10 @@ public interface StewardFacade {
      * @return
      */
     List<StewardDTO> findAll();
+    /**
+     * Returns steward who is available for the flight
+     * @return entity Steward
+     */
+    StewardDTO findFreeStewardInTimeInterval(ZonedDateTime from, ZonedDateTime to);
 
 }
