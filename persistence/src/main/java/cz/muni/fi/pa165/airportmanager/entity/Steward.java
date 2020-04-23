@@ -3,6 +3,7 @@ package cz.muni.fi.pa165.airportmanager.entity;
 import com.sun.istack.NotNull;
 
 import javax.persistence.*;
+import java.io.Serializable;
 import java.util.HashSet;
 import java.util.Objects;
 import java.util.Set;
@@ -12,7 +13,7 @@ import java.util.Set;
  */
 @Entity(name = "Steward")
 @Table(name = "steward")
-public class Steward {
+public class Steward implements Serializable {
     @Id
     @GeneratedValue(strategy= GenerationType.IDENTITY)
     private Long id;
@@ -28,6 +29,12 @@ public class Steward {
     @OneToMany
     @JoinColumn(name = "flight_id")
     private Set<Flight> flights = new HashSet<Flight>();
+
+    public Steward(){}
+
+    public Steward(Long id) {
+        this.id = id;
+    }
 
     public Long getId() {
         return id;

@@ -1,5 +1,6 @@
 package cz.muni.fi.pa165.airportmanager;
 
+import cz.muni.fi.pa165.airportmanager.dto.StewardDTO;
 import cz.muni.fi.pa165.airportmanager.entity.Steward;
 
 import java.time.ZonedDateTime;
@@ -44,7 +45,6 @@ public interface StewardService {
      * @return  List of Stewards
      */
     List<Steward> findAll();
-
     /**
      * Returns stewards who is available for the flight
      * @param from Lower-bound of the time interval

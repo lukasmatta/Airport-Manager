@@ -2,7 +2,9 @@ package cz.muni.fi.pa165.airportmanager.facade;
 
 import cz.muni.fi.pa165.airportmanager.BeanMappingService;
 import cz.muni.fi.pa165.airportmanager.StewardService;
+import cz.muni.fi.pa165.airportmanager.dto.AirplaneDTO;
 import cz.muni.fi.pa165.airportmanager.dto.StewardDTO;
+import cz.muni.fi.pa165.airportmanager.entity.Airplane;
 import cz.muni.fi.pa165.airportmanager.entity.Steward;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -54,10 +56,10 @@ public class StewardFacadeImpl implements StewardFacade{
         Collection<Steward> stewards = stewardService.findAll();
         return beanMappingService.mapToList(stewards, StewardDTO.class);
     }
-
     @Override
     public StewardDTO findFreeStewardInTimeInterval(ZonedDateTime from, ZonedDateTime to) {
-        Steward newSteward = stewardService.findFreeStewardInTimeInterval(from,to);
-        return beanMappingService.mapTo(newSteward,StewardDTO.class);
+        Steward steward = stewardService.findFreeStewardInTimeInterval(from, to);
+        return (steward == null) ? null : beanMappingService.mapTo(steward, StewardDTO.class);
     }
+
 }

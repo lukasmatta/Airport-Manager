@@ -2,6 +2,7 @@ package cz.muni.fi.pa165.airportmanager.config;
 
 import cz.muni.fi.pa165.airportmanager.AirplaneService;
 import cz.muni.fi.pa165.airportmanager.PersistenceSampleApplicationContext;
+import cz.muni.fi.pa165.airportmanager.StewardService;
 import cz.muni.fi.pa165.airportmanager.dto.AirplaneDTO;
 import cz.muni.fi.pa165.airportmanager.entity.Airplane;
 import org.dozer.DozerBeanMapper;
@@ -15,6 +16,7 @@ import org.springframework.context.annotation.Import;
 @Configuration
 @Import(PersistenceSampleApplicationContext.class)
 @ComponentScan(basePackageClasses={AirplaneService.class})
+@ComponentScan(basePackageClasses={StewardService.class})
 public class ServiceConfiguration {
 
     @Bean
