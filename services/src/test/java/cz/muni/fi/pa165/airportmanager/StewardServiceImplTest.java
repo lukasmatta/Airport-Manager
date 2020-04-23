@@ -13,6 +13,7 @@ import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
+import org.springframework.test.context.testng.AbstractTestNGSpringContextTests;
 import org.testng.Assert;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.BeforeMethod;
@@ -32,7 +33,7 @@ import static org.mockito.Mockito.*;
  * Author: Almas Shakirtkhanov
  */
 @ContextConfiguration(classes = ServiceConfiguration.class)
-public class StewardServiceImplTest {
+public class StewardServiceImplTest extends AbstractTestNGSpringContextTests {
     @Mock
     private StewardDao stewardDao;
 
@@ -40,9 +41,8 @@ public class StewardServiceImplTest {
     @InjectMocks
     private StewardService stewardService;
 
-    private Steward steward1 = new Steward();
-    private Steward steward2 = new Steward();
-    private Steward steward3 = new Steward();
+    private Steward steward1 = new Steward((long) 1);
+    private Steward steward2 = new Steward((long) 2);
 
     private List<Steward> stewards;
 
@@ -70,28 +70,29 @@ public class StewardServiceImplTest {
         steward2.setFirstName("Beka");
         steward2.setLastName("Kokpanbaev");
 
-        steward3.setFirstName("Aza");
-        steward3.setLastName("Ergali");
-
-        stewards = Arrays.asList(steward1, steward2, steward3);
-
         Flight flight1 = new Flight();
         flight1.setId((long) 1);
         flight1.setPlane(airplane);
         flight1.setOrigin(airport1);
         flight1.setDestination(airport2);
-        flight1.addSteward(steward1);
-        flight1.setDeparture(ZonedDateTime.of(LocalDateTime.of(2020, Month.MAY, 1,14,0), ZoneOffset.UTC));
-        flight1.setArrival(ZonedDateTime.of(LocalDateTime.of(2020, Month.MAY, 1,16,0), ZoneOffset.UTC));
+        flight1.setStewards(Collections.singleton(steward1));
+        flight1.setDeparture(ZonedDateTime.of(LocalDateTime.of(2020, Month.AUGUST, 18,9,0), ZoneOffset.UTC));
+        flight1.setArrival(ZonedDateTime.of(LocalDateTime.of(2020, Month.AUGUST, 18,13,0), ZoneOffset.UTC));
 
         Flight flight2 = new Flight();
         flight2.setId((long) 2);
         flight2.setPlane(airplane);
         flight2.setOrigin(airport2);
         flight2.setDestination(airport1);
-        flight2.addSteward(steward2);
-        flight2.setDeparture(ZonedDateTime.of(LocalDateTime.of(2020, Month.MAY, 1,15,0), ZoneOffset.UTC));
-        flight2.setArrival(ZonedDateTime.of(LocalDateTime.of(2020, Month.MAY, 1,17,0), ZoneOffset.UTC));
+        flight2.setStewards(Collections.singleton(steward2));
+        flight2.setDeparture(ZonedDateTime.of(LocalDateTime.of(2020, Month.AUGUST, 18,11,0), ZoneOffset.UTC));
+        flight2.setArrival(ZonedDateTime.of(LocalDateTime.of(2020, Month.AUGUST, 18,12,0), ZoneOffset.UTC));
+
+        steward1.setFlights(Collections.singleton(flight1));
+
+        steward2.setFlights(Collections.singleton(flight2));
+
+        stewards = Arrays.asList(steward1, steward2);
 
     }
 
@@ -104,20 +105,21 @@ public class StewardServiceImplTest {
     public void findFreeStewardInTimeIntervalTest() {
         when(stewardDao.findAll()).thenReturn(stewards);
 
-        ZonedDateTime from1 = ZonedDateTime.of(LocalDateTime.of(2020, Month.MAY, 1,16,1), ZoneOffset.UTC);
-        ZonedDateTime to1 = ZonedDateTime.of(LocalDateTime.of(2020, Month.MAY, 1,17,0), ZoneOffset.UTC);
+        ZonedDateTime from1 = ZonedDateTime.of(LocalDateTime.of(2020, Month.AUGUST, 18,13,1), ZoneOffset.UTC);
+        ZonedDateTime to1 = ZonedDateTime.of(LocalDateTime.of(2020, Month.AUGUST, 18,13,40), ZoneOffset.UTC);
         Steward freeSteward1 = stewardService.findFreeStewardInTimeInterval(from1, to1);
 
         Assert.assertEquals(freeSteward1, steward1);
 
-        ZonedDateTime from2 = ZonedDateTime.of(LocalDateTime.of(2020, Month.MAY, 1,14,1), ZoneOffset.UTC);
-        ZonedDateTime to2 = ZonedDateTime.of(LocalDateTime.of(2020, Month.MAY, 1,14,59), ZoneOffset.UTC);
+        ZonedDateTime from2 = ZonedDateTime.of(LocalDateTime.of(2020, Month.AUGUST, 18,12,1), ZoneOffset.UTC);
+        ZonedDateTime to2 = ZonedDateTime.of(LocalDateTime.of(2020, Month.AUGUST, 18,13,0), ZoneOffset.UTC);
         Steward freeSteward2 = stewardService.findFreeStewardInTimeInterval(from2, to2);
 
         Assert.assertEquals(freeSteward2, steward2);
 
-        ZonedDateTime from3 = ZonedDateTime.of(LocalDateTime.of(2020, Month.MAY, 1,15,0), ZoneOffset.UTC);
-        ZonedDateTime to3 = ZonedDateTime.of(LocalDateTime.of(2020, Month.MAY, 1,16,0), ZoneOffset.UTC);
+
+        ZonedDateTime from3 = ZonedDateTime.of(LocalDateTime.of(2020, Month.AUGUST, 18,9,55), ZoneOffset.UTC);
+        ZonedDateTime to3 = ZonedDateTime.of(LocalDateTime.of(2020, Month.AUGUST, 18,13,16), ZoneOffset.UTC);
         Steward freeSteward3 = stewardService.findFreeStewardInTimeInterval(from3, to3);
 
         Assert.assertNull(freeSteward3);

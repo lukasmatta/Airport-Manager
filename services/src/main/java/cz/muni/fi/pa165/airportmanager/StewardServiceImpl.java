@@ -23,38 +23,38 @@ public class StewardServiceImpl implements StewardService {
     private StewardDao stewardDao;
 
     @Override
-    @Transactional
+    //@Transactional
     public Long insertSteward(Steward entity) {
         return stewardDao.insertSteward(entity);
     }
 
     @Override
-    @Transactional
+   // @Transactional
     public void updateSteward(Steward steward) {
         stewardDao.updateSteward(steward);
     }
 
     @Override
-    @Transactional
+    //@Transactional
     public void deleteSteward(Long id) {
         Steward toDelete = stewardDao.findById(id);
         stewardDao.deleteSteward(toDelete);
     }
 
     @Override
-    @Transactional
+    //@Transactional
     public Steward findById(Long id) {
         return stewardDao.findById(id);
     }
 
     @Override
-    @Transactional
+   // @Transactional
     public List<Steward> findAll() {
         return stewardDao.findAll();
     }
 
     @Override
-    @Transactional
+    //@Transactional
     public Steward findFreeStewardInTimeInterval(ZonedDateTime from, ZonedDateTime to) {
         List<Steward> allStewards = this.findAll();
         Optional<Steward> result = allStewards.stream()
