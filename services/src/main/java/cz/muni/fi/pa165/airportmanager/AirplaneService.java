@@ -50,8 +50,8 @@ public interface AirplaneService {
 
     /**
      * Finds an airplane in a time interval which not scheduled to any flight
-     * @param from Lower-bound of the timr interval
-     * @param to Upper-bound of the timr interval
+     * @param from Lower-bound of the time interval
+     * @param to Upper-bound of the time interval
      * @return Free airplane
      */
     Airplane findFreePlaneInTimeInterval(ZonedDateTime from, ZonedDateTime to);

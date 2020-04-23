@@ -46,7 +46,9 @@ public interface StewardService {
      */
     List<Steward> findAll();
     /**
-     * Returns steward who is available for the flight
+     * Returns stewards who is available for the flight
+     * @param from Lower-bound of the time interval
+     * @param to Upper-bound of the time interval
      * @return entity Steward
      */
     Steward findFreeStewardInTimeInterval(ZonedDateTime from, ZonedDateTime to);

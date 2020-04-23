@@ -41,14 +41,26 @@ public class AirportDTO {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (!(o instanceof AirportDTO)) return false;
+
         AirportDTO that = (AirportDTO) o;
-        return id.equals(that.id) &&
-                city.equals(that.city) &&
-                country.equals(that.country);
+
+        if (!getCity().equals(that.getCity())) return false;
+        return getCountry().equals(that.getCountry());
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, city, country);
+        int result = getCity().hashCode();
+        result = 31 * result + getCountry().hashCode();
+        return result;
+    }
+
+    @Override
+    public String toString() {
+        return "AirportDTO{" +
+                "id=" + id +
+                ", city='" + city + '\'' +
+                ", country='" + country + '\'' +
+                '}';
     }
 }

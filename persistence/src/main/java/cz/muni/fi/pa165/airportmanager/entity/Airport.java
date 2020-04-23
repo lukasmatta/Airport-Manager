@@ -24,6 +24,12 @@ public class Airport {
     @NotNull
     private String country;
 
+    public Airport() { }
+
+    public Airport(long id) {
+        this.id = id;
+    }
+
     public String getCity() {
         return city;
     }
