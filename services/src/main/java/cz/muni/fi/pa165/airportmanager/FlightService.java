@@ -33,9 +33,8 @@ public interface FlightService {
     /**
      * Update attributes of given entity in DB
      * @param entity flight entity
-     * @return updated flight
      */
-    Flight update(Flight entity);
+    void update(Flight entity);
 
     /**
      * Finds a flight in DB by its ID

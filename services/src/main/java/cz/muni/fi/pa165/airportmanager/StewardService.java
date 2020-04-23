@@ -1,6 +1,5 @@
 package cz.muni.fi.pa165.airportmanager;
 
-import cz.muni.fi.pa165.airportmanager.dto.StewardDTO;
 import cz.muni.fi.pa165.airportmanager.entity.Steward;
 
 import java.time.ZonedDateTime;

@@ -39,8 +39,8 @@ public class FlightServiceImpl implements FlightService {
 
     @Override
     @Transactional
-    public Flight update(Flight entity) {
-        return flightDao.update(entity);
+    public void update(Flight entity) {
+        flightDao.update(entity);
     }
 
     @Override

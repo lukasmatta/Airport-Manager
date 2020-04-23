@@ -2,6 +2,7 @@ package cz.muni.fi.pa165.airportmanager;
 
 import cz.muni.fi.pa165.airportmanager.dao.AirportDao;
 import cz.muni.fi.pa165.airportmanager.entity.Airport;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import javax.inject.Inject;
@@ -15,7 +16,7 @@ import java.util.List;
 
 @Service
 public class AirportServiceImpl implements AirportService {
-    @Inject
+    @Autowired
     private AirportDao airportDao;
 
     @Override

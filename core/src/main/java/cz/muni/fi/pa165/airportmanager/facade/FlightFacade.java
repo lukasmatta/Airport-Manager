@@ -32,9 +32,8 @@ public interface FlightFacade {
     /**
      * Update attributes of given entity in DB
      * @param entity flight entity
-     * @return updated flight
      */
-    FlightDTO update(FlightDTO entity);
+    void update(FlightDTO entity);
 
     /**
      * Finds a flight in DB by its ID

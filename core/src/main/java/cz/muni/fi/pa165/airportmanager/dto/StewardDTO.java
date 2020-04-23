@@ -1,9 +1,6 @@
 package cz.muni.fi.pa165.airportmanager.dto;
 
 
-import com.sun.istack.NotNull;
-
-import javax.persistence.*;
 import java.util.HashSet;
 import java.util.Set;
 
