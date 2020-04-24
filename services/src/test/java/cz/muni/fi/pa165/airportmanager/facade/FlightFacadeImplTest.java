@@ -49,17 +49,17 @@ public class FlightFacadeImplTest extends AbstractTestNGSpringContextTests {
         MockitoAnnotations.initMocks(this);
     }
 
-    private final ZonedDateTime test_date = ZonedDateTime.of(LocalDateTime.of(2020, Month.MAY, 1, 16, 1), ZoneOffset.UTC);
+    private final ZonedDateTime testDate = ZonedDateTime.of(LocalDateTime.of(2020, Month.MAY, 1, 16, 1), ZoneOffset.UTC);
 
     @Test
     public void findByIdTest() {
         Flight flight = new Flight();
         flight.setId((long) 5);
-        flight.setDeparture(test_date);
+        flight.setDeparture(testDate);
 
         FlightDTO flightDTO = new FlightDTO();
-        flightDTO.setId((long) 6);
-        flight.setDeparture(test_date);
+        flightDTO.setId((long) 5);
+        flight.setDeparture(testDate);
 
         when(beanMappingService.mapTo(flight, FlightDTO.class)).thenReturn(flightDTO);
 
@@ -85,11 +85,11 @@ public class FlightFacadeImplTest extends AbstractTestNGSpringContextTests {
     public void testCreateFlight() {
         FlightDTO flightDTO = new FlightDTO();
         flightDTO.setId((long) 5);
-        flightDTO.setDeparture(test_date);
+        flightDTO.setDeparture(testDate);
 
         Flight flight = new Flight();
         flight.setId((long) 5);
-        flight.setDeparture(test_date);
+        flight.setDeparture(testDate);
 
         when(beanMappingService.mapTo(flightDTO, Flight.class)).thenReturn(flight);
 
@@ -98,30 +98,15 @@ public class FlightFacadeImplTest extends AbstractTestNGSpringContextTests {
         verify(flightService).create(flight);
     }
 
-//    @Test
-//    public void updateFlightTest() {
-//        FlightDTO flightDTO = new FlightDTO();
-//        flightDTO.setId((long) 1);
-//
-//        Flight flight = new Flight();
-//        flight.setId((long) 1);
-//
-//        when(beanMappingService.mapTo(flightDTO, Flight.class)).thenReturn(flight);
-//
-//        flightFacade.update(flightDTO);
-//
-//        verify(flightService).update(flight);
-//    }
-
     @Test
     public void testFindAllFlights() {
         FlightDTO flightDTO = new FlightDTO();
         flightDTO.setId((long) 5);
-        flightDTO.setDeparture(test_date);
+        flightDTO.setDeparture(testDate);
 
         Flight flight = new Flight();
         flight.setId((long) 5);
-        flight.setDeparture(test_date);
+        flight.setDeparture(testDate);
 
         List<Flight> flights = Collections.singletonList(flight);
         List<FlightDTO> flightDTOS = Collections.singletonList(flightDTO);
@@ -134,9 +119,26 @@ public class FlightFacadeImplTest extends AbstractTestNGSpringContextTests {
         List<FlightDTO> flightFacadeAll = flightFacade.findAll();
 
         assertEquals(flightFacadeAll.size(), 1);
-        assertEquals(flightFacadeAll.get(0).getDeparture(), test_date);
+        assertEquals(flightFacadeAll.get(0).getDeparture(), testDate);
 
 
         verify(flightService).findAll();
+    }
+
+    @Test
+    public void testUpdateFlight() {
+        FlightDTO flightDTO = new FlightDTO();
+        flightDTO.setId((long) 5);
+        flightDTO.setDeparture(testDate);
+
+        Flight flight = new Flight();
+        flight.setId((long) 5);
+        flight.setDeparture(testDate);
+
+        when(beanMappingService.mapTo(flightDTO, Flight.class)).thenReturn(flight);
+
+        flightFacade.update(flightDTO);
+
+        verify(flightService).update(flight);
     }
 }

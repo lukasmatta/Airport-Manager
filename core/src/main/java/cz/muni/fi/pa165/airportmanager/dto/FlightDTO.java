@@ -86,18 +86,28 @@ public class FlightDTO {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (!(o instanceof FlightDTO)) return false;
+
         FlightDTO flightDTO = (FlightDTO) o;
-        return getOrigin().equals(flightDTO.getOrigin()) &&
-                getDestination().equals(flightDTO.getDestination()) &&
-                getDeparture().equals(flightDTO.getDeparture()) &&
-                getArrival().equals(flightDTO.getArrival()) &&
-                getPlane().equals(flightDTO.getPlane()) &&
-                Objects.equals(getStewards(), flightDTO.getStewards());
+
+        if (getOrigin() != null ? !getOrigin().equals(flightDTO.getOrigin()) : flightDTO.getOrigin() != null)
+            return false;
+        if (getDestination() != null ? !getDestination().equals(flightDTO.getDestination()) : flightDTO.getDestination() != null)
+            return false;
+        if (getDeparture() != null ? !getDeparture().equals(flightDTO.getDeparture()) : flightDTO.getDeparture() != null)
+            return false;
+        if (getArrival() != null ? !getArrival().equals(flightDTO.getArrival()) : flightDTO.getArrival() != null)
+            return false;
+        return getPlane() != null ? getPlane().equals(flightDTO.getPlane()) : flightDTO.getPlane() == null;
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(getOrigin(), getDestination(), getDeparture(), getArrival(), getPlane(), getStewards());
+        int result = getOrigin() != null ? getOrigin().hashCode() : 0;
+        result = 31 * result + (getDestination() != null ? getDestination().hashCode() : 0);
+        result = 31 * result + (getDeparture() != null ? getDeparture().hashCode() : 0);
+        result = 31 * result + (getArrival() != null ? getArrival().hashCode() : 0);
+        result = 31 * result + (getPlane() != null ? getPlane().hashCode() : 0);
+        return result;
     }
 
     @Override
