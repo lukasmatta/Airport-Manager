@@ -6,13 +6,13 @@ import cz.muni.fi.pa165.airportmanager.config.ServiceConfiguration;
 import cz.muni.fi.pa165.airportmanager.dto.AirportDTO;
 import cz.muni.fi.pa165.airportmanager.entity.Airport;
 import org.hibernate.service.spi.ServiceException;
+import org.testng.annotations.BeforeClass;
+import org.testng.annotations.Test;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.testng.AbstractTestNGSpringContextTests;
-import org.testng.annotations.BeforeClass;
-import org.testng.annotations.Test;
 
 import java.util.Collections;
 import java.util.List;
