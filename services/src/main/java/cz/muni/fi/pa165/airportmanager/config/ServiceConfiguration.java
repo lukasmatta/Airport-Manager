@@ -13,12 +13,11 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Import;
+import org.springframework.transaction.annotation.EnableTransactionManagement;
 
 @Configuration
 @Import(PersistenceSampleApplicationContext.class)
-@ComponentScan(basePackageClasses={AirplaneService.class})
-@ComponentScan(basePackageClasses={StewardService.class})
-@ComponentScan(basePackageClasses={FlightService.class})
+@ComponentScan(basePackages = {"cz.muni.fi.pa165.airportmanager"})
 public class ServiceConfiguration {
 
     @Bean

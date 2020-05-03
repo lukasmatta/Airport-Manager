@@ -1,6 +1,8 @@
 package cz.muni.fi.pa165.airportmanager.facade;
 
 import cz.muni.fi.pa165.airportmanager.dto.FlightDTO;
+import org.springframework.stereotype.Repository;
+
 import java.util.List;
 
 /**
