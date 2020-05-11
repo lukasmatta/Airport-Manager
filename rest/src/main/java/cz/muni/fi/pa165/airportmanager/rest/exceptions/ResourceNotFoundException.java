@@ -8,6 +8,10 @@ import org.springframework.web.bind.annotation.ResponseStatus;
  *
  * @author Petr Kantek
  */
-@ResponseStatus(value= HttpStatus.NOT_FOUND, reason="The resource you have requested does not exist")
+@ResponseStatus(value= HttpStatus.NOT_FOUND) //reason="The resource you have requested does not exist")
 public class ResourceNotFoundException extends RuntimeException {
+
+    public ResourceNotFoundException(String message) {
+        super(message);
+    }
 }

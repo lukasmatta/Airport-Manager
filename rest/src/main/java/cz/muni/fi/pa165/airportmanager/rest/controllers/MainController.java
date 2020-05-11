@@ -29,12 +29,10 @@ public class MainController {
      */
     @RequestMapping(value = "/", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
     public final Map<String, String> getResources() {
-
+        logger.debug("main rest controller getResources()");
         Map<String,String> resourcesMap = new HashMap<>();
 
         resourcesMap.put("stewards_uri", URIs.URI_STEWARDS);
-        resourcesMap.put("flight_uri", URIs.URI_FLIGHTS);
-        resourcesMap.put("airplanes_uri", URIs.URI_AIRPLANES);
         resourcesMap.put("airports_uri", URIs.URI_AIRPORTS);
 
         return Collections.unmodifiableMap(resourcesMap);

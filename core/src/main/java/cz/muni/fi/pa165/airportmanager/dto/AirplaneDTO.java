@@ -11,8 +11,7 @@ import java.util.Set;
  * @author Lukáš Matta
  */
 
-public class AirplaneDTO {
-    private Long id;
+public class AirplaneDTO extends BaseDTO {
 
     private Set<FlightDTO> flight = new HashSet<>();
 
@@ -22,9 +21,6 @@ public class AirplaneDTO {
 
     private int capacity;
 
-    public Long getId() {
-        return id;
-    }
 
     public Set<FlightDTO> getFlights() {
         return flight;

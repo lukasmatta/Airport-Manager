@@ -9,6 +9,10 @@ import org.springframework.web.bind.annotation.ResponseStatus;
  *
  * @author Petr Kantek
  */
-@ResponseStatus(value= HttpStatus.UNPROCESSABLE_ENTITY, reason = "The resource was not added")
+@ResponseStatus(value= HttpStatus.UNPROCESSABLE_ENTITY) // reason = "The resource was not added")
 public class ResourceAlreadyExistingException extends RuntimeException {
+
+    public ResourceAlreadyExistingException(String message) {
+        super(message);
+    }
 }

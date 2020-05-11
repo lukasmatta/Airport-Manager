@@ -16,10 +16,28 @@
 
     <build>
         <plugins>
-            <!--  embedded tomcat 8 -->
+            <!-- embedded Tomcat 9 plugin configuration, use "mvn cargo:run" to run -->
             <plugin>
                 <groupId>org.codehaus.cargo</groupId>
                 <artifactId>cargo-maven2-plugin</artifactId>
+                <version>1.7.10</version>
+                <configuration>
+                    <container>
+                        <containerId>tomcat9x</containerId>
+                        <artifactInstaller>
+                            <groupId>org.apache.tomcat</groupId>
+                            <artifactId>tomcat</artifactId>
+                            <version>${tomcat.version}</version>
+                        </artifactInstaller>
+                    </container>
+                    <deployables>
+                        <deployable>
+                            <properties>
+                                <context>/pa165/rest</context>
+                            </properties>
+                        </deployable>
+                    </deployables>
+                </configuration>
             </plugin>
         </plugins>
     </build>
@@ -78,6 +96,7 @@
             <groupId>ch.qos.logback</groupId>
             <artifactId>logback-classic</artifactId>
         </dependency>
+
     </dependencies>
 
 </project>

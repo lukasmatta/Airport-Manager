@@ -9,5 +9,5 @@ import org.springframework.web.bind.annotation.ResponseStatus;
  * @author Petr Kantek
  */
 @ResponseStatus(value= HttpStatus.NOT_MODIFIED, reason = "The resource has not been modified")
-public class ResourceNotModified extends RuntimeException {
+public class ResourceNotModifiedException extends RuntimeException {
 }

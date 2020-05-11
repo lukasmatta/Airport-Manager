@@ -1,13 +1,17 @@
 package cz.muni.fi.pa165.airportmanager.rest;
 
 import javax.servlet.Filter;
+
+import org.springframework.web.context.WebApplicationContext;
 import org.springframework.web.context.request.RequestContextListener;
 import org.springframework.web.filter.CharacterEncodingFilter;
 import org.springframework.web.filter.ShallowEtagHeaderFilter;
+import org.springframework.web.servlet.DispatcherServlet;
+import org.springframework.web.servlet.FrameworkServlet;
 import org.springframework.web.servlet.support.AbstractAnnotationConfigDispatcherServletInitializer;
 
 /**
- * Class
+ * Servlet initializer
  *
  * @author Petr Kantek
  */
@@ -44,5 +48,4 @@ public class Initializer extends AbstractAnnotationConfigDispatcherServletInitia
             super.onStartup(servletContext);
             servletContext.addListener(RequestContextListener.class);
         }
-
 }
