@@ -10,9 +10,7 @@ import java.util.Set;
  *
  * @author Petr Kantek
  */
-public class FlightDTO {
-
-    private Long id;
+public class FlightDTO extends BaseDTO {
 
     private AirportDTO origin;
 
@@ -25,14 +23,6 @@ public class FlightDTO {
     private AirplaneDTO plane;
 
     private Set<StewardDTO> stewards = new HashSet<StewardDTO>();
-
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
 
     public AirportDTO getOrigin() {
         return origin;

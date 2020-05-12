@@ -8,18 +8,10 @@ import java.util.Objects;
  * @author Tomáš Janíček
  */
 
-public class AirportDTO {
-    private Long id;
+public class AirportDTO extends BaseDTO {
+
     private String city;
     private String country;
-
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
 
     public String getCity() {
         return city;

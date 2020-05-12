@@ -9,22 +9,13 @@ import java.util.Set;
  *
  * @author Almas Shakirtkhanov
  */
-public class StewardDTO {
+public class StewardDTO extends BaseDTO {
 
-    private Long id;
     private String firstName;
 
     private String lastName;
 
     private Set<FlightDTO> flights = new HashSet<>();
-
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
 
     public String getFirstName() {
         return firstName;
