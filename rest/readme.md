@@ -1,7 +1,7 @@
 # Rest Interface
 
 Welcome to our project! This module contains a REST compliant interface for our
-airport manager. So far, the REST interface has controllers for Airport and Steward
+airport user. So far, the REST interface has controllers for Airport and Steward
 entities. 
 
 ## Setup

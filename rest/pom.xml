@@ -6,7 +6,7 @@
 
     <parent>
         <groupId>cz.muni.fi</groupId>
-        <artifactId>airport-manager</artifactId>
+        <artifactId>airport-user</artifactId>
         <version>0.0.1-SNAPSHOT</version>
     </parent>
 

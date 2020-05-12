@@ -17,9 +17,9 @@
         <relativePath/> <!-- lookup parent from repository -->
     </parent>
     <groupId>cz.muni.fi</groupId>
-    <artifactId>airport-manager</artifactId>
+    <artifactId>airport-user</artifactId>
     <version>0.0.1-SNAPSHOT</version>
-    <name>airport-manager</name>
+    <name>airport-user</name>
     <description>Project for PA165</description>
 
     <properties>
