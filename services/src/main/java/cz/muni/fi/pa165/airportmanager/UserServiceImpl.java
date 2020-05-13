@@ -3,6 +3,12 @@ package cz.muni.fi.pa165.airportmanager;
 import cz.muni.fi.pa165.airportmanager.dao.UserDao;
 import cz.muni.fi.pa165.airportmanager.entity.User;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContext;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.stereotype.Service;
 
 import javax.crypto.SecretKeyFactory;
@@ -37,6 +43,31 @@ public class UserServiceImpl implements UserService {
     @Override
     public boolean authenticate(User user, String password) {
         return validatePassword(password, user.getPasswordHash());
+    }
+
+    @Override
+    public User getCurrentUser() {
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        if (authentication == null)
+            return null;
+        return findByName(authentication.getName());
+    }
+
+    @Override
+    public void logout() {
+        SecurityContextHolder.clearContext();
+    }
+
+    @Override
+    public void login(String name, String password, boolean isAdmin) {
+        UserDetailsService userDetailsService = new MyUserDetailsService();
+        UserDetails springUser = userDetailsService.loadUserByUsername(name);
+
+        UsernamePasswordAuthenticationToken authReq
+                = new UsernamePasswordAuthenticationToken(springUser.getUsername(), springUser.getPassword(), springUser.getAuthorities());
+
+        SecurityContext sc = SecurityContextHolder.getContext();
+        sc.setAuthentication(authReq);
     }
 
     @Override
