@@ -19,16 +19,10 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.util.Base64;
 
-/**
- * Manager protection filter
- *
- * @author Tomáš Janíček
- */
-@WebFilter(urlPatterns = {"/flights/*"})
+@WebFilter(urlPatterns = {"/airports/*"})
 public class ProtectFilter implements Filter {
 
     private final static Logger log = LoggerFactory.getLogger(ProtectFilter.class);
-
 
     @Override
     public void doFilter(ServletRequest r, ServletResponse s, FilterChain chain) throws IOException, ServletException {
@@ -44,22 +38,28 @@ public class ProtectFilter implements Filter {
         String name = credentials[0];
         String password = credentials[1];
 
+        //get Spring context and UserFacade from it
         UserFacade userFacade = WebApplicationContextUtils.getWebApplicationContext(r.getServletContext()).getBean(UserFacade.class);
-        UserDTO matchingManager = userFacade.findByName(name);
-        if (matchingManager == null) {
+        UserDTO matchingUser = userFacade.findByName(name);
+        if (matchingUser == null) {
             log.warn("no user with email {}", name);
             response401(response);
             return;
         }
         UserAuthenticateDTO userAuthenticateDTO = new UserAuthenticateDTO();
-        userAuthenticateDTO.setId(matchingManager.getId());
+        userAuthenticateDTO.setId(matchingUser.getId());
         userAuthenticateDTO.setPassword(password);
-        if (!userFacade.authenticate(userAuthenticateDTO)) {
-            log.warn("wrong credentials: name={} password={}", credentials[0], credentials[1]);
+        if (!userFacade.isAdmin(matchingUser)) {
+            log.warn("user not admin {}", matchingUser);
             response401(response);
             return;
         }
-        request.setAttribute("authenticatedManager", matchingManager);
+        if (!userFacade.authenticate(userAuthenticateDTO)) {
+            log.warn("wrong credentials: user={} password={}", credentials[0], credentials[1]);
+            response401(response);
+            return;
+        }
+        request.setAttribute("authenticatedUser", matchingUser);
         chain.doFilter(request, response);
     }
 
@@ -70,7 +70,7 @@ public class ProtectFilter implements Filter {
 
     private void response401(HttpServletResponse response) throws IOException {
         response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
-        response.setHeader("WWW-Authenticate", "Basic realm=\"type email and password\"");
+        response.setHeader("WWW-Authenticate", "Basic realm=\"type name and password\"");
         response.getWriter().println("<html><body><h1>401 Unauthorized</h1> Go away ...</body></html>");
     }
 

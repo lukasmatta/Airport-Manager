@@ -6,6 +6,7 @@ import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
+import org.springframework.security.web.authentication.AuthenticationSuccessHandler;
 
 @Configuration
 @EnableWebSecurity
@@ -25,20 +26,30 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     protected void configure(final HttpSecurity http) throws Exception {
         http
                 .authorizeRequests()
-                    .antMatchers("/anonymous*").anonymous()
-                    .antMatchers("/login*").permitAll()
-                    .anyRequest().authenticated()
-                    .and()
-                    .formLogin()
+                .antMatchers("/anonymous*").anonymous()
+                .antMatchers("/login*").permitAll()
+                .anyRequest().authenticated()
+
+                .and()
+                .formLogin()
                 .loginPage("/login.html")
-                    .loginProcessingUrl("/login")
-                    .failureUrl("/login.html?error=true")
-                    .and()
+                .loginProcessingUrl("/login")
+                .successHandler(myAuthenticationSuccessHandler())
+                .failureUrl("/login.html?error=true")
+
+                .and()
                 .logout().deleteCookies("JSESSIONID")
-                    .and()
+
+                .and()
                 .rememberMe().key("uniqueAndSecret").tokenValiditySeconds(86400)
-                    .and()
+
+                .and()
                 .csrf().disable()
         ;
+    }
+
+    @Bean
+    public AuthenticationSuccessHandler myAuthenticationSuccessHandler(){
+        return new SimpleAuthHandler();
     }
 }

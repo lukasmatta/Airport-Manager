@@ -33,11 +33,25 @@ public interface UserService {
      */
     List<User> findAll();
 
+    /**
+     * Returns current logged User
+     *
+     * @return current logged user
+     */
     User getCurrentUser();
 
+    /**
+     *  Logout current User
+     */
     void logout();
 
-    void login(String name, String password, boolean isAdmin);
+    /**
+     * Log-in User into security context
+     *
+     * @param name name of user
+     * @param password password of user
+     */
+    User login(String name, String password);
 
     /**
      * Authenticate User

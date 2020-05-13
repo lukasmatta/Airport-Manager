@@ -18,6 +18,8 @@ import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import javax.annotation.security.RolesAllowed;
+
 /**
  * Airport HATEOAS-compliant controller
  *
@@ -35,12 +37,14 @@ public class AirportController {
     @Autowired
     private GenericResourceAssembler<AirportDTO> airportResourceAssembler;
 
+    @RolesAllowed("ROLE_ADMIN")
     @RequestMapping(method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
     public HttpEntity<CollectionModel<EntityModel<AirportDTO>>> getAirports() throws ResourceNotFoundException {
         logger.debug("rest getAirports");
         return new ResponseEntity<>(airportResourceAssembler.toCollectionModel(airportFacade.findAllAirports(), this.getClass()), HttpStatus.OK);
     }
 
+    @RolesAllowed("ROLE_ADMIN")
     @RequestMapping(value = "/{id}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
     public HttpEntity<EntityModel<AirportDTO>> getAirport(@PathVariable("id") long id) throws ResourceNotFoundException {
         logger.debug("rest getAirport");
@@ -55,6 +59,7 @@ public class AirportController {
         }
     }
 
+    @RolesAllowed("ROLE_ADMIN")
     @RequestMapping(value = "/create", method = RequestMethod.POST,
             consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
     public HttpEntity<EntityModel<AirportDTO>> createAirport(@RequestBody AirportDTO airport) throws Exception {
@@ -71,6 +76,7 @@ public class AirportController {
         }
     }
 
+    @RolesAllowed("ROLE_ADMIN")
     @RequestMapping(value = "/update", method = RequestMethod.POST,
             produces = MediaType.APPLICATION_JSON_VALUE, consumes = MediaType.APPLICATION_JSON_VALUE)
     public final HttpEntity<EntityModel<AirportDTO>> updateAirport(@RequestBody AirportDTO airport) throws ResourceNotModifiedException {
@@ -84,6 +90,7 @@ public class AirportController {
         }
     }
 
+    @RolesAllowed("ROLE_ADMIN")
     @RequestMapping(value = "/{id}", method = RequestMethod.DELETE, produces = MediaType.APPLICATION_JSON_VALUE)
     public final void deleteAirportById(@PathVariable("id") long id) throws ResourceNotFoundException {
         logger.debug("rest deleteAirportById()");

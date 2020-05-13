@@ -5,6 +5,8 @@ import cz.muni.fi.pa165.airportmanager.entity.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.context.SecurityContext;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -13,6 +15,7 @@ import org.springframework.stereotype.Service;
 
 import javax.crypto.SecretKeyFactory;
 import javax.crypto.spec.PBEKeySpec;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -59,15 +62,26 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public void login(String name, String password, boolean isAdmin) {
-        UserDetailsService userDetailsService = new MyUserDetailsService();
-        UserDetails springUser = userDetailsService.loadUserByUsername(name);
+    public User login(String name, String password) {
+        User user = findByName(name);
+        validatePassword(user.getPasswordHash(), password);
+        setSecurityContext(user.getName(), user.getPasswordHash(), user.isAdmin());
+        return user;
+    }
 
-        UsernamePasswordAuthenticationToken authReq
-                = new UsernamePasswordAuthenticationToken(springUser.getUsername(), springUser.getPassword(), springUser.getAuthorities());
+    private void setSecurityContext(String name, String password, boolean isAdmin) {
+        List<GrantedAuthority> authorities = new ArrayList<>();
+        authorities.add(new SimpleGrantedAuthority("ROLE_USER"));
+        if (isAdmin)
+            authorities.add(new SimpleGrantedAuthority("ROLE_ADMIN"));
 
-        SecurityContext sc = SecurityContextHolder.getContext();
-        sc.setAuthentication(authReq);
+        org.springframework.security.core.userdetails.User springUser
+                = new org.springframework.security.core.userdetails.User(name, password, authorities);
+
+        SecurityContextHolder.getContext().setAuthentication(new UsernamePasswordAuthenticationToken(
+                springUser.getUsername(),
+                springUser.getPassword(),
+                springUser.getAuthorities()));
     }
 
     @Override

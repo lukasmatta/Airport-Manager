@@ -9,6 +9,7 @@
         <module>presentation</module>
         <module>services</module>
         <module>rest</module>
+<!--        <module>sample-data</module>-->
     </modules>
     <parent>
         <groupId>org.springframework.boot</groupId>

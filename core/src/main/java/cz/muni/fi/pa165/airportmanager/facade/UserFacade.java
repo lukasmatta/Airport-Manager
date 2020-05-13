@@ -30,11 +30,24 @@ public interface UserFacade {
     List<UserDTO> findAll();
 
     /**
-     * Authenticate User
+     * Returns current logged User
      *
-     * @param user UserDTO object to authenticate
+     * @return current logged user
      */
-    boolean authenticate(UserAuthenticateDTO user);
+    UserDTO getCurrentUser();
+
+    /**
+     *  Logout current User
+     */
+    void logout();
+
+    /**
+     * Log-in User into security context
+     *
+     * @param name name of user
+     * @param password password of user
+     */
+    UserAuthenticateDTO login(String name, String password);
 
     /**
      * Check if User is admin
@@ -42,4 +55,6 @@ public interface UserFacade {
      * @param user UserDTO object to check
      */
     boolean isAdmin(UserDTO user);
+
+    boolean authenticate(UserAuthenticateDTO u);
 }

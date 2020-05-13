@@ -46,11 +46,8 @@
     <dependencies>
         <dependency>
             <groupId>cz.muni.fi</groupId>
-            <artifactId>core</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>cz.muni.fi</groupId>
             <artifactId>services</artifactId>
+            <version>${project.parent.version}</version>
         </dependency>
 
         <dependency>
