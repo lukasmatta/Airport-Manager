@@ -55,6 +55,21 @@ public class UserServiceImplTest extends AbstractTestNGSpringContextTests {
         admin.setAdmin(true);
     }
 
+    @Test
+    public void testRegister() {
+        when(userDao.insertUser(user)).thenReturn(42L);
+        when(userDao.insertUser(admin)).thenReturn(666L);
+
+        Long userID = userService.register(user, "user");
+        Long adminID = userService.register(admin, "admin");
+
+        assertEquals(userID, user.getId());
+        assertEquals(adminID, admin.getId());
+
+        verify(userDao, times(1)).insertUser(user);
+        verify(userDao, times(1)).insertUser(admin);
+    }
+
 
     @Test
     public void testFindById() {

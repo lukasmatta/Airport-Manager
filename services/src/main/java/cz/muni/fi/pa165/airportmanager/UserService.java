@@ -44,8 +44,9 @@ public interface UserService {
      * Register User
      * @param user to register
      * @param password password of user
+     * @return id of user
      */
-    void register(User user, String password);
+    Long register(User user, String password);
 
     /**
      * Authenticate User

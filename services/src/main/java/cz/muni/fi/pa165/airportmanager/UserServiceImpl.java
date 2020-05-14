@@ -52,9 +52,10 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public void register(User user, String password) {
+    public Long register(User user, String password) {
         user.setPasswordHash(createHash(password));
         userDao.insertUser(user);
+        return user.getId();
     }
 
     @Override
