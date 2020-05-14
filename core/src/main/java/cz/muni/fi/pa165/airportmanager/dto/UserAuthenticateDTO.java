@@ -1,6 +1,6 @@
 package cz.muni.fi.pa165.airportmanager.dto;
 
-public class UserAuthenticateDTO extends BaseDTO{
+public class UserAuthenticateDTO{
     private String name;
 
     private String password;
@@ -44,7 +44,6 @@ public class UserAuthenticateDTO extends BaseDTO{
         return "UserAuthenticateDTO{" +
                 "name='" + name + '\'' +
                 ", password='" + password + '\'' +
-                ", id=" + id +
                 '}';
     }
 }

@@ -11,6 +11,8 @@ public class UserDTO extends BaseDTO {
 
     private String passwordHash;
 
+    private boolean admin;
+
     public String getName() {
         return name;
     }
@@ -27,6 +29,14 @@ public class UserDTO extends BaseDTO {
         this.passwordHash = passwordHash;
     }
 
+    public boolean isAdmin() {
+        return admin;
+    }
+
+    public void setAdmin(boolean admin) {
+        this.admin = admin;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -34,6 +44,7 @@ public class UserDTO extends BaseDTO {
 
         UserDTO userDTO = (UserDTO) o;
 
+        if (isAdmin() != userDTO.isAdmin()) return false;
         if (getName() != null ? !getName().equals(userDTO.getName()) : userDTO.getName() != null) return false;
         return getPasswordHash() != null ? getPasswordHash().equals(userDTO.getPasswordHash()) : userDTO.getPasswordHash() == null;
     }
@@ -42,6 +53,7 @@ public class UserDTO extends BaseDTO {
     public int hashCode() {
         int result = getName() != null ? getName().hashCode() : 0;
         result = 31 * result + (getPasswordHash() != null ? getPasswordHash().hashCode() : 0);
+        result = 31 * result + (isAdmin() ? 1 : 0);
         return result;
     }
 
@@ -50,6 +62,7 @@ public class UserDTO extends BaseDTO {
         return "UserDTO{" +
                 "name='" + name + '\'' +
                 ", passwordHash='" + passwordHash + '\'' +
+                ", admin=" + admin +
                 ", id=" + id +
                 '}';
     }

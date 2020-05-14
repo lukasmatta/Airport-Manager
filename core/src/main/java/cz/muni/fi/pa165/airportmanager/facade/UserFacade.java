@@ -37,24 +37,25 @@ public interface UserFacade {
     UserDTO getCurrentUser();
 
     /**
-     *  Logout current User
-     */
-    void logout();
-
-    /**
-     * Log-in User into security context
-     *
-     * @param name name of user
-     * @param password password of user
-     */
-    UserAuthenticateDTO login(String name, String password);
-
-    /**
      * Check if User is admin
      *
      * @param user UserDTO object to check
      */
     boolean isAdmin(UserDTO user);
 
+    /**
+     * Authenticate user
+     *
+     * @param u user to authenticate
+     * @return result of authorisation
+     */
     boolean authenticate(UserAuthenticateDTO u);
+
+    /**
+     * Register User
+     *
+     * @param user user to register
+     * @return registered user credentials
+     */
+    UserDTO register(UserAuthenticateDTO user);
 }

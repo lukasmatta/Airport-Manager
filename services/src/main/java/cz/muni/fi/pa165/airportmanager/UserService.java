@@ -41,17 +41,11 @@ public interface UserService {
     User getCurrentUser();
 
     /**
-     *  Logout current User
-     */
-    void logout();
-
-    /**
-     * Log-in User into security context
-     *
-     * @param name name of user
+     * Register User
+     * @param user to register
      * @param password password of user
      */
-    User login(String name, String password);
+    void register(User user, String password);
 
     /**
      * Authenticate User

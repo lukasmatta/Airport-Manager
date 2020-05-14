@@ -3,19 +3,14 @@ package cz.muni.fi.pa165.airportmanager;
 import cz.muni.fi.pa165.airportmanager.dao.UserDao;
 import cz.muni.fi.pa165.airportmanager.entity.User;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
-import org.springframework.security.core.GrantedAuthority;
-import org.springframework.security.core.authority.SimpleGrantedAuthority;
-import org.springframework.security.core.context.SecurityContext;
 import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.stereotype.Service;
 
 import javax.crypto.SecretKeyFactory;
 import javax.crypto.spec.PBEKeySpec;
-import java.util.ArrayList;
+import java.math.BigInteger;
+import java.security.SecureRandom;
 import java.util.List;
 
 /**
@@ -57,31 +52,9 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public void logout() {
-        SecurityContextHolder.clearContext();
-    }
-
-    @Override
-    public User login(String name, String password) {
-        User user = findByName(name);
-        validatePassword(user.getPasswordHash(), password);
-        setSecurityContext(user.getName(), user.getPasswordHash(), user.isAdmin());
-        return user;
-    }
-
-    private void setSecurityContext(String name, String password, boolean isAdmin) {
-        List<GrantedAuthority> authorities = new ArrayList<>();
-        authorities.add(new SimpleGrantedAuthority("ROLE_USER"));
-        if (isAdmin)
-            authorities.add(new SimpleGrantedAuthority("ROLE_ADMIN"));
-
-        org.springframework.security.core.userdetails.User springUser
-                = new org.springframework.security.core.userdetails.User(name, password, authorities);
-
-        SecurityContextHolder.getContext().setAuthentication(new UsernamePasswordAuthenticationToken(
-                springUser.getUsername(),
-                springUser.getPassword(),
-                springUser.getAuthorities()));
+    public void register(User user, String password) {
+        user.setPasswordHash(createHash(password));
+        userDao.insertUser(user);
     }
 
     @Override
@@ -122,5 +95,23 @@ public class UserServiceImpl implements UserService {
             binary[i] = (byte) Integer.parseInt(hex.substring(2 * i, 2 * i + 2), 16);
         }
         return binary;
+    }
+
+    private static String toHex(byte[] array) {
+        BigInteger bi = new BigInteger(1, array);
+        String hex = bi.toString(16);
+        int paddingLength = (array.length * 2) - hex.length();
+        return paddingLength > 0 ? String.format("%0" + paddingLength + "d", 0) + hex : hex;
+    }
+
+    private static String createHash(String password) {
+        final int SALT_BYTE_SIZE = 24;
+        final int HASH_BYTE_SIZE = 24;
+        final int PBKDF2_ITERATIONS = 1000;
+        SecureRandom random = new SecureRandom();
+        byte[] salt = new byte[SALT_BYTE_SIZE];
+        random.nextBytes(salt);
+        byte[] hash = pbkdf2(password.toCharArray(), salt, PBKDF2_ITERATIONS, HASH_BYTE_SIZE);
+        return PBKDF2_ITERATIONS + ":" + toHex(salt) + ":" + toHex(hash);
     }
 }

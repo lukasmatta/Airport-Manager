@@ -9,24 +9,21 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Import;
 
 import javax.annotation.PostConstruct;
+import java.io.IOException;
 
-/**
- * Takes ServiceConfiguration and adds the SampleDataLoadingFacade bean.
- *
- * @author Martin Kuba makub@ics.muni.cz
- */
+
 @Configuration
 @Import(ServiceConfiguration.class)
 @ComponentScan(basePackageClasses = {SampleDataLoadingFacadeImpl.class})
-public class EshopWithSampleDataConfiguration {
+public class SampleDataConfiguration {
 
-    final static Logger log = LoggerFactory.getLogger(SampleDataLoadingFacadeImpl.class);
+    final static Logger log = LoggerFactory.getLogger(SampleDataConfiguration.class);
 
     @Autowired
-    SampleDataLoadingFacadeImpl sampleDataLoadingFacade;
+    SampleDataLoadingFacade sampleDataLoadingFacade;
 
     @PostConstruct
-    public void dataLoading() {
+    public void dataLoading() throws IOException {
         log.debug("dataLoading()");
         sampleDataLoadingFacade.loadData();
     }

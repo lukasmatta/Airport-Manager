@@ -1,27 +1,27 @@
 package cz.muni.fi.pa165.airportmanager.sampledata;
 
+import cz.muni.fi.pa165.airportmanager.AirportService;
 import cz.muni.fi.pa165.airportmanager.UserService;
+import cz.muni.fi.pa165.airportmanager.entity.Airport;
 import cz.muni.fi.pa165.airportmanager.entity.User;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
-/**
- * Loads some sample data to populate the eshop database.
- *
- * @author Martin Kuba makub@ics.muni.cz
- */
+import javax.inject.Inject;
+
 @Component
-@Transactional //transactions are handled on facade layer
+@Transactional
 public class SampleDataLoadingFacadeImpl implements SampleDataLoadingFacade {
 
     final static Logger log = LoggerFactory.getLogger(SampleDataLoadingFacadeImpl.class);
 
-    @Autowired
+    @Inject
     private UserService userService;
-    @Autowired
+
+    @Inject
+    private AirportService airportService;
 
 
     @Override
@@ -30,6 +30,11 @@ public class SampleDataLoadingFacadeImpl implements SampleDataLoadingFacade {
         User admin = new User();
         admin.setName("admin");
         admin.setAdmin(true);
-        userService.registerUser(admin, "password");
+        userService.register(admin, "admin");
+
+        Airport airport = new Airport();
+        airport.setCity("Gbelany");
+        airport.setCountry("Slovakia");
+        airportService.createAirport(airport);
     }
 }

@@ -5,12 +5,18 @@ import com.fasterxml.jackson.databind.MapperFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializationFeature;
 import cz.muni.fi.pa165.airportmanager.config.ServiceConfiguration;
-import org.springframework.boot.context.properties.ConfigurationProperties;
-import org.springframework.context.annotation.*;
+import cz.muni.fi.pa165.airportmanager.sampledata.SampleDataConfiguration;
+import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.ComponentScan;
+import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.Import;
+import org.springframework.context.annotation.Primary;
 import org.springframework.http.converter.HttpMessageConverter;
 import org.springframework.http.converter.json.MappingJackson2HttpMessageConverter;
-import org.springframework.web.servlet.DispatcherServlet;
-import org.springframework.web.servlet.config.annotation.*;
+import org.springframework.web.servlet.config.annotation.DefaultServletHandlerConfigurer;
+import org.springframework.web.servlet.config.annotation.EnableWebMvc;
+import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
+import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
 import java.text.SimpleDateFormat;
 import java.util.List;
@@ -23,7 +29,7 @@ import java.util.Locale;
  */
 @Configuration
 @EnableWebMvc
-@Import({ServiceConfiguration.class})
+@Import({ServiceConfiguration.class, SampleDataConfiguration.class})
 @ComponentScan(basePackages = {"cz.muni.fi.pa165.airportmanager.rest.controllers"})
 public class MyConfiguration implements WebMvcConfigurer {
 

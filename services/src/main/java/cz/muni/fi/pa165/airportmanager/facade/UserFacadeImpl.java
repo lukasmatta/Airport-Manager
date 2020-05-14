@@ -51,17 +51,6 @@ public class UserFacadeImpl implements UserFacade {
     }
 
     @Override
-    public void logout() {
-        userService.logout();
-    }
-
-    @Override
-    public UserAuthenticateDTO login(String name, String password) {
-        User user = userService.login(name, password);
-        return beanMappingService.mapTo(user, UserAuthenticateDTO.class);
-    }
-
-    @Override
     public boolean isAdmin(UserDTO user) {
         return userService.isAdmin(beanMappingService.mapTo(user, User.class));
     }
@@ -69,6 +58,17 @@ public class UserFacadeImpl implements UserFacade {
     @Override
     public boolean authenticate(UserAuthenticateDTO user) {
         return userService.authenticate(
-                userService.findById(user.getId()), user.getPassword());
+                userService.findByName(user.getName()), user.getPassword());
+    }
+
+    @Override
+    public UserDTO register(UserAuthenticateDTO user) {
+        User newUser = new User();
+        newUser.setName(user.getName());
+        newUser.setAdmin(false);
+
+        userService.register(newUser, user.getPassword());
+
+        return findByName(user.getName());
     }
 }

@@ -47,7 +47,7 @@ public class UserDaoImpl implements UserDao {
     @Override
     public User findByName(String name) {
         if (name == null || name.isEmpty())
-            throw new IllegalArgumentException("Cannot search for null e-mail");
+            throw new IllegalArgumentException("Cannot search for null name");
 
         try {
             return em
