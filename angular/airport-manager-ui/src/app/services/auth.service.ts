@@ -17,9 +17,21 @@ export class AuthService {
       return null;
     }
 
-    const authString = btoa('${username} ${password}');
-    const authHeader: HttpHeaders = new HttpHeaders({Authorization: authString});
+    const authString = btoa(`${username}:${password}`);
+    const authHeader: HttpHeaders = new HttpHeaders({Authorization: 'Basic ' + authString});
 
-    return this.http.get(environment.restAPI, {headers: authHeader});
+    return this.http.get(environment.restAPI + 'airports', {headers: authHeader});
+  }
+
+  public saveCredentials(username: string, password: string): void {
+    sessionStorage.setItem('username', username);
+    sessionStorage.setItem('password', password);
+  }
+
+  public isAuthenticated(): boolean {
+    if (sessionStorage.getItem('username') && sessionStorage.getItem('passowrd')) {
+      return true;
+    }
+    return false;
   }
 }

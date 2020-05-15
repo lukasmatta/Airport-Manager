@@ -19,7 +19,9 @@ export class LoginComponent implements OnInit {
   public login() {
     this.auth.authenticate(this.username, this.password).subscribe(
       response => {
-        console.log(response)
+        if (response) {
+          console.log('Success login');
+        }
       }
     );
   }
