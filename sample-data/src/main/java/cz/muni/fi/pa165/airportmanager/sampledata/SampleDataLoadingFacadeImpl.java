@@ -32,6 +32,11 @@ public class SampleDataLoadingFacadeImpl implements SampleDataLoadingFacade {
         admin.setAdmin(true);
         userService.register(admin, "admin");
 
+        User user = new User();
+        user.setName("user");
+        user.setAdmin(false);
+        userService.register(user, "user");
+
         Airport airport = new Airport();
         airport.setCity("Gbelany");
         airport.setCountry("Slovakia");

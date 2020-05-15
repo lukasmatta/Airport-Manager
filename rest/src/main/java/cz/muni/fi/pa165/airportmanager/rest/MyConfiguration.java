@@ -30,7 +30,7 @@ import java.util.Locale;
 @Configuration
 @EnableWebMvc
 @Import({ServiceConfiguration.class, SampleDataConfiguration.class})
-@ComponentScan(basePackages = {"cz.muni.fi.pa165.airportmanager.rest.controllers"})
+@ComponentScan(basePackages = {"cz.muni.fi.pa165.airportmanager"})
 public class MyConfiguration implements WebMvcConfigurer {
 
     @Override

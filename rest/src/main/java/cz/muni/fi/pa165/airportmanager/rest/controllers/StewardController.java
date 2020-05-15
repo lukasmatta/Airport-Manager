@@ -1,7 +1,9 @@
 package cz.muni.fi.pa165.airportmanager.rest.controllers;
 
 import cz.muni.fi.pa165.airportmanager.dto.StewardDTO;
+import cz.muni.fi.pa165.airportmanager.dto.UserDTO;
 import cz.muni.fi.pa165.airportmanager.facade.StewardFacade;
+import cz.muni.fi.pa165.airportmanager.facade.UserFacade;
 import cz.muni.fi.pa165.airportmanager.rest.URIs;
 import cz.muni.fi.pa165.airportmanager.rest.assemblers.GenericResourceAssembler;
 import cz.muni.fi.pa165.airportmanager.rest.exceptions.ResourceAlreadyExistingException;
@@ -55,7 +57,7 @@ public class StewardController {
         }
     }
 
-    @RequestMapping(value = "/create", method = RequestMethod.POST,
+    @RequestMapping(value = "/auth/create", method = RequestMethod.POST,
             consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
     public HttpEntity<EntityModel<StewardDTO>> createSteward(@RequestBody StewardDTO steward) throws ResourceAlreadyExistingException {
         logger.debug("rest createSteward()");
@@ -70,7 +72,7 @@ public class StewardController {
         }
     }
 
-    @RequestMapping(value = "/update", method = RequestMethod.POST,
+    @RequestMapping(value = "/auth/update", method = RequestMethod.POST,
             produces = MediaType.APPLICATION_JSON_VALUE, consumes = MediaType.APPLICATION_JSON_VALUE)
     public final HttpEntity<EntityModel<StewardDTO>> updateSteward(@RequestBody StewardDTO steward) throws ResourceNotModifiedException {
         logger.debug("rest updateSteward()");
@@ -83,7 +85,7 @@ public class StewardController {
         }
     }
 
-    @RequestMapping(value = "/{id}", method = RequestMethod.DELETE, produces = MediaType.APPLICATION_JSON_VALUE)
+    @RequestMapping(value = "/auth/delete/{id}", method = RequestMethod.DELETE, produces = MediaType.APPLICATION_JSON_VALUE)
     public final void deleteStewardById(@PathVariable("id") long id) throws ResourceNotFoundException {
         logger.debug("rest deleteStewardById()");
         try {

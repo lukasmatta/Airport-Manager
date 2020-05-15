@@ -62,10 +62,10 @@ public class UserFacadeImpl implements UserFacade {
     }
 
     @Override
-    public UserDTO register(UserAuthenticateDTO user) {
+    public UserDTO register(UserAuthenticateDTO user, Boolean isAdmin) {
         User newUser = new User();
         newUser.setName(user.getName());
-        newUser.setAdmin(false);
+        newUser.setAdmin(isAdmin);
 
         userService.register(newUser, user.getPassword());
 

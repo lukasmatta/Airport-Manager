@@ -81,7 +81,7 @@ public class UserFacadeImplTest {
     @Test
     public void register(){
         given(beanMappingService.mapTo(userAuthenticateDTO, User.class)).willReturn(user);
-        userFacade.register(userAuthenticateDTO);
+        userFacade.register(userAuthenticateDTO, false);
         then(userService).should().register(user, "password");
     }
 

@@ -55,7 +55,8 @@ public interface UserFacade {
      * Register User
      *
      * @param user user to register
+     * @param isAdmin is user admin
      * @return registered user credentials
      */
-    UserDTO register(UserAuthenticateDTO user);
+    UserDTO register(UserAuthenticateDTO user, Boolean isAdmin);
 }
