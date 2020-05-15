@@ -18,6 +18,8 @@ import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.time.ZonedDateTime;
+
 /**
  * Steward HATEOAS-compliant controller
  *
@@ -92,4 +94,20 @@ public class StewardController {
             throw new ResourceNotFoundException("Steward with ID: " + id + " could not be found in the database");
         }
     }
+
+    @RequestMapping(value = "/freeSteward", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
+    public HttpEntity<EntityModel<StewardDTO>> getFreeSteward(@PathVariable("from") ZonedDateTime from, @PathVariable("to") ZonedDateTime to) throws ResourceNotFoundException {
+        logger.debug("rest getFreeSteward()");
+        try {
+            StewardDTO found =  stewardFacade.findFreeStewardInTimeInterval(from,to);
+            if (found == null) {
+                throw new ResourceNotFoundException("Cannot find free Steward in this period of time");
+            }
+            return new ResponseEntity<>(genericResourceAssembler.toModel(found, this.getClass()), HttpStatus.OK);
+        } catch (Exception e) {
+            throw new ResourceNotFoundException("Cannot find free Steward in this period of time");
+        }
+    }
+
+
 }
