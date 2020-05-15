@@ -1,10 +1,12 @@
 package cz.muni.fi.pa165.airportmanager.facade;
 
 import cz.muni.fi.pa165.airportmanager.dto.StewardDTO;
+import org.springframework.stereotype.Repository;
 
 import java.time.ZonedDateTime;
 import java.util.List;
 
+@Repository
 public interface StewardFacade {
     /**
      * Creates new steward

@@ -1,6 +1,7 @@
 package cz.muni.fi.pa165.airportmanager.facade;
 
 import cz.muni.fi.pa165.airportmanager.dto.AirplaneDTO;
+import org.springframework.stereotype.Repository;
 
 import java.time.ZonedDateTime;
 import java.util.List;
