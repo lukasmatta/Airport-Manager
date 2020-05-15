@@ -3,17 +3,17 @@
         <h1>Airport Manager</h1>
         <mat-form-field appearance="fill">
             <mat-label>Username</mat-label>
-            <input matInput type="text">
+            <input [(ngModel)]="username" matInput type="text">
         </mat-form-field>
 
         <mat-form-field appearance="fill">
             <mat-label>Password</mat-label>
-            <input matInput [type]="hide ? 'password' : 'text'">
+            <input matInput [(ngModel)]="password" [type]="hide ? 'password' : 'text'">
             <button mat-icon-button matSuffix (click)="hide = !hide" [attr.aria-label]="'Hide password'" [attr.aria-pressed]="hide">
             <mat-icon>{{hide ? 'visibility_off' : 'visibility'}}</mat-icon>
             </button>
           </mat-form-field>
 
-          <button class="login-button" mat-raised-button color="primary" (click)="''">Login</button>
+          <button class="login-button" mat-raised-button color="primary" (click)="login()">Login</button>
     </div>
 </div>
