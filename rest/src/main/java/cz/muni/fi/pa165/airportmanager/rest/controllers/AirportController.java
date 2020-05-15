@@ -18,6 +18,8 @@ import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import javax.annotation.security.RolesAllowed;
+
 /**
  * Airport HATEOAS-compliant controller
  *
@@ -55,7 +57,7 @@ public class AirportController {
         }
     }
 
-    @RequestMapping(value = "/create", method = RequestMethod.POST,
+    @RequestMapping(value = "/auth/create", method = RequestMethod.POST,
             consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
     public HttpEntity<EntityModel<AirportDTO>> createAirport(@RequestBody AirportDTO airport) throws Exception {
         logger.debug("rest createAirport()");
@@ -71,7 +73,7 @@ public class AirportController {
         }
     }
 
-    @RequestMapping(value = "/update", method = RequestMethod.POST,
+    @RequestMapping(value = "/auth/update", method = RequestMethod.POST,
             produces = MediaType.APPLICATION_JSON_VALUE, consumes = MediaType.APPLICATION_JSON_VALUE)
     public final HttpEntity<EntityModel<AirportDTO>> updateAirport(@RequestBody AirportDTO airport) throws ResourceNotModifiedException {
         logger.debug("rest updateAirport()");
@@ -84,7 +86,7 @@ public class AirportController {
         }
     }
 
-    @RequestMapping(value = "/{id}", method = RequestMethod.DELETE, produces = MediaType.APPLICATION_JSON_VALUE)
+    @RequestMapping(value = "/auth/delete/{id}", method = RequestMethod.DELETE, produces = MediaType.APPLICATION_JSON_VALUE)
     public final void deleteAirportById(@PathVariable("id") long id) throws ResourceNotFoundException {
         logger.debug("rest deleteAirportById()");
         try {
