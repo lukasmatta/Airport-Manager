@@ -51,20 +51,6 @@ public class Initializer extends AbstractAnnotationConfigDispatcherServletInitia
 
         @Override
         public void onStartup(javax.servlet.ServletContext servletContext) throws javax.servlet.ServletException {
-            SpringBeanAutowiringSupport.processInjectionBasedOnCurrentContext (this );
-
-            if (userFacade != null) {
-                UserAuthenticateDTO admin = new UserAuthenticateDTO();
-                admin.setName("admin");
-                admin.setPassword("test");
-                userFacade.register(admin, true);
-
-                UserAuthenticateDTO user = new UserAuthenticateDTO();
-                user.setName("user");
-                user.setPassword("heslo");
-                userFacade.register(user, false);
-            }
-
             super.onStartup(servletContext);
             servletContext.addListener(RequestContextListener.class);
         }
