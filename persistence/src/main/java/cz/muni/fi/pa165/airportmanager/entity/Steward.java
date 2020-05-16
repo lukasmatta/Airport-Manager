@@ -3,18 +3,16 @@ package cz.muni.fi.pa165.airportmanager.entity;
 import com.sun.istack.NotNull;
 
 import javax.persistence.*;
-import java.io.Serializable;
 import java.util.HashSet;
-import java.util.Objects;
 import java.util.Set;
 
 /**
  * @author Almas Shakirtkhanov
  */
-@Entity
-public class Steward implements Serializable {
+@Entity(name = "Steward")
+public class Steward {
     @Id
-    @GeneratedValue(strategy= GenerationType.IDENTITY)
+    @GeneratedValue(strategy= GenerationType.AUTO)
     private Long id;
 
     @NotNull
@@ -23,10 +21,10 @@ public class Steward implements Serializable {
     @NotNull
     private String lastName;
 
-    @OneToMany
-    private Set<Flight> flights = new HashSet<Flight>();
+    @ManyToMany(mappedBy = "stewards")
+    private Set<Flight> flights = new HashSet<>();
 
-    public Steward(){}
+    public Steward() {}
 
     public Steward(Long id) {
         this.id = id;
@@ -62,6 +60,14 @@ public class Steward implements Serializable {
 
     public void setFlights(Set<Flight> flights) {
         this.flights = flights;
+    }
+
+    public void addFlight(Flight flight) {
+        if (flights.contains(flight)) {
+            return;
+        }
+        flights.add(flight);
+        flight.addSteward(this);
     }
 
     public void removeFlight(Flight flight) {

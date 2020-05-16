@@ -1,10 +1,16 @@
 package cz.muni.fi.pa165.airportmanager.facade;
 
+import cz.muni.fi.pa165.airportmanager.AirplaneService;
+import cz.muni.fi.pa165.airportmanager.AirportService;
 import cz.muni.fi.pa165.airportmanager.BeanMappingService;
 import cz.muni.fi.pa165.airportmanager.FlightService;
 import cz.muni.fi.pa165.airportmanager.config.ServiceConfiguration;
+import cz.muni.fi.pa165.airportmanager.dto.FlightCreateDTO;
 import cz.muni.fi.pa165.airportmanager.dto.FlightDTO;
+import cz.muni.fi.pa165.airportmanager.entity.Airplane;
+import cz.muni.fi.pa165.airportmanager.entity.Airport;
 import cz.muni.fi.pa165.airportmanager.entity.Flight;
+import cz.muni.fi.pa165.airportmanager.enums.AirplaneType;
 import org.hibernate.service.spi.ServiceException;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
@@ -37,6 +43,7 @@ import static org.testng.Assert.assertNull;
 public class FlightFacadeImplTest extends AbstractTestNGSpringContextTests {
     @Mock
     private FlightService flightService;
+
 
     @Mock
     private BeanMappingService beanMappingService;
@@ -83,17 +90,47 @@ public class FlightFacadeImplTest extends AbstractTestNGSpringContextTests {
 
     @Test
     public void testCreateFlight() {
-        FlightDTO flightDTO = new FlightDTO();
-        flightDTO.setId((long) 5);
-        flightDTO.setDeparture(testDate);
+        FlightCreateDTO flightCreateDTO= new FlightCreateDTO();
+
+        ZonedDateTime dep = ZonedDateTime.of(LocalDateTime.of(2020, Month.AUGUST, 18,12,1), ZoneOffset.UTC);
+        ZonedDateTime arr = ZonedDateTime.of(LocalDateTime.of(2020, Month.AUGUST, 18,13,0), ZoneOffset.UTC);
+
+        flightCreateDTO.setDeparture(dep);
+        flightCreateDTO.setArrival(arr);
+
+        flightCreateDTO.setDestinationID(4);
+        flightCreateDTO.setOriginID(3);
+
+        flightCreateDTO.setPlaneID(1);
 
         Flight flight = new Flight();
-        flight.setId((long) 5);
-        flight.setDeparture(testDate);
 
-        when(beanMappingService.mapTo(flightDTO, Flight.class)).thenReturn(flight);
+        ZonedDateTime dep_1 = ZonedDateTime.of(LocalDateTime.of(2020, Month.AUGUST, 18,12,1), ZoneOffset.UTC);
+        ZonedDateTime arr_1 = ZonedDateTime.of(LocalDateTime.of(2020, Month.AUGUST, 18,13,0), ZoneOffset.UTC);
 
-        flightFacade.create(flightDTO);
+        flight.setDeparture(dep);
+        flight.setArrival(arr);
+
+        Airport air1 = new Airport((long)3);
+        air1.setCity("Almaty");
+        air1.setCountry("Kazakhstan");
+
+        Airport air2 = new Airport((long)4);
+        air2.setCity("Astana");
+        air2.setCountry("Kazakhstan");
+
+        flight.setDestination(air2);
+        flight.setOrigin(air1);
+
+        Airplane airplane = new Airplane((long)1);
+        airplane.setCapacity(100);
+        airplane.setName("Boeing");
+        airplane.setType(AirplaneType.COMMERCIAL);
+        flight.setPlane(airplane);
+
+        when(beanMappingService.mapTo(flightCreateDTO, Flight.class)).thenReturn(flight);
+
+        flightService.create(flight);
 
         verify(flightService).create(flight);
     }

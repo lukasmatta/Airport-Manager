@@ -3,6 +3,7 @@ package cz.muni.fi.pa165.airportmanager.facade;
 import cz.muni.fi.pa165.airportmanager.BeanMappingService;
 import cz.muni.fi.pa165.airportmanager.StewardService;
 import cz.muni.fi.pa165.airportmanager.config.ServiceConfiguration;
+import cz.muni.fi.pa165.airportmanager.dto.StewardCreateDTO;
 import cz.muni.fi.pa165.airportmanager.dto.StewardDTO;
 import cz.muni.fi.pa165.airportmanager.entity.Steward;
 import org.hibernate.service.spi.ServiceException;
@@ -80,22 +81,21 @@ public class StewardFacadeImplTest extends AbstractTestNGSpringContextTests {
 
     @Test
     public void createStewardTest() {
-        StewardDTO stewardDTO = new StewardDTO();
-        stewardDTO.setId((long) 1);
-        stewardDTO.setFirstName("Almas");
-        stewardDTO.setLastName("Luffy");
+        StewardCreateDTO stewardCreateDTO = new StewardCreateDTO();
+        stewardCreateDTO.setFirstName("Almas");
+        stewardCreateDTO.setLastName("Luffy");
 
         Steward steward = new Steward((long)1);
         steward.setFirstName("Almas");
         steward.setLastName("Luffy");
 
 
-        when(beanMappingService.mapTo(stewardDTO, Steward.class)).thenReturn(steward);
+        when(beanMappingService.mapTo(stewardCreateDTO, Steward.class)).thenReturn(steward);
 
-        stewardFacade.insertSteward(stewardDTO);
+        stewardFacade.insertSteward(stewardCreateDTO);
 
-        assertEquals(stewardDTO.getFirstName(), steward.getFirstName());
-        assertEquals(stewardDTO.getLastName(), steward.getLastName());
+        assertEquals(stewardCreateDTO.getFirstName(), steward.getFirstName());
+        assertEquals(stewardCreateDTO.getLastName(), steward.getLastName());
 
         verify(stewardService).insertSteward(steward);
     }

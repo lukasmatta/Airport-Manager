@@ -1,5 +1,6 @@
 package cz.muni.fi.pa165.airportmanager.facade;
 
+import cz.muni.fi.pa165.airportmanager.dto.AirplaneCreateDTO;
 import cz.muni.fi.pa165.airportmanager.dto.AirplaneDTO;
 import org.springframework.stereotype.Repository;
 
@@ -33,7 +34,7 @@ public interface AirplaneFacade {
      *
      * @param airplane object Airplane
      */
-    void createAirplane(AirplaneDTO airplane);
+    Long createAirplane(AirplaneCreateDTO airplane);
 
     /**
      * Update airplane

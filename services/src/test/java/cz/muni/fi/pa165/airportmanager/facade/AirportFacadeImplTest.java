@@ -3,6 +3,7 @@ package cz.muni.fi.pa165.airportmanager.facade;
 import cz.muni.fi.pa165.airportmanager.AirportService;
 import cz.muni.fi.pa165.airportmanager.BeanMappingService;
 import cz.muni.fi.pa165.airportmanager.config.ServiceConfiguration;
+import cz.muni.fi.pa165.airportmanager.dto.AirportCreateDTO;
 import cz.muni.fi.pa165.airportmanager.dto.AirportDTO;
 import cz.muni.fi.pa165.airportmanager.entity.Airport;
 import org.hibernate.service.spi.ServiceException;
@@ -48,23 +49,23 @@ public class AirportFacadeImplTest extends AbstractTestNGSpringContextTests {
         airportEntity.setCountry("Slovakia");
 
         AirportDTO dummyAirport = new AirportDTO();
-        dummyAirport.setId((long) 5);
+        dummyAirport.setId(5L);
         dummyAirport.setCity("Kosice");
         dummyAirport.setCountry("Slovakia");
 
         when(beanMappingService.mapTo(airportEntity, AirportDTO.class)).thenReturn(dummyAirport);
 
-        when(airportService.findById((long) 5)).thenReturn(airportEntity);
-        when(airportService.findById((long) 6)).thenReturn(null);
+        when(airportService.findById(5L)).thenReturn(airportEntity);
+        when(airportService.findById(6L)).thenReturn(null);
 
-        AirportDTO airport = airportFacade.findById((long) 5);
+        AirportDTO airport = airportFacade.findById(5L);
         assertEquals(airport.getCity(), dummyAirport.getCity());
         assertEquals(airport.getCountry(), dummyAirport.getCountry());
 
-        AirportDTO none = airportFacade.findById((long) 6);
+        AirportDTO none = airportFacade.findById(6L);
         assertNull(none);
-        verify(airportService, times(1)).findById((long) 5);
-        verify(airportService, times(1)).findById((long) 6);
+        verify(airportService, times(1)).findById(5L);
+        verify(airportService, times(1)).findById(6L);
     }
 
     @Test
@@ -75,8 +76,7 @@ public class AirportFacadeImplTest extends AbstractTestNGSpringContextTests {
 
     @Test
     public void testCreateAirport() {
-        AirportDTO dummyAirport = new AirportDTO();
-        dummyAirport.setId((long) 5);
+        AirportCreateDTO dummyAirport = new AirportCreateDTO();
         dummyAirport.setCity("Kosice");
         dummyAirport.setCountry("Slovakia");
 
@@ -94,7 +94,7 @@ public class AirportFacadeImplTest extends AbstractTestNGSpringContextTests {
     @Test
     public void testUpdateAirport() {
         AirportDTO dummyAirport = new AirportDTO();
-        dummyAirport.setId((long) 5);
+        dummyAirport.setId(5L);
         dummyAirport.setCity("Kosice");
         dummyAirport.setCountry("Slovakia");
 
@@ -112,7 +112,7 @@ public class AirportFacadeImplTest extends AbstractTestNGSpringContextTests {
     @Test
     public void testFindAllAirports() {
         AirportDTO dummyAirport = new AirportDTO();
-        dummyAirport.setId((long) 5);
+        dummyAirport.setId(5L);
         dummyAirport.setCity("Kosice");
         dummyAirport.setCountry("Slovakia");
 

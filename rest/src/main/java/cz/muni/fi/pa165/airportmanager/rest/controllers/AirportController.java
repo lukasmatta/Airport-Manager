@@ -1,10 +1,11 @@
 package cz.muni.fi.pa165.airportmanager.rest.controllers;
 
+import cz.muni.fi.pa165.airportmanager.dto.AirportCreateDTO;
 import cz.muni.fi.pa165.airportmanager.dto.AirportDTO;
 import cz.muni.fi.pa165.airportmanager.facade.AirportFacade;
 import cz.muni.fi.pa165.airportmanager.rest.URIs;
 import cz.muni.fi.pa165.airportmanager.rest.assemblers.GenericResourceAssembler;
-import cz.muni.fi.pa165.airportmanager.rest.exceptions.ResourceAlreadyExistingException;
+import cz.muni.fi.pa165.airportmanager.rest.exceptions.ResourceNotCreatedException;
 import cz.muni.fi.pa165.airportmanager.rest.exceptions.ResourceNotFoundException;
 import cz.muni.fi.pa165.airportmanager.rest.exceptions.ResourceNotModifiedException;
 import org.slf4j.Logger;
@@ -59,17 +60,14 @@ public class AirportController {
 
     @RequestMapping(value = "/auth/create", method = RequestMethod.POST,
             consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
-    public HttpEntity<EntityModel<AirportDTO>> createAirport(@RequestBody AirportDTO airport) throws Exception {
+    public HttpEntity<EntityModel<AirportDTO>> createAirport(@RequestBody AirportCreateDTO airport) throws ResourceNotFoundException {
         logger.debug("rest createAirport()");
         try {
-            if (airportFacade.findById(airport.getId()) != null) {
-                throw new ResourceAlreadyExistingException("Airport " + airport.toString() + " already exists in the database");
-            }
-            airportFacade.createAirport(airport);
-            AirportDTO created = airportFacade.findById(airport.getId());
+            Long id = airportFacade.createAirport(airport);
+            AirportDTO created = airportFacade.findById(id);
             return new ResponseEntity<>(airportResourceAssembler.toModel(created, this.getClass()), HttpStatus.OK);
         } catch (Exception e) {
-            throw new ResourceAlreadyExistingException("Airport " + airport.toString() + " already exists in the database");
+            throw new ResourceNotCreatedException("Airport " + airport.toString() + " was not created due to an illegal operation");
         }
     }
 
