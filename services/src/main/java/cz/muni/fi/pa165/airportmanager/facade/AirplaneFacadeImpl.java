@@ -2,6 +2,7 @@ package cz.muni.fi.pa165.airportmanager.facade;
 
 import cz.muni.fi.pa165.airportmanager.AirplaneService;
 import cz.muni.fi.pa165.airportmanager.BeanMappingService;
+import cz.muni.fi.pa165.airportmanager.dto.AirplaneCreateDTO;
 import cz.muni.fi.pa165.airportmanager.dto.AirplaneDTO;
 import cz.muni.fi.pa165.airportmanager.entity.Airplane;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -39,9 +40,10 @@ public class AirplaneFacadeImpl implements AirplaneFacade {
     }
 
     @Override
-    public void createAirplane(AirplaneDTO airplane) {
+    public Long createAirplane(AirplaneCreateDTO airplane) {
         Airplane newAirport = beanMappingService.mapTo(airplane, Airplane.class);
         airplaneService.createAirplane(newAirport);
+        return newAirport.getId();
     }
 
     @Override

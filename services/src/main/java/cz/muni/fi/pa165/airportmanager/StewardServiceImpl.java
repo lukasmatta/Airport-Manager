@@ -17,6 +17,7 @@ import java.util.Optional;
  */
 
 @Service
+@Transactional
 public class StewardServiceImpl implements StewardService {
 
     @Autowired
@@ -56,7 +57,7 @@ public class StewardServiceImpl implements StewardService {
     @Override
     //@Transactional
     public Steward findFreeStewardInTimeInterval(ZonedDateTime from, ZonedDateTime to) {
-        List<Steward> allStewards = this.findAll();
+        List<Steward> allStewards = stewardDao.findAll();
         Optional<Steward> result = allStewards.stream()
                 .filter(
                         steward -> steward.getFlights()

@@ -37,17 +37,15 @@ public class StewardServiceImplTest extends AbstractTestNGSpringContextTests {
     @Mock
     private StewardDao stewardDao;
 
-    @Autowired
     @InjectMocks
-    private StewardService stewardService;
+    private StewardServiceImpl stewardService;
 
     private Steward steward1 = new Steward((long) 1);
     private Steward steward2 = new Steward((long) 2);
 
-    private List<Steward> stewards;
-
     @BeforeMethod
     public void initObjects(){
+        MockitoAnnotations.initMocks(this);
         //First Airport
         Airport airport1 = new Airport();
         airport1.setCountry("Kazakhstan");
@@ -91,19 +89,12 @@ public class StewardServiceImplTest extends AbstractTestNGSpringContextTests {
         steward1.setFlights(Collections.singleton(flight1));
 
         steward2.setFlights(Collections.singleton(flight2));
-
-        stewards = Arrays.asList(steward1, steward2);
-
     }
 
-    @BeforeClass
-    public void setup() throws ServiceException {
-        MockitoAnnotations.initMocks(this);
-    }
 
     @Test
     public void findFreeStewardInTimeIntervalTest() {
-        when(stewardDao.findAll()).thenReturn(stewards);
+        when(stewardDao.findAll()).thenReturn(Arrays.asList(steward1, steward2));
 
         ZonedDateTime from1 = ZonedDateTime.of(LocalDateTime.of(2020, Month.AUGUST, 18,13,1), ZoneOffset.UTC);
         ZonedDateTime to1 = ZonedDateTime.of(LocalDateTime.of(2020, Month.AUGUST, 18,13,40), ZoneOffset.UTC);

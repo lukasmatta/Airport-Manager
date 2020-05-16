@@ -2,6 +2,7 @@ package cz.muni.fi.pa165.airportmanager.facade;
 
 import cz.muni.fi.pa165.airportmanager.BeanMappingService;
 import cz.muni.fi.pa165.airportmanager.StewardService;
+import cz.muni.fi.pa165.airportmanager.dto.StewardCreateDTO;
 import cz.muni.fi.pa165.airportmanager.dto.StewardDTO;
 import cz.muni.fi.pa165.airportmanager.entity.Steward;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -34,7 +35,7 @@ public class StewardFacadeImpl implements StewardFacade{
     }
 
     @Override
-    public Long insertSteward(StewardDTO steward) {
+    public Long insertSteward(StewardCreateDTO steward) {
         Steward newSteward  = beanMappingService.mapTo(steward, Steward.class);
         return stewardService.insertSteward(newSteward);
     }

@@ -1,12 +1,11 @@
 package cz.muni.fi.pa165.airportmanager.rest.controllers;
 
+import cz.muni.fi.pa165.airportmanager.dto.StewardCreateDTO;
 import cz.muni.fi.pa165.airportmanager.dto.StewardDTO;
-import cz.muni.fi.pa165.airportmanager.dto.UserDTO;
 import cz.muni.fi.pa165.airportmanager.facade.StewardFacade;
-import cz.muni.fi.pa165.airportmanager.facade.UserFacade;
 import cz.muni.fi.pa165.airportmanager.rest.URIs;
 import cz.muni.fi.pa165.airportmanager.rest.assemblers.GenericResourceAssembler;
-import cz.muni.fi.pa165.airportmanager.rest.exceptions.ResourceAlreadyExistingException;
+import cz.muni.fi.pa165.airportmanager.rest.exceptions.ResourceNotCreatedException;
 import cz.muni.fi.pa165.airportmanager.rest.exceptions.ResourceNotFoundException;
 import cz.muni.fi.pa165.airportmanager.rest.exceptions.ResourceNotModifiedException;
 import org.slf4j.Logger;
@@ -61,16 +60,13 @@ public class StewardController {
 
     @RequestMapping(value = "/auth/create", method = RequestMethod.POST,
             consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
-    public HttpEntity<EntityModel<StewardDTO>> createSteward(@RequestBody StewardDTO steward) throws ResourceAlreadyExistingException {
+    public HttpEntity<EntityModel<StewardDTO>> createSteward(@RequestBody StewardCreateDTO steward) throws ResourceNotCreatedException {
         logger.debug("rest createSteward()");
         try {
-            if (stewardFacade.findById(steward.getId()) != null) {
-                throw new ResourceAlreadyExistingException("Steward " + steward.toString() + " already exists in the database");
-            }
-            stewardFacade.insertSteward(steward);
-            return new ResponseEntity<>(genericResourceAssembler.toModel(stewardFacade.findById(steward.getId()), this.getClass()), HttpStatus.OK);
+            Long id = stewardFacade.insertSteward(steward);
+            return new ResponseEntity<>(genericResourceAssembler.toModel(stewardFacade.findById(id), this.getClass()), HttpStatus.OK);
         } catch (Exception e) {
-            throw new ResourceAlreadyExistingException("Steward " + steward.toString() + " already exists in the database");
+            throw new ResourceNotCreatedException("Steward " + steward.toString() + " was not created due to an illegal operation");
         }
     }
 
