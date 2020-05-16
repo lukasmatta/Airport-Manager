@@ -11,23 +11,19 @@ import java.util.Set;
 /**
  * @author Almas Shakirtkhanov
  */
-@Entity(name = "Steward")
-@Table(name = "steward")
+@Entity
 public class Steward implements Serializable {
     @Id
     @GeneratedValue(strategy= GenerationType.IDENTITY)
     private Long id;
 
     @NotNull
-    @Column(name = "firstName")
     private String firstName;
 
     @NotNull
-    @Column(name = "secondName")
     private String lastName;
 
     @OneToMany
-    @JoinColumn(name = "flight_id")
     private Set<Flight> flights = new HashSet<Flight>();
 
     public Steward(){}
@@ -101,4 +97,3 @@ public class Steward implements Serializable {
         return result;
     }
 }
-
