@@ -1,5 +1,6 @@
 package cz.muni.fi.pa165.airportmanager.facade;
 
+import cz.muni.fi.pa165.airportmanager.dto.FlightCreateDTO;
 import cz.muni.fi.pa165.airportmanager.dto.FlightDTO;
 import org.springframework.stereotype.Repository;
 
@@ -17,7 +18,7 @@ public interface FlightFacade {
      * @param entity flight entity
      * @return created flight ID
      */
-    Long create(FlightDTO entity);
+    Long create(FlightCreateDTO entity);
 
     /**
      * Deletes flight from DB
