@@ -34,6 +34,8 @@ public class MainController {
 
         resourcesMap.put("stewards_uri", URIs.URI_STEWARDS);
         resourcesMap.put("airports_uri", URIs.URI_AIRPORTS);
+        resourcesMap.put("flights_uri", URIs.URI_FLIGHTS);
+        resourcesMap.put("airplanes_uri", URIs.URI_AIRPLANES);
 
         return Collections.unmodifiableMap(resourcesMap);
 

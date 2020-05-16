@@ -1,13 +1,12 @@
 package cz.muni.fi.pa165.airportmanager.rest.controllers;
 
 
+import cz.muni.fi.pa165.airportmanager.dto.AirplaneCreateDTO;
 import cz.muni.fi.pa165.airportmanager.dto.AirplaneDTO;
-import cz.muni.fi.pa165.airportmanager.dto.StewardDTO;
-import cz.muni.fi.pa165.airportmanager.entity.Airplane;
 import cz.muni.fi.pa165.airportmanager.facade.AirplaneFacade;
 import cz.muni.fi.pa165.airportmanager.rest.URIs;
 import cz.muni.fi.pa165.airportmanager.rest.assemblers.GenericResourceAssembler;
-import cz.muni.fi.pa165.airportmanager.rest.exceptions.ResourceAlreadyExistingException;
+import cz.muni.fi.pa165.airportmanager.rest.exceptions.ResourceNotCreatedException;
 import cz.muni.fi.pa165.airportmanager.rest.exceptions.ResourceNotFoundException;
 import cz.muni.fi.pa165.airportmanager.rest.exceptions.ResourceNotModifiedException;
 import org.slf4j.Logger;
@@ -61,17 +60,14 @@ public class AirplaneController {
 
     @RequestMapping(value = "/create", method = RequestMethod.POST,
             consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
-    public HttpEntity<EntityModel<AirplaneDTO>> createAirplane(@RequestBody AirplaneDTO airplane) throws Exception {
+    public HttpEntity<EntityModel<AirplaneDTO>> createAirplane(@RequestBody AirplaneCreateDTO airplane) throws ResourceNotCreatedException {
         logger.debug("rest createAirplane()");
         try {
-            if (airplaneFacade.findById(airplane.getId()) != null) {
-                throw new ResourceAlreadyExistingException("Airplane " + airplane.toString() + " already exists in the database");
-            }
-            airplaneFacade.createAirplane(airplane);
-            AirplaneDTO created = airplaneFacade.findById(airplane.getId());
+            Long id = airplaneFacade.createAirplane(airplane);
+            AirplaneDTO created = airplaneFacade.findById(id);
             return new ResponseEntity<>(airplaneResourceAssembler.toModel(created, this.getClass()), HttpStatus.OK);
         } catch (Exception e) {
-            throw new ResourceAlreadyExistingException("Airplane " + airplane.toString() + " already exists in the database");
+            throw new ResourceNotCreatedException("Airplane " + airplane.toString() + " was not created due to an illegal operation");
         }
     }
 
