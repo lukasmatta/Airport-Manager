@@ -12,13 +12,21 @@ import { MatInputModule } from '@angular/material/input';
 import { MatIconModule } from '@angular/material/icon';
 import { MatButtonModule } from '@angular/material/button';
 import { HttpClientModule } from '@angular/common/http';
+import { FlightsComponent } from './components/routes/dashboard/flights/flights.component';
+import { AirplanesComponent } from './components/routes/dashboard/airplanes/airplanes.component';
+import { AirportsComponent } from './components/routes/dashboard/airports/airports.component';
+import { StewardsComponent } from './components/routes/dashboard/stewards/stewards.component';
 
 
 @NgModule({
   declarations: [
     AppComponent,
     LoginComponent,
-    DashboardComponent
+    DashboardComponent,
+    FlightsComponent,
+    AirplanesComponent,
+    AirportsComponent,
+    StewardsComponent
   ],
   imports: [
     BrowserModule,

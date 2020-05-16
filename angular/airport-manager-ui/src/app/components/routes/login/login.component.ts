@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { AuthService } from 'src/app/services/auth.service';
+import { Observable } from 'rxjs';
 
 @Component({
   selector: 'app-login',
@@ -13,8 +14,7 @@ export class LoginComponent implements OnInit {
 
   constructor(private auth: AuthService) { }
 
-  ngOnInit() {
-  }
+  ngOnInit() { }
 
   public login() {
     this.auth.authenticate(this.username, this.password).subscribe(
