@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import javax.inject.Inject;
+import javax.transaction.Transactional;
 import java.util.List;
 
 /**
@@ -16,8 +17,6 @@ import java.util.List;
 
 @Service
 public class AirportServiceImpl implements AirportService {
-
-
 
     @Autowired
     private AirportDao airportDao;

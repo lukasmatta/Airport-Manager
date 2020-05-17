@@ -23,6 +23,7 @@ import java.util.List;
  * @author Petr Kantek
  */
 @Service
+@Transactional
 public class FlightFacadeImpl implements FlightFacade {
 
     @Autowired
