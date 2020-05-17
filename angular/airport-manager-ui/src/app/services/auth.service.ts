@@ -29,9 +29,14 @@ export class AuthService {
   }
 
   public isAuthenticated(): boolean {
-    if (sessionStorage.getItem('username') && sessionStorage.getItem('passowrd')) {
+    if (sessionStorage.getItem('username') && sessionStorage.getItem('password')) {
       return true;
     }
     return false;
+  }
+
+  public getEncodedCredentials(): string {
+    const credentials = `${sessionStorage.getItem('username')}:${sessionStorage.getItem('password')}`;
+    return btoa(credentials);
   }
 }

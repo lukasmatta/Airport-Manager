@@ -6,10 +6,12 @@ import { FlightsComponent } from './components/routes/dashboard/flights/flights.
 import { AirportsComponent } from './components/routes/dashboard/airports/airports.component';
 import { AirplanesComponent } from './components/routes/dashboard/airplanes/airplanes.component';
 import { StewardsComponent } from './components/routes/dashboard/stewards/stewards.component';
+import { AuthGuard } from './guards/auth.guard';
 
 const routes: Routes = [
   { path: 'login', component: LoginComponent },
-  { path: 'dashboard', component: DashboardComponent, children:
+  { path: 'dashboard',   redirectTo: '/dashboard/airplanes', pathMatch: 'full' },
+  { path: 'dashboard', component: DashboardComponent, canActivate: [AuthGuard], children:
     [
       { path: 'flights', component: FlightsComponent },
       { path: 'airports', component: AirportsComponent },

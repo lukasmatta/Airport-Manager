@@ -9,13 +9,15 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { LoginComponent } from './components/routes/login/login.component';
 import { DashboardComponent } from './components/routes/dashboard/dashboard.component';
 import { MatInputModule } from '@angular/material/input';
+import { MatTableModule } from '@angular/material/table';
 import { MatIconModule } from '@angular/material/icon';
 import { MatButtonModule } from '@angular/material/button';
-import { HttpClientModule } from '@angular/common/http';
+import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { FlightsComponent } from './components/routes/dashboard/flights/flights.component';
 import { AirplanesComponent } from './components/routes/dashboard/airplanes/airplanes.component';
 import { AirportsComponent } from './components/routes/dashboard/airports/airports.component';
 import { StewardsComponent } from './components/routes/dashboard/stewards/stewards.component';
+import { AuthInterceptor } from './interceptors/auth.interceptor';
 
 
 @NgModule({
@@ -36,9 +38,16 @@ import { StewardsComponent } from './components/routes/dashboard/stewards/stewar
     MatIconModule,
     MatButtonModule,
     HttpClientModule,
-    FormsModule
+    FormsModule,
+    MatTableModule
   ],
-  providers: [],
+  providers: [
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: AuthInterceptor,
+      multi: true
+    }
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

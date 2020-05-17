@@ -30,9 +30,10 @@ public class LoggedFilter implements Filter {
         HttpServletResponse response = (HttpServletResponse) servletResponse;
 
         String auth = request.getHeader("Authorization");
+        logger.debug("METHOD:", request.getMethod());
+        System.out.println("METHOD" + request.getMethod());
 
-
-        if (request.getMethod().equals("OPTIONS")) {
+        if ("OPTIONS".equals(request.getMethod())) {
             responsePreflight(response);
             return;
         }
