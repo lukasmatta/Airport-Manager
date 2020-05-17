@@ -16,7 +16,7 @@ export class AuthService {
     if (username === '' || password === '') {
       return null;
     }
-
+    console.log("username:", username, "password", password);
     const authString = btoa(`${username}:${password}`);
     const authHeader: HttpHeaders = new HttpHeaders({Authorization: 'Basic ' + authString});
 

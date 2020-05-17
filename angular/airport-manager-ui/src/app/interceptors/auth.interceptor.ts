@@ -12,12 +12,13 @@ import { Observable } from 'rxjs';
 export class AuthInterceptor implements HttpInterceptor {
   constructor(public auth: AuthService) {}
   intercept(request: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
-
-    request = request.clone({
-      setHeaders: {
-        Authorization: `Basic ${this.auth.getEncodedCredentials()}`
-      }
-    });
+    if (!request.headers.has('Authorization')) {
+        request = request.clone({
+        setHeaders: {
+            Authorization: `Basic ${this.auth.getEncodedCredentials()}`
+        }
+        });
+    }
     return next.handle(request);
   }
 }
