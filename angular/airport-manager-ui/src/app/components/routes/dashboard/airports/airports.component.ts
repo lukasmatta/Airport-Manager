@@ -19,7 +19,7 @@ const AIRPORTS: Airport[] = [
   styleUrls: ['./airports.component.scss']
 })
 export class AirportsComponent implements OnInit {
-  dataSource: Airport[];
+  dataSource = new MatTableDataSource<Airport>();
   dataColumns = ['id', 'city', 'country'];
   city: string;
   country: string;
@@ -28,7 +28,7 @@ export class AirportsComponent implements OnInit {
   constructor(private dataService: DataService) {
     this.dataService.fetchAirports().subscribe(
       data => {
-        this.dataSource = data.content;
+        this.dataSource.data = data.content;
       }
     );
   }
@@ -39,14 +39,14 @@ export class AirportsComponent implements OnInit {
   addAirport() {
     if (this.city && this.country) {
       this.dataService.addAirport(this.city, this.country).subscribe(
-        data => {
-          console.log(data);
+        (data: Airport) => {
+          this.dataSource.data = this.dataSource.data.concat([{id: data.id, city: data.city, country: data.country}]);
         }
       );
     } else {
       this.errorMessage = 'City and country are required';
     }
-    console.log(this.dataSource);
+    console.log(this.dataSource.data);
   }
 
 }

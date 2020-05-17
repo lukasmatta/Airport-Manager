@@ -31,9 +31,10 @@ public class LoggedFilter implements Filter {
 
         String auth = request.getHeader("Authorization");
         logger.debug("METHOD:", request.getMethod());
-        System.out.println("METHOD" + request.getMethod());
+        System.out.println("METHOD " + request.getMethod());
 
         if ("OPTIONS".equals(request.getMethod())) {
+            System.out.println("awyea method " + request.getMethod());
             responsePreflight(response);
             return;
         }
@@ -88,7 +89,7 @@ public class LoggedFilter implements Filter {
         response.setHeader("Access-Control-Allow-Methods",
                 "GET, POST, PUT, DELETE, OPTIONS");
         response.setHeader("Access-Control-Allow-Credentials", "true");
-        response.setHeader("Access-Control-Allow-Headers", "Authorization");
+        response.setHeader("Access-Control-Allow-Headers", "Authorization, content-type");
         response.getWriter().println("<html><body><h1>Preflight</h1></body></html>");
     }
 
