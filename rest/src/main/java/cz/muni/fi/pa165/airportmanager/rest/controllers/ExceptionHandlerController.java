@@ -25,8 +25,8 @@ public class ExceptionHandlerController extends ResponseEntityExceptionHandler {
         return getObjectResponseEntity(ex.getMessage());
     }
 
-    @ExceptionHandler(ResourceAlreadyExistingException.class)
-    public ResponseEntity<Object> handleResourceAlreadyExistingException(ResourceAlreadyExistingException ex) {
+    @ExceptionHandler(ResourceNotCreatedException.class)
+    public ResponseEntity<Object> handleResourceAlreadyExistingException(ResourceNotCreatedException ex) {
         return getObjectResponseEntity(ex.getMessage());
     }
 

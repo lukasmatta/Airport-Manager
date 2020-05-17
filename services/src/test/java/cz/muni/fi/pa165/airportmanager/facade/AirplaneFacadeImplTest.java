@@ -3,6 +3,7 @@ package cz.muni.fi.pa165.airportmanager.facade;
 import cz.muni.fi.pa165.airportmanager.AirplaneService;
 import cz.muni.fi.pa165.airportmanager.BeanMappingService;
 import cz.muni.fi.pa165.airportmanager.config.ServiceConfiguration;
+import cz.muni.fi.pa165.airportmanager.dto.AirplaneCreateDTO;
 import cz.muni.fi.pa165.airportmanager.dto.AirplaneDTO;
 import cz.muni.fi.pa165.airportmanager.entity.Airplane;
 import cz.muni.fi.pa165.airportmanager.enums.AirplaneType;
@@ -92,13 +93,12 @@ public class AirplaneFacadeImplTest {
         airEntity.setFlights(new HashSet<>());
         airEntity.setType(AirplaneType.COMMERCIAL);
 
-        AirplaneDTO airDTO = new AirplaneDTO();
-        airDTO.setName("Boeing");
-        airDTO.setCapacity(42);
-        airDTO.setFlights(new HashSet<>());
-        airDTO.setType(AirplaneType.COMMERCIAL);
+        AirplaneCreateDTO airCreateDTO = new AirplaneCreateDTO();
+        airCreateDTO.setName("Boeing");
+        airCreateDTO.setCapacity(42);
+        airCreateDTO.setType(AirplaneType.COMMERCIAL);
 
-        when(beanMappingService.mapTo(airDTO, Airplane.class)).thenReturn(airEntity);
+        when(beanMappingService.mapTo(airCreateDTO, Airplane.class)).thenReturn(airEntity);
         airplaneService.createAirplane(airEntity);
         verify(airplaneService, times(1)).createAirplane(airEntity);
     }

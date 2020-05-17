@@ -39,8 +39,11 @@ public class Flight {
     @ManyToOne
     private Airplane plane;
 
-    @ManyToMany
-    private Set<Steward> stewards = new HashSet<Steward>();
+    @ManyToMany(cascade = {
+            CascadeType.MERGE,
+            CascadeType.REFRESH
+    })
+    private Set<Steward> stewards = new HashSet<>();
 
     public Long getId() {
         return id;
@@ -96,7 +99,7 @@ public class Flight {
     }
 
     public Set<Steward> getStewards() {
-        return Collections.unmodifiableSet(stewards);
+        return stewards;
     }
 
     public void setStewards(Set<Steward> stewards) {
@@ -104,12 +107,16 @@ public class Flight {
     }
 
     public void addSteward(Steward steward) {
+        if (stewards.contains(steward)) {
+            return;
+        }
         try {
             isResourceAvailable(steward.getFlights());
             stewards.add(steward);
         } catch (OverlappingTimeException e) {
             System.out.println("Steward " + steward.getFirstName() + " " + steward.getLastName() + " is not available for given flight");
         }
+        steward.addFlight(this);
     }
 
     public boolean removeSteward(Steward steward) {
@@ -121,6 +128,9 @@ public class Flight {
     }
 
     private void isResourceAvailable(Collection<Flight> flights) throws OverlappingTimeException {
+        if (flights == null) {
+            return;
+        }
         for (Flight flight : flights) {
             if (isOverlapping(flight.departure, flight.arrival)) {
                 throw new OverlappingTimeException();
@@ -149,13 +159,11 @@ public class Flight {
 
     @Override
     public int hashCode() {
-        int result = getId().hashCode();
-        result = 31 * result + getPlane().hashCode();
+        int result = getPlane().hashCode();
         result = 31 * result + getOrigin().hashCode();
         result = 31 * result + getDestination().hashCode();
         result = 31 * result + getDeparture().hashCode();
         result = 31 * result + getArrival().hashCode();
-        result = 31 * result + getStewards().hashCode();
         return result;
     }
 }

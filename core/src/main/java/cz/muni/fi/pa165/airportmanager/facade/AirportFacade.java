@@ -1,5 +1,6 @@
 package cz.muni.fi.pa165.airportmanager.facade;
 
+import cz.muni.fi.pa165.airportmanager.dto.AirportCreateDTO;
 import cz.muni.fi.pa165.airportmanager.dto.AirportDTO;
 
 import java.util.List;
@@ -31,7 +32,7 @@ public interface AirportFacade {
      *
      * @param airport object Airport
      */
-    void createAirport(AirportDTO airport);
+    Long createAirport(AirportCreateDTO airport);
 
     /**
      * Update airport

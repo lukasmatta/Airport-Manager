@@ -22,7 +22,7 @@ public class FlightDTO extends BaseDTO {
 
     private AirplaneDTO plane;
 
-    private Set<StewardDTO> stewards = new HashSet<StewardDTO>();
+    private Set<StewardDTO> stewards = new HashSet<>();
 
     public AirportDTO getOrigin() {
         return origin;

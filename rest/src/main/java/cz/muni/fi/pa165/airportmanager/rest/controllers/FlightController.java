@@ -1,12 +1,12 @@
 package cz.muni.fi.pa165.airportmanager.rest.controllers;
 
-import cz.muni.fi.pa165.airportmanager.dto.AirplaneDTO;
+import cz.muni.fi.pa165.airportmanager.dto.AirportDTO;
+import cz.muni.fi.pa165.airportmanager.dto.FlightCreateDTO;
 import cz.muni.fi.pa165.airportmanager.dto.FlightDTO;
-import cz.muni.fi.pa165.airportmanager.entity.Flight;
 import cz.muni.fi.pa165.airportmanager.facade.FlightFacade;
 import cz.muni.fi.pa165.airportmanager.rest.URIs;
 import cz.muni.fi.pa165.airportmanager.rest.assemblers.GenericResourceAssembler;
-import cz.muni.fi.pa165.airportmanager.rest.exceptions.ResourceAlreadyExistingException;
+import cz.muni.fi.pa165.airportmanager.rest.exceptions.ResourceNotCreatedException;
 import cz.muni.fi.pa165.airportmanager.rest.exceptions.ResourceNotFoundException;
 import cz.muni.fi.pa165.airportmanager.rest.exceptions.ResourceNotModifiedException;
 import org.slf4j.Logger;
@@ -56,23 +56,19 @@ public class FlightController {
         }
     }
 
-    @RequestMapping(value = "/create", method = RequestMethod.POST,
+    @RequestMapping(value = "/auth/create", method = RequestMethod.POST,
             consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
-    public HttpEntity<EntityModel<FlightDTO>> createFlight(@RequestBody FlightDTO flight) throws Exception {
+    public HttpEntity<EntityModel<FlightDTO>> createFlight(@RequestBody FlightCreateDTO flight) throws Exception {
         logger.debug("rest createFlight()");
         try {
-            if (flightFacade.findById(flight.getId()) != null) {
-                throw new ResourceAlreadyExistingException("Flight " + flight.toString() + " already exists in the database");
-            }
-            flightFacade.create(flight);
-            FlightDTO created = flightFacade.findById(flight.getId());
-            return new ResponseEntity<>(flightResourceAssembler.toModel(created, this.getClass()), HttpStatus.OK);
+            Long id = flightFacade.create(flight);
+            return new ResponseEntity<>(flightResourceAssembler.toModel(flightFacade.findById(id), this.getClass()), HttpStatus.OK);
         } catch (Exception e) {
-            throw new ResourceAlreadyExistingException("Flight " + flight.toString() + " already exists in the database");
+            throw new ResourceNotCreatedException("Flight " + flight.toString() + " was not created due to an illegal operation");
         }
     }
 
-    @RequestMapping(value = "/update", method = RequestMethod.POST,
+    @RequestMapping(value = "/auth/update", method = RequestMethod.POST,
             produces = MediaType.APPLICATION_JSON_VALUE, consumes = MediaType.APPLICATION_JSON_VALUE)
     public final HttpEntity<EntityModel<FlightDTO>> updateFlight(@RequestBody FlightDTO flight) throws ResourceNotModifiedException {
         logger.debug("rest updateFlight()");
@@ -85,7 +81,7 @@ public class FlightController {
         }
     }
 
-    @RequestMapping(value = "/{id}", method = RequestMethod.DELETE, produces = MediaType.APPLICATION_JSON_VALUE)
+    @RequestMapping(value = "/auth/{id}", method = RequestMethod.DELETE, produces = MediaType.APPLICATION_JSON_VALUE)
     public final void deleteFlightByID(@PathVariable("id") long id) throws ResourceNotFoundException {
         logger.debug("rest deleteFlight()");
         try {
@@ -95,7 +91,7 @@ public class FlightController {
         }
     }
 
-    @RequestMapping(value = "/delete", method = RequestMethod.DELETE,
+    @RequestMapping(value = "/auth/delete", method = RequestMethod.DELETE,
             produces = MediaType.APPLICATION_JSON_VALUE, consumes = MediaType.APPLICATION_JSON_VALUE)
     public final void deleteFlight(@RequestBody FlightDTO flight) throws ResourceNotModifiedException {
         logger.debug("rest deleteFlight()");
