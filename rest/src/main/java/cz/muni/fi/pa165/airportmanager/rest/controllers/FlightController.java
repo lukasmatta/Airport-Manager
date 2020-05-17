@@ -60,12 +60,12 @@ public class FlightController {
             consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
     public HttpEntity<EntityModel<FlightDTO>> createFlight(@RequestBody FlightCreateDTO flight) throws Exception {
         logger.debug("rest createFlight()");
-        try {
+//        try {
             Long id = flightFacade.create(flight);
             return new ResponseEntity<>(flightResourceAssembler.toModel(flightFacade.findById(id), this.getClass()), HttpStatus.OK);
-        } catch (Exception e) {
-            throw new ResourceNotCreatedException("Flight " + flight.toString() + " was not created due to an illegal operation");
-        }
+//        } catch (Exception e) {
+//            throw new ResourceNotCreatedException("Flight " + flight.toString() + " was not created due to an illegal operation");
+//        }
     }
 
     @RequestMapping(value = "/auth/update", method = RequestMethod.POST,

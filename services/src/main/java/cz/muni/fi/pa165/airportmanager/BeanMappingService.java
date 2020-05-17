@@ -19,6 +19,4 @@ public interface BeanMappingService {
     <T> Set<T> mapToSet(Collection<?> objects, Class<T> mapToClass);
 
     <T> T mapTo(Object u, Class<T> mapToClass);
-
-    Mapper getMapper();
 }
