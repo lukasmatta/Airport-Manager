@@ -1,1 +1,79 @@
-<p>flights works!</p>
+<div class="container">
+    <h1>Flights</h1>
+    <table mat-table [dataSource]="dataSource" class="mat-elevation-z8">
+        <ng-container matColumnDef="id">
+            <th mat-header-cell *matHeaderCellDef> No. </th>
+            <td mat-cell *matCellDef="let element"> {{element.id}} </td>
+        </ng-container>
+  
+        <ng-container matColumnDef="origin">
+            <th mat-header-cell *matHeaderCellDef> Origin </th>
+            <td mat-cell *matCellDef="let element"> {{element.origin.city + ', ' + element.origin.country}} </td>
+        </ng-container>
+  
+        <ng-container matColumnDef="destination">
+            <th mat-header-cell *matHeaderCellDef> Destination </th>
+            <td mat-cell *matCellDef="let element"> {{element.destination.city + ', ' + element.destination.country}} </td>
+        </ng-container>
+
+        <ng-container matColumnDef="departure">
+            <th mat-header-cell *matHeaderCellDef> Departure </th>
+            <td mat-cell *matCellDef="let element"> {{element.departure}} </td>
+        </ng-container>
+
+        <ng-container matColumnDef="arrival">
+            <th mat-header-cell *matHeaderCellDef> Arrival </th>
+            <td mat-cell *matCellDef="let element"> {{element.arrival}} </td>
+        </ng-container>
+
+        <ng-container matColumnDef="plane">
+            <th mat-header-cell *matHeaderCellDef> Plane </th>
+            <td mat-cell *matCellDef="let element"> {{element.plane.name}} </td>
+        </ng-container>
+
+        <tr mat-header-row *matHeaderRowDef="dataColumns"></tr>
+        <tr mat-row *matRowDef="let row; columns: dataColumns;"></tr>
+    </table>
+    <div class="add-form">
+        <p>Add new Flight</p>
+        <mat-form-field appearance="standard">
+            <mat-label>Origin</mat-label>
+            <mat-select [(ngModel)]="originID">
+                <mat-option *ngFor="let type of allAirports" [value]="type.id">
+                  {{type.city}}, {{type.country}}
+                </mat-option>
+              </mat-select>
+        </mat-form-field>
+
+        <mat-form-field appearance="standard">
+            <mat-label>Departure time (ZonedDatetime format)</mat-label>
+            <input [(ngModel)]="departure" matInput type="text">
+        </mat-form-field>
+
+        <mat-form-field appearance="standard">
+            <mat-label>Destination</mat-label>
+            <mat-select [(ngModel)]="destinationID">
+                <mat-option *ngFor="let type of allAirports" [value]="type.id">
+                  {{type.city}}, {{type.country}}
+                </mat-option>
+              </mat-select>
+        </mat-form-field>
+
+        <mat-form-field appearance="standard">
+            <mat-label>Arrival time (ZonedDatetime format)</mat-label>
+            <input [(ngModel)]="arrival" matInput type="text">
+        </mat-form-field>
+
+        <mat-form-field appearance="standard">
+            <mat-label>Airplane</mat-label>
+            <mat-select [(ngModel)]="planeID">
+                <mat-option *ngFor="let type of allAirplanes" [value]="type.id">
+                  {{type.name}} ({{type.type}}) - Capacity: {{ type.capacity }}
+                </mat-option>
+              </mat-select>
+        </mat-form-field>
+
+        <button class="login-button" mat-raised-button color="primary" (click)="addFlight()">Add Airport</button>
+        <p *ngIf="errorMessage" class="error-message">{{ errorMessage }}</p>
+    </div>
+</div>

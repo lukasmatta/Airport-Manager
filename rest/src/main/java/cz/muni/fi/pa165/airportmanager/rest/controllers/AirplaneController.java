@@ -58,7 +58,7 @@ public class AirplaneController {
         }
     }
 
-    @RequestMapping(value = "/create", method = RequestMethod.POST,
+    @RequestMapping(value = "/auth/create", method = RequestMethod.POST,
             consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
     public HttpEntity<EntityModel<AirplaneDTO>> createAirplane(@RequestBody AirplaneCreateDTO airplane) throws ResourceNotCreatedException {
         logger.debug("rest createAirplane()");

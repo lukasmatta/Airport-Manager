@@ -12,6 +12,8 @@ import { MatInputModule } from '@angular/material/input';
 import { MatTableModule } from '@angular/material/table';
 import { MatIconModule } from '@angular/material/icon';
 import { MatButtonModule } from '@angular/material/button';
+import { MatSelectModule } from '@angular/material/select';
+
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { FlightsComponent } from './components/routes/dashboard/flights/flights.component';
 import { AirplanesComponent } from './components/routes/dashboard/airplanes/airplanes.component';
@@ -39,7 +41,8 @@ import { AuthInterceptor } from './interceptors/auth.interceptor';
     MatButtonModule,
     HttpClientModule,
     FormsModule,
-    MatTableModule
+    MatTableModule,
+    MatSelectModule
   ],
   providers: [
     {
