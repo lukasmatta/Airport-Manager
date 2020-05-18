@@ -16,10 +16,27 @@ export class AuthService {
     if (username === '' || password === '') {
       return null;
     }
+    console.log("username:", username, "password", password);
+    const authString = btoa(`${username}:${password}`);
+    const authHeader: HttpHeaders = new HttpHeaders({Authorization: 'Basic ' + authString});
 
-    const authString = btoa('${username} ${password}');
-    const authHeader: HttpHeaders = new HttpHeaders({Authorization: authString});
+    return this.http.get(environment.restAPI + 'airports', {headers: authHeader});
+  }
 
-    return this.http.get(environment.restAPI, {headers: authHeader});
+  public saveCredentials(username: string, password: string): void {
+    sessionStorage.setItem('username', username);
+    sessionStorage.setItem('password', password);
+  }
+
+  public isAuthenticated(): boolean {
+    if (sessionStorage.getItem('username') && sessionStorage.getItem('password')) {
+      return true;
+    }
+    return false;
+  }
+
+  public getEncodedCredentials(): string {
+    const credentials = `${sessionStorage.getItem('username')}:${sessionStorage.getItem('password')}`;
+    return btoa(credentials);
   }
 }

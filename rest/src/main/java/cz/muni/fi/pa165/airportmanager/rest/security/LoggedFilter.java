@@ -30,6 +30,15 @@ public class LoggedFilter implements Filter {
         HttpServletResponse response = (HttpServletResponse) servletResponse;
 
         String auth = request.getHeader("Authorization");
+        logger.debug("METHOD:", request.getMethod());
+        System.out.println("METHOD " + request.getMethod());
+
+        if ("OPTIONS".equals(request.getMethod())) {
+            System.out.println("awyea method " + request.getMethod());
+            responsePreflight(response);
+            return;
+        }
+
         if (auth == null) {
             response401(response,"No Authorization header");
             return;
@@ -72,6 +81,16 @@ public class LoggedFilter implements Filter {
         response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
 //        response.setHeader("WWW-Authenticate", "Basic realm=\"type username and password\"");
         response.getWriter().println(String.format("<html><body><h1>401 Unauthorized %s</h1></body></html>", message));
+    }
+
+    private void responsePreflight(HttpServletResponse response) throws IOException {
+        response.setStatus(HttpServletResponse.SC_OK);
+        response.setHeader("Access-Control-Allow-Origin", "http://localhost:4200");
+        response.setHeader("Access-Control-Allow-Methods",
+                "GET, POST, PUT, DELETE, OPTIONS");
+        response.setHeader("Access-Control-Allow-Credentials", "true");
+        response.setHeader("Access-Control-Allow-Headers", "Authorization, content-type");
+        response.getWriter().println("<html><body><h1>Preflight</h1></body></html>");
     }
 
     private String[] parseAuthHeader(String auth) {
