@@ -1,6 +1,6 @@
 package cz.muni.fi.pa165.airportmanager;
 
-import org.dozer.Mapper;
+import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -18,13 +18,17 @@ import java.util.Set;
 
 @Service
 public class BeanMappingServiceImpl implements BeanMappingService {
+    private ModelMapper modelMapper;
+
     @Autowired
-    private Mapper dozer;
+    public BeanMappingServiceImpl(ModelMapper modelMapper){
+        this.modelMapper = modelMapper;
+    }
 
     public <T> List<T> mapToList(Collection<?> objects, Class<T> mapToClass) {
         List<T> mappedCollection = new ArrayList<>();
         for (Object object : objects) {
-            mappedCollection.add(dozer.map(object, mapToClass));
+            mappedCollection.add(modelMapper.map(object, mapToClass));
         }
         return mappedCollection;
     }
@@ -33,16 +37,12 @@ public class BeanMappingServiceImpl implements BeanMappingService {
     public <T> Set<T> mapToSet(Collection<?> objects, Class<T> mapToClass) {
         Set<T> mappedCollection = new HashSet<>();
         for (Object object : objects) {
-            mappedCollection.add(dozer.map(object, mapToClass));
+            mappedCollection.add(modelMapper.map(object, mapToClass));
         }
         return mappedCollection;
     }
 
     public <T> T mapTo(Object u, Class<T> mapToClass) {
-        return dozer.map(u, mapToClass);
-    }
-
-    public Mapper getMapper() {
-        return dozer;
+        return modelMapper.map(u, mapToClass);
     }
 }

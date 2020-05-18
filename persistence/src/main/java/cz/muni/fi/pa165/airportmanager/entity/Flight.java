@@ -23,11 +23,11 @@ public class Flight {
     private Long id;
 
     @NotNull
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     private Airport origin;
 
     @NotNull
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     private Airport destination;
 
     @NotNull
@@ -36,7 +36,7 @@ public class Flight {
     @NotNull
     private ZonedDateTime arrival;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     private Airplane plane;
 
     @ManyToMany(cascade = {

@@ -23,6 +23,7 @@ import java.util.List;
  * @author Petr Kantek
  */
 @Service
+@Transactional
 public class FlightFacadeImpl implements FlightFacade {
 
     @Autowired
@@ -38,7 +39,6 @@ public class FlightFacadeImpl implements FlightFacade {
     private BeanMappingService beanMappingService;
 
     @Override
-    @Transactional
     public Long create(FlightCreateDTO entity) {
         Flight flight = beanMappingService.mapTo(entity, Flight.class);
 
@@ -56,20 +56,17 @@ public class FlightFacadeImpl implements FlightFacade {
     }
 
     @Override
-    @Transactional
     public void delete(FlightDTO entity) {
         Flight flight = beanMappingService.mapTo(entity, Flight.class);
         flightService.delete(flight);
     }
 
     @Override
-    @Transactional
     public void deleteById(long entityId) {
         flightService.deleteById(entityId);
     }
 
     @Override
-    @Transactional
     public void update(FlightDTO entity) {
         Flight flight = beanMappingService.mapTo(entity, Flight.class);
         flightService.update(flight);
