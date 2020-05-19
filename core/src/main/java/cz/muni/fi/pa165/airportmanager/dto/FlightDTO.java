@@ -4,6 +4,8 @@ import java.time.ZonedDateTime;
 import java.util.HashSet;
 import java.util.Objects;
 import java.util.Set;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+
 
 /**
  * Flight DTO class
@@ -22,6 +24,7 @@ public class FlightDTO extends BaseDTO {
 
     private AirplaneDTO plane;
 
+    @JsonManagedReference
     private Set<StewardDTO> stewards = new HashSet<>();
 
     public AirportDTO getOrigin() {

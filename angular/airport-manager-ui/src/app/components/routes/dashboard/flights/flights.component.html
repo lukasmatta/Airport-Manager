@@ -7,19 +7,19 @@
         </ng-container>
   
         <ng-container matColumnDef="origin">
-            <th mat-header-cell *matHeaderCellDef> Origin </th>
+            <th mat-header-cell *matHeaderCellDef> Origin Airport </th>
             <td mat-cell *matCellDef="let element"> {{element.origin.city + ', ' + element.origin.country}} </td>
         </ng-container>
   
         <ng-container matColumnDef="destination">
-            <th mat-header-cell *matHeaderCellDef> Destination </th>
+            <th mat-header-cell *matHeaderCellDef> Destination Airport </th>
             <td mat-cell *matCellDef="let element"> {{element.destination.city + ', ' + element.destination.country}} </td>
         </ng-container>
 
         <ng-container matColumnDef="departure">
             <th mat-header-cell *matHeaderCellDef> Departure </th>
             <td mat-cell *matCellDef="let element"> {{element.departure}} </td>
-        </ng-container>
+        </ng-container>          
 
         <ng-container matColumnDef="arrival">
             <th mat-header-cell *matHeaderCellDef> Arrival </th>
@@ -29,6 +29,11 @@
         <ng-container matColumnDef="plane">
             <th mat-header-cell *matHeaderCellDef> Plane </th>
             <td mat-cell *matCellDef="let element"> {{element.plane.name}} </td>
+        </ng-container>
+
+        <ng-container matColumnDef="stewards">
+            <th mat-header-cell *matHeaderCellDef> Stewards </th>
+            <td mat-cell *matCellDef="let element"> {{showStewards(element.stewards)}} </td>
         </ng-container>
 
         <tr mat-header-row *matHeaderRowDef="dataColumns"></tr>
@@ -45,10 +50,18 @@
               </mat-select>
         </mat-form-field>
 
-        <mat-form-field appearance="standard">
-            <mat-label>Departure time (ZonedDatetime format)</mat-label>
-            <input [(ngModel)]="departure" matInput type="text">
+        <mat-form-field>
+            <mat-label>Departure date</mat-label>
+            <input matInput [matDatepicker]="picker" [(ngModel)]="departureDate">
+            <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+            <mat-datepicker #picker></mat-datepicker>
+          </mat-form-field>
+
+          <mat-form-field appearance="standard">
+            <mat-label>Departure time</mat-label>
+            <input [(ngModel)]="departureTime" matInput type="time">
         </mat-form-field>
+
 
         <mat-form-field appearance="standard">
             <mat-label>Destination</mat-label>
@@ -59,9 +72,16 @@
               </mat-select>
         </mat-form-field>
 
-        <mat-form-field appearance="standard">
-            <mat-label>Arrival time (ZonedDatetime format)</mat-label>
-            <input [(ngModel)]="arrival" matInput type="text">
+        <mat-form-field>
+            <mat-label>Arrival date</mat-label>
+            <input matInput [matDatepicker]="picker2" [(ngModel)]="arrivalDate">
+            <mat-datepicker-toggle matSuffix [for]="picker2"></mat-datepicker-toggle>
+            <mat-datepicker #picker2></mat-datepicker>
+          </mat-form-field>
+
+          <mat-form-field appearance="standard">
+            <mat-label>Departure time</mat-label>
+            <input [(ngModel)]="arrivalTime" matInput type="time">
         </mat-form-field>
 
         <mat-form-field appearance="standard">
@@ -73,7 +93,16 @@
               </mat-select>
         </mat-form-field>
 
-        <button class="login-button" mat-raised-button color="primary" (click)="addFlight()">Add Airport</button>
+        <mat-form-field appearance="standard">
+            <mat-label>Stewards</mat-label>
+            <mat-select [(ngModel)]="selectedStewards" multiple>
+                <mat-option *ngFor="let type of allStewards" [value]="type.id">
+                  {{type.firstName}} {{type.lastName}}
+                </mat-option>
+              </mat-select>
+        </mat-form-field>
+
+        <button class="login-button" mat-raised-button color="primary" (click)="addFlight()">Add Flight</button>
         <p *ngIf="errorMessage" class="error-message">{{ errorMessage }}</p>
     </div>
 </div>

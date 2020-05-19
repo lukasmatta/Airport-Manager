@@ -1,5 +1,6 @@
 package cz.muni.fi.pa165.airportmanager.entity;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.sun.istack.NotNull;
 
 import javax.persistence.*;
@@ -21,7 +22,8 @@ public class Steward {
     @NotNull
     private String lastName;
 
-    @ManyToMany(mappedBy = "stewards")
+    @JsonBackReference
+    @ManyToMany (mappedBy = "stewards", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     private Set<Flight> flights = new HashSet<>();
 
     public Steward() {}
@@ -91,15 +93,13 @@ public class Steward {
         Steward steward = (Steward) o;
 
         if (!getFirstName().equals(steward.getFirstName())) return false;
-        if (!getLastName().equals(steward.getLastName())) return false;
-        return getFlights() != null ? getFlights().equals(steward.getFlights()) : steward.getFlights() == null;
+        return getLastName().equals(steward.getLastName());
     }
 
     @Override
     public int hashCode() {
         int result = getFirstName().hashCode();
         result = 31 * result + getLastName().hashCode();
-        result = 31 * result + (getFlights() != null ? getFlights().hashCode() : 0);
         return result;
     }
 }

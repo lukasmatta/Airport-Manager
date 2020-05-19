@@ -1,21 +1,25 @@
 package cz.muni.fi.pa165.airportmanager.facade;
 
-import cz.muni.fi.pa165.airportmanager.AirplaneService;
-import cz.muni.fi.pa165.airportmanager.AirportService;
-import cz.muni.fi.pa165.airportmanager.BeanMappingService;
-import cz.muni.fi.pa165.airportmanager.FlightService;
+import cz.muni.fi.pa165.airportmanager.*;
 import cz.muni.fi.pa165.airportmanager.dto.AirplaneDTO;
 import cz.muni.fi.pa165.airportmanager.dto.AirportDTO;
 import cz.muni.fi.pa165.airportmanager.dto.FlightCreateDTO;
 import cz.muni.fi.pa165.airportmanager.dto.FlightDTO;
 import cz.muni.fi.pa165.airportmanager.entity.Airplane;
 import cz.muni.fi.pa165.airportmanager.entity.Flight;
+import cz.muni.fi.pa165.airportmanager.entity.Steward;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
+import java.time.ZonedDateTime;
+import java.time.format.DateTimeFormatter;
+import java.util.Arrays;
 import java.util.Collection;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
+
 
 /**
  * Flight facade layer
@@ -30,6 +34,9 @@ public class FlightFacadeImpl implements FlightFacade {
     private FlightService flightService;
 
     @Autowired
+    private StewardService  stewardService;
+
+    @Autowired
     private AirportService airportService;
 
     @Autowired
@@ -42,8 +49,23 @@ public class FlightFacadeImpl implements FlightFacade {
     public Long create(FlightCreateDTO entity) {
         Flight flight = beanMappingService.mapTo(entity, Flight.class);
 
-        flight.setArrival(entity.getArrival());
-        flight.setDeparture(entity.getDeparture());
+        flight.setArrival(ZonedDateTime.parse(entity.getArrival(), DateTimeFormatter.RFC_1123_DATE_TIME));
+        flight.setDeparture(ZonedDateTime.parse(entity.getDeparture(), DateTimeFormatter.RFC_1123_DATE_TIME));
+
+
+        Set<Steward> stewards = new HashSet<Steward>();
+        Long[] stewardsList = entity.getStewardsList();
+
+        if (stewardsList != null && stewardsList.length > 0) {
+
+            Steward currentSteward;
+            for (long id : stewardsList) {
+                currentSteward = stewardService.findById(id);
+                stewards.add(currentSteward);
+            }
+
+            flight.setStewards(stewards);
+        }
 
         flight.setOrigin(airportService.findById(entity.getOriginID()));
         flight.setDestination(airportService.findById(entity.getDestinationID()));

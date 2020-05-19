@@ -7,9 +7,11 @@ import cz.muni.fi.pa165.airportmanager.FlightService;
 import cz.muni.fi.pa165.airportmanager.config.ServiceConfiguration;
 import cz.muni.fi.pa165.airportmanager.dto.FlightCreateDTO;
 import cz.muni.fi.pa165.airportmanager.dto.FlightDTO;
+import cz.muni.fi.pa165.airportmanager.dto.StewardDTO;
 import cz.muni.fi.pa165.airportmanager.entity.Airplane;
 import cz.muni.fi.pa165.airportmanager.entity.Airport;
 import cz.muni.fi.pa165.airportmanager.entity.Flight;
+import cz.muni.fi.pa165.airportmanager.entity.Steward;
 import cz.muni.fi.pa165.airportmanager.enums.AirplaneType;
 import org.hibernate.service.spi.ServiceException;
 import org.mockito.InjectMocks;
@@ -24,8 +26,11 @@ import java.time.LocalDateTime;
 import java.time.Month;
 import java.time.ZoneOffset;
 import java.time.ZonedDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.Collections;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
@@ -92,8 +97,8 @@ public class FlightFacadeImplTest extends AbstractTestNGSpringContextTests {
     public void testCreateFlight() {
         FlightCreateDTO flightCreateDTO= new FlightCreateDTO();
 
-        ZonedDateTime dep = ZonedDateTime.of(LocalDateTime.of(2020, Month.AUGUST, 18,12,1), ZoneOffset.UTC);
-        ZonedDateTime arr = ZonedDateTime.of(LocalDateTime.of(2020, Month.AUGUST, 18,13,0), ZoneOffset.UTC);
+        String dep = "Thu, 31 Mar 2016 06:49:02 GMT";
+        String arr = "Thu, 31 Mar 2016 08:49:02 GMT";
 
         flightCreateDTO.setDeparture(dep);
         flightCreateDTO.setArrival(arr);
@@ -105,11 +110,9 @@ public class FlightFacadeImplTest extends AbstractTestNGSpringContextTests {
 
         Flight flight = new Flight();
 
-        ZonedDateTime dep_1 = ZonedDateTime.of(LocalDateTime.of(2020, Month.AUGUST, 18,12,1), ZoneOffset.UTC);
-        ZonedDateTime arr_1 = ZonedDateTime.of(LocalDateTime.of(2020, Month.AUGUST, 18,13,0), ZoneOffset.UTC);
 
-        flight.setDeparture(dep);
-        flight.setArrival(arr);
+        flight.setDeparture(ZonedDateTime.parse(dep, DateTimeFormatter.RFC_1123_DATE_TIME));
+        flight.setArrival(ZonedDateTime.parse(arr, DateTimeFormatter.RFC_1123_DATE_TIME));
 
         Airport air1 = new Airport((long)3);
         air1.setCity("Almaty");
@@ -137,13 +140,27 @@ public class FlightFacadeImplTest extends AbstractTestNGSpringContextTests {
 
     @Test
     public void testFindAllFlights() {
+        StewardDTO steward = new StewardDTO();
+        steward.setFirstName("lukas");
+        steward.setLastName("matta");
+        Set<StewardDTO> stewards = new HashSet<>();
+        stewards.add(steward);
+
         FlightDTO flightDTO = new FlightDTO();
         flightDTO.setId((long) 5);
         flightDTO.setDeparture(testDate);
+        flightDTO.setStewards(stewards);
+
+        Steward steward2 = new Steward();
+        steward2.setFirstName("lukas");
+        steward2.setLastName("matta");
+        Set<Steward> stewards2 = new HashSet<>();
+        stewards2.add(steward2);
 
         Flight flight = new Flight();
         flight.setId((long) 5);
         flight.setDeparture(testDate);
+        flight.setStewards(stewards2);
 
         List<Flight> flights = Collections.singletonList(flight);
         List<FlightDTO> flightDTOS = Collections.singletonList(flightDTO);

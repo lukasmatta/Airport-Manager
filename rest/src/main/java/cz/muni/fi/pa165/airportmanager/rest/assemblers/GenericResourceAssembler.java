@@ -38,6 +38,7 @@ public class GenericResourceAssembler<TEntity extends BaseDTO>  {
     public CollectionModel<EntityModel<TEntity>> toCollectionModel(Iterable<? extends TEntity> entities, Class<?> controller) {
 
         Collection<EntityModel<TEntity>> resources = new ArrayList<>();
+
         for (TEntity entity : entities) {
             resources.add(toModel(entity, controller));
         }

@@ -13,25 +13,27 @@ public class FlightCreateDTO {
 
     private long destinationID;
 
-    private ZonedDateTime departure;
+    private String departure;
 
-    private ZonedDateTime arrival;
+    private String arrival;
 
     private long planeID;
 
-    public ZonedDateTime getDeparture() {
+    private Long[] stewardsList;
+
+    public String getDeparture() {
         return departure;
     }
 
-    public ZonedDateTime getArrival() {
+    public String getArrival() {
         return arrival;
     }
 
-    public void setDeparture(ZonedDateTime departure) {
+    public void setDeparture(String departure) {
         this.departure = departure;
     }
 
-    public void setArrival(ZonedDateTime arrival) {
+    public void setArrival(String arrival) {
         this.arrival = arrival;
     }
 
@@ -57,6 +59,14 @@ public class FlightCreateDTO {
 
     public void setPlaneID(long planeID) {
         this.planeID = planeID;
+    }
+
+    public Long[] getStewardsList() {
+        return stewardsList;
+    }
+
+    public void setStewardsList(Long[] stewardsList) {
+        this.stewardsList = stewardsList;
     }
 
     @Override

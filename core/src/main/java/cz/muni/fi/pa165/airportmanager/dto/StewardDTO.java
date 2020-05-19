@@ -2,7 +2,11 @@ package cz.muni.fi.pa165.airportmanager.dto;
 
 
 import java.util.HashSet;
+import java.util.List;
+import java.util.LinkedList;
 import java.util.Set;
+import java.util.HashSet;
+import com.fasterxml.jackson.annotation.JsonBackReference;
 
 /**
  * DTO for Steward
@@ -15,6 +19,7 @@ public class StewardDTO extends BaseDTO {
 
     private String lastName;
 
+    @JsonBackReference
     private Set<FlightDTO> flights = new HashSet<>();
 
     public String getFirstName() {
@@ -62,15 +67,16 @@ public class StewardDTO extends BaseDTO {
         StewardDTO steward = (StewardDTO) o;
 
         if (!getFirstName().equals(steward.getFirstName())) return false;
-        if (!getLastName().equals(steward.getLastName())) return false;
-        return getFlights() != null ? getFlights().equals(steward.getFlights()) : steward.getFlights() == null;
+        return getLastName().equals(steward.getLastName());
     }
 
     @Override
     public int hashCode() {
-        int result = getFirstName().hashCode();
-        result = 31 * result + getLastName().hashCode();
-        result = 31 * result + (getFlights() != null ? getFlights().hashCode() : 0);
-        return result;
+        if (getFirstName() != null && getLastName() != null) {
+            int result = getFirstName().hashCode();
+            result = 31 * result + getLastName().hashCode();
+            return result;
+        }
+        return 1;
     }
 }

@@ -40,11 +40,11 @@ export class DataService {
 
   public addAirplane(name: string, type: AirplaneType, capacity: number) {
     const data = {'name': name, 'type': type, 'capacity': capacity};
-    return this.http.post(environment.restAPI + 'airplanes/create', data);
+    return this.http.post(environment.restAPI + 'airplanes/auth/create', data);
   }
 
-  public addFlight(originID: number, destinationID: number, departure: string, arrival: string, planeID: number) {
-    const data = {'originID': originID, 'destinationID': destinationID, 'departure': departure, 'arrival': arrival, 'planeID': planeID};
+  public addFlight(originID: number, destinationID: number, departure: string, arrival: string, planeID: number, stewards: number[]) {
+    const data = {'originID': originID, 'destinationID': destinationID, 'departure': departure, 'arrival': arrival, 'planeID': planeID, 'stewardsList': stewards};
     return this.http.post(environment.restAPI + 'flights/auth/create', data);
   }
 }

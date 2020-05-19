@@ -1,5 +1,6 @@
 package cz.muni.fi.pa165.airportmanager.entity;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.sun.istack.NotNull;
 import cz.muni.fi.pa165.airportmanager.exceptions.OverlappingTimeException;
 
@@ -39,10 +40,12 @@ public class Flight {
     @ManyToOne(fetch = FetchType.LAZY)
     private Airplane plane;
 
-    @ManyToMany(cascade = {
-            CascadeType.MERGE,
-            CascadeType.REFRESH
-    })
+    @JsonManagedReference
+    @ManyToMany
+    @JoinTable(
+            name = "flights_stewards",
+            joinColumns = @JoinColumn(name = "flight_id"),
+            inverseJoinColumns = @JoinColumn(name = "steward_id"))
     private Set<Steward> stewards = new HashSet<>();
 
     public Long getId() {
@@ -153,8 +156,7 @@ public class Flight {
         if (!getOrigin().equals(flight.getOrigin())) return false;
         if (!getDestination().equals(flight.getDestination())) return false;
         if (!getDeparture().equals(flight.getDeparture())) return false;
-        if (!getArrival().equals(flight.getArrival())) return false;
-        return getStewards().equals(flight.getStewards());
+        return getArrival().equals(flight.getArrival());
     }
 
     @Override
