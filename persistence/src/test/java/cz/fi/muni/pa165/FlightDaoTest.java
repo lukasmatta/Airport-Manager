@@ -6,6 +6,7 @@ import cz.muni.fi.pa165.airportmanager.entity.Airport;
 import cz.muni.fi.pa165.airportmanager.entity.Flight;
 import cz.muni.fi.pa165.airportmanager.entity.Steward;
 import cz.muni.fi.pa165.airportmanager.enums.AirplaneType;
+import cz.muni.fi.pa165.airportmanager.exceptions.OverlappingTimeException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.TestExecutionListeners;
@@ -26,7 +27,6 @@ import java.util.List;
 
 import static org.testng.AssertJUnit.*;
 
-
 /**
  * Tests for Flight class
  *
@@ -43,7 +43,7 @@ public class FlightDaoTest extends AbstractTestNGSpringContextTests {
     private EntityManager em;
 
     @Test
-    public void create() {
+    public void create() throws OverlappingTimeException {
         Flight flight = new Flight();
 
         Airport origin = new Airport();
@@ -86,7 +86,7 @@ public class FlightDaoTest extends AbstractTestNGSpringContextTests {
     }
 
     @Test
-    public void delete(){
+    public void delete() throws OverlappingTimeException {
 
         Flight flight = new Flight();
 
@@ -134,7 +134,7 @@ public class FlightDaoTest extends AbstractTestNGSpringContextTests {
     }
 
     @Test
-    public void deleteById(){
+    public void deleteById() throws OverlappingTimeException {
         Flight flight = new Flight();
 
         Airport origin = new Airport();
@@ -180,7 +180,7 @@ public class FlightDaoTest extends AbstractTestNGSpringContextTests {
     }
 
     @Test
-    public Flight update(){
+    public Flight update() throws OverlappingTimeException {
 
         Flight flight = new Flight();
 
@@ -268,7 +268,7 @@ public class FlightDaoTest extends AbstractTestNGSpringContextTests {
     }
 
     @Test
-    public Flight findById(){
+    public Flight findById() throws OverlappingTimeException {
         Flight flight = new Flight();
 
         Airport origin = new Airport();
@@ -315,7 +315,7 @@ public class FlightDaoTest extends AbstractTestNGSpringContextTests {
     }
 
     @Test
-    public List<Flight> findAll(){
+    public List<Flight> findAll() throws OverlappingTimeException {
         List<Flight> flights = new ArrayList<>();
         Flight flight = new Flight();
 

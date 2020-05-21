@@ -2,6 +2,7 @@ package cz.muni.fi.pa165.airportmanager.entity;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.sun.istack.NotNull;
+import cz.muni.fi.pa165.airportmanager.exceptions.OverlappingTimeException;
 
 import javax.persistence.*;
 import java.util.HashSet;
@@ -64,7 +65,7 @@ public class Steward {
         this.flights = flights;
     }
 
-    public void addFlight(Flight flight) {
+    public void addFlight(Flight flight) throws OverlappingTimeException {
         if (flights.contains(flight)) {
             return;
         }

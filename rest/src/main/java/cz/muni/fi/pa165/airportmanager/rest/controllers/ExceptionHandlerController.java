@@ -1,5 +1,6 @@
 package cz.muni.fi.pa165.airportmanager.rest.controllers;
 
+import cz.muni.fi.pa165.airportmanager.entity.Flight;
 import cz.muni.fi.pa165.airportmanager.rest.exceptions.*;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -37,6 +38,11 @@ public class ExceptionHandlerController extends ResponseEntityExceptionHandler {
 
     @ExceptionHandler(InvalidParameterException.class)
     public ResponseEntity<Object> handleInvalidParameterException(InvalidParameterException ex) {
+        return getObjectResponseEntity(ex.getMessage());
+    }
+
+    @ExceptionHandler(IllegalResourceAssignedToFlightException.class)
+    public ResponseEntity<Object> handleIllegalResourceAssignedToFlightException(IllegalResourceAssignedToFlightException ex) {
         return getObjectResponseEntity(ex.getMessage());
     }
 

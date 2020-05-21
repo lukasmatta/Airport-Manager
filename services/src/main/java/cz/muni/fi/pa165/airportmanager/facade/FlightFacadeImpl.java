@@ -8,6 +8,7 @@ import cz.muni.fi.pa165.airportmanager.dto.FlightDTO;
 import cz.muni.fi.pa165.airportmanager.entity.Airplane;
 import cz.muni.fi.pa165.airportmanager.entity.Flight;
 import cz.muni.fi.pa165.airportmanager.entity.Steward;
+import cz.muni.fi.pa165.airportmanager.exceptions.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -52,26 +53,36 @@ public class FlightFacadeImpl implements FlightFacade {
         flight.setArrival(ZonedDateTime.parse(entity.getArrival(), DateTimeFormatter.RFC_1123_DATE_TIME));
         flight.setDeparture(ZonedDateTime.parse(entity.getDeparture(), DateTimeFormatter.RFC_1123_DATE_TIME));
 
-
-        Set<Steward> stewards = new HashSet<Steward>();
         Long[] stewardsList = entity.getStewardsList();
 
         if (stewardsList != null && stewardsList.length > 0) {
-
             Steward currentSteward;
             for (long id : stewardsList) {
                 currentSteward = stewardService.findById(id);
-                stewards.add(currentSteward);
+                if (currentSteward == null) {
+                    throw new NonExistentAssignedStewardException("Steward with ID: " + id + " does not exist");
+                }
+                try {
+                    flight.addSteward(currentSteward);
+                } catch (OverlappingTimeException e) {
+                    throw new StewardNotAvailableException("Steward with ID: " + currentSteward.getId() + e.getMessage());
+                }
             }
-
-            flight.setStewards(stewards);
         }
 
         flight.setOrigin(airportService.findById(entity.getOriginID()));
         flight.setDestination(airportService.findById(entity.getDestinationID()));
 
-        flight.setPlane(airplaneService.findById(entity.getPlaneID()));
+        Airplane plane = airplaneService.findById(entity.getPlaneID());
+        if (plane == null) {
+            throw new NonExistentAssignedPlaneException("Plane with ID: " + entity.getPlaneID() + " does not exist");
+        }
 
+        try {
+            flight.setPlane(plane);
+        } catch (OverlappingTimeException e) {
+            throw new PlaneNotAvailableException("Plane with ID: " + entity.getPlaneID() + e.getMessage());
+        }
 
         flightService.create(flight);
         return flight.getId();

@@ -92,13 +92,9 @@ public class Flight {
         return plane;
     }
 
-    public void setPlane(Airplane plane) {
-        try {
-            isResourceAvailable(plane.getFlights());
-            this.plane = plane;
-        } catch (OverlappingTimeException e) {
-            System.out.println("Plane with ID: " + plane.getId() + " is not available for given flight");
-        }
+    public void setPlane(Airplane plane) throws OverlappingTimeException {
+        isResourceAvailable(plane.getFlights());
+        this.plane = plane;
     }
 
     public Set<Steward> getStewards() {
@@ -109,16 +105,14 @@ public class Flight {
         this.stewards = stewards;
     }
 
-    public void addSteward(Steward steward) {
+    public void addSteward(Steward steward) throws OverlappingTimeException {
         if (stewards.contains(steward)) {
             return;
         }
-        try {
-            isResourceAvailable(steward.getFlights());
-            stewards.add(steward);
-        } catch (OverlappingTimeException e) {
-            System.out.println("Steward " + steward.getFirstName() + " " + steward.getLastName() + " is not available for given flight");
-        }
+
+        isResourceAvailable(steward.getFlights());
+        stewards.add(steward);
+
         steward.addFlight(this);
     }
 
@@ -136,13 +130,16 @@ public class Flight {
         }
         for (Flight flight : flights) {
             if (isOverlapping(flight.departure, flight.arrival)) {
-                throw new OverlappingTimeException();
+                throw new OverlappingTimeException("is not available for this flight.");
             }
         }
     }
 
     private boolean isOverlapping(ZonedDateTime departure, ZonedDateTime arrival) {
-        return this.departure.isBefore(arrival) && this.arrival.isBefore(departure);
+        return  (this.departure.isBefore(departure) && this.arrival.isAfter(arrival)) ||
+                (this.departure.isBefore(departure) && this.arrival.isAfter(departure) && this.arrival.isBefore(arrival)) ||
+                (this.departure.isAfter(departure) && this.arrival.isBefore(arrival)) ||
+                (this.departure.isAfter(departure) && this.departure.isBefore(arrival) && this.arrival.isAfter(departure));
     }
 
     @Override

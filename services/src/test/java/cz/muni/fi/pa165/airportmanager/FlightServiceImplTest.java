@@ -6,6 +6,7 @@ import cz.muni.fi.pa165.airportmanager.entity.Airplane;
 import cz.muni.fi.pa165.airportmanager.entity.Airport;
 import cz.muni.fi.pa165.airportmanager.entity.Flight;
 import cz.muni.fi.pa165.airportmanager.entity.Steward;
+import cz.muni.fi.pa165.airportmanager.exceptions.OverlappingTimeException;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
@@ -53,7 +54,7 @@ public class FlightServiceImplTest extends AbstractTestNGSpringContextTests {
     private Flight flight2;
 
     @BeforeMethod
-    public void setUp() {
+    public void setUp() throws OverlappingTimeException {
 
         MockitoAnnotations.initMocks(this);
 
