@@ -16,118 +16,154 @@ or ```postman```
 
 ## Examples
 
-```curl -X GET -i http://localhost:8080/pa165/rest``` We get the entry point to our api
+We can get the entry points to our REST api.
+
+```curl -X GET -i http://localhost:8080/pa165/rest/``` 
 
 ```json
-{   
-    "stewards_uri":"/stewards",
-    "airports_uri":"/airports"
+{
+    "flights_uri": "/flights",
+    "stewards_uri": "/stewards",
+    "airplanes_uri": "/airplanes",
+    "airports_uri": "/airports"
 }
 ```
 
-```curl -X GET -i http://localhost:8080/pa165/rest/airports``` This gets us all the airports. Initially, 
-there are none.
+If we execute this command 
+
+```curl -X GET -i http://localhost:8080/pa165/rest/airports``` ,
+ 
+ we get a _401 unauthorized access response_. Of course, we forgot to include
+the authorization header. In curl, we can for example use ```--user admin:admin```. If you are using postman,
+select _Basic Auth_ under _Authorization_ tab, and enter admin username and admin password.
+
+
+```curl --user admin:admin -X GET -i http://localhost:8080/pa165/rest/airports```
+This gets us all the airports. Initially, there is one airport in Gbelany, Slovakia.
 
 ```json
-{   
-    "links":[
-              {
-                "rel":"self",
-                "href":"http://localhost:8080/pa165/rest/airports"
-              }
-            ],
-    "content":[]
+{
+    "links": [
+        {
+            "rel": "self",
+            "href": "http://localhost:8080/pa165/rest/airports"
+        }
+    ],
+    "content": [
+        {
+            "id": 3,
+            "city": "Gbelany",
+            "country": "Slovakia",
+            "links": [
+                {
+                    "rel": "CREATE",
+                    "href": "http://localhost:8080/pa165/rest/airports/create"
+                },
+                {
+                    "rel": "READ",
+                    "href": "http://localhost:8080/pa165/rest/airports/3"
+                },
+                {
+                    "rel": "UPDATE",
+                    "href": "http://localhost:8080/pa165/rest/airports/update"
+                },
+                {
+                    "rel": "DELETE",
+                    "href": "http://localhost:8080/pa165/rest/airports/3"
+                }
+            ]
+        }
+    ]
 }
 ```
+We can try to get an airport with non-existent ID, but
+that will obviously fail.
 
-```curl -X GET -i http://localhost:8080/pa165/rest/airports/1``` We can try to get an airport with ID 1, but
-obviously it fails.
 
+```curl --user admin:admin -X GET -i http://localhost:8080/pa165/rest/airports/1``` 
 ```json
 {   
     "timestamp":"2020/05/11 14:11:42",
-    "status":"FAIL",
-    "message":"Airport with ID 1 is not existing in the database"
+    "status": "FAIL",
+    "message": "Airport with ID 1 does not exist in the database"
 }
 ```
 
-``` curl -X POST -i -H "Content-Type: application/json" --data '{"id":"1", "city":"Frankfurt", "country":"Germany"}' http://localhost:8080/pa165/rest/airports/create```
-Now let's add Frankfurt, Germany airport to the Database
+Now let's add Frankfurt, Germany airport to the database.
+
+```curl --user admin:admin -X POST -i -H "Content-Type: application/json" --data '{"city":"Frankfurt", "country":"Germany"}' http://localhost:8080/pa165/rest/airports/auth/create```
+
 ```json
 {
-  "id":1,
-  "city":"Frankfurt",
-  "country":"Germany",
-  "links":[
-            {
-              "rel":"CREATE",
-              "href":"http://localhost:8080/pa165/rest/airports/create"
-            },
-            { 
-              "rel":"READ",
-              "href":"http://localhost:8080/pa165/rest/airports/1"
-            },
-            {
-              "rel":"UPDATE",
-              "href":"http://localhost:8080/pa165/rest/airports/update"
-            },
-            {
-              "rel":"DELETE",
-              "href":"http://localhost:8080/pa165/rest/airports/1"
-            }
-          ]
+    "id": 4,
+    "city": "Frankfurt",
+    "country": "Germany",
+    "links": [
+        {
+            "rel": "CREATE",
+            "href": "http://localhost:8080/pa165/rest/airports/create"
+        },
+        {
+            "rel": "READ",
+            "href": "http://localhost:8080/pa165/rest/airports/4"
+        },
+        {
+            "rel": "UPDATE",
+            "href": "http://localhost:8080/pa165/rest/airports/update"
+        },
+        {
+            "rel": "DELETE",
+            "href": "http://localhost:8080/pa165/rest/airports/4"
+        }
+    ]
 }
-```
-
-``` curl -X POST -i -H "Content-Type: application/json" --data '{"id":"1", "city":"Frankfurt", "country":"Germany"}' http://localhost:8080/pa165/rest/airports/create```
-If we try to insert the same airport twice, we get the following error.
+``` 
+ This time, when we try to get an airport with ID 4
+ 
+  ```curl --user admin:admin -X GET -i http://localhost:8080/pa165/rest/airports/4```,
+   
+   it returns the correct airport we had created previously.
+ 
 
 ```json
 {
-  "timestamp":"2020/05/11 15:02:56",
-  "status":"FAIL",
-  "message":"Airport AirportDTO{id=1, city='Frankfurt', country='Germany'} already exists in the database"
-}
-```
-
-```curl -X GET -i http://localhost:8080/pa165/rest/airports/1``` Getting airport with ID 1 return the airport
-we created previously.
-```json
-{
-  "id":1,
-  "city":"Frankfurt",
-  "country":"Germany",
-  "links":[
-            {
-              "rel":"CREATE",
-              "href":"http://localhost:8080/pa165/rest/airports/create"
-            },
-            { 
-              "rel":"READ",
-              "href":"http://localhost:8080/pa165/rest/airports/1"
-            },
-            {
-              "rel":"UPDATE",
-              "href":"http://localhost:8080/pa165/rest/airports/update"
-            },
-            {
-              "rel":"DELETE",
-              "href":"http://localhost:8080/pa165/rest/airports/1"
-            }
-          ]
+    "id": 4,
+    "city": "Frankfurt",
+    "country": "Germany",
+    "links": [
+        {
+            "rel": "CREATE",
+            "href": "http://localhost:8080/pa165/rest/airports/create"
+        },
+        {
+            "rel": "READ",
+            "href": "http://localhost:8080/pa165/rest/airports/4"
+        },
+        {
+            "rel": "UPDATE",
+            "href": "http://localhost:8080/pa165/rest/airports/update"
+        },
+        {
+            "rel": "DELETE",
+            "href": "http://localhost:8080/pa165/rest/airports/4"
+        }
+    ]
 }
 ```
 
 From an unspecified reason, we suddenly stop being fond of the Frankfurt airport, and we want
 to say goodbye to it. 
-``` curl -X DELETE -i http://localhost:8080/pa165/rest/airports/1 ```
+
+``` curl --user admin:admin -X DELETE -i http://localhost:8080/pa165/rest/airports/auth/delete/4 ```
+
 Let's see if it accidentally did not survive.
-``` curl -X GET -i http://localhost:8080/pa165/rest/airports/1 ```
+
+``` curl --user admin:admin -X GET -i http://localhost:8080/pa165/rest/airports/4 ```
 ```json
 {
     "timestamp":"2020/05/11 14:33:38",
-    "status":"FAIL",
-    "message":"Airport with ID 1 is not existing in the database"
+     "status": "FAIL",
+     "message": "Airport with ID 4 does not exist in the database"
 }
 ```
 :-)
