@@ -179,6 +179,56 @@ public class FlightDaoTest extends AbstractTestNGSpringContextTests {
         assertNull(flightDao.findById(flightId));
     }
 
+    @Test(expectedExceptions = OverlappingTimeException.class)
+    public void testCorrectStewardAndPlane() throws OverlappingTimeException {
+        Flight flight = new Flight();
+
+        Airport origin = new Airport();
+        origin.setCity("New York");
+        origin.setCountry("USA");
+        Airport destination = new Airport();
+        destination.setCity("London");
+        destination.setCountry("UK");
+
+        flight.setOrigin(origin);
+        flight.setDestination(destination);
+
+        ZonedDateTime arrival = ZonedDateTime.of(LocalDateTime.of(2020, Month.AUGUST, 23,14,30), ZoneOffset.UTC);
+        ZonedDateTime departure = ZonedDateTime.of(LocalDateTime.of(2020, Month.AUGUST, 23,16,30), ZoneOffset.UTC);
+
+        flight.setArrival(arrival);
+        flight.setDeparture(departure);
+
+        Airplane pl = new Airplane();
+        pl.setName("Airbus");
+        pl.setType(AirplaneType.COMMERCIAL);
+        pl.setCapacity(100);
+        flight.setPlane(pl);
+
+        Flight flight2 = new Flight();
+        ZonedDateTime arrival2 = ZonedDateTime.of(LocalDateTime.of(2020, Month.AUGUST, 23,13,30), ZoneOffset.UTC);
+        ZonedDateTime departure2 = ZonedDateTime.of(LocalDateTime.of(2020, Month.AUGUST, 23,17,30), ZoneOffset.UTC);
+        flight2.setArrival(arrival2);
+        flight2.setDeparture(departure2);
+        flight2.setOrigin(origin);
+        flight2.setDestination(destination);
+
+        Steward steward1 = new Steward();
+        steward1.setFirstName("Tony");
+        steward1.setLastName("Stark");
+
+        steward1.addFlight(flight);
+        flight2.addSteward(steward1);
+
+
+//        Steward steward2 = new Steward();
+//        steward2.setFirstName("Leo");
+//        steward2.setLastName("Messi");
+//
+//        flight.addSteward(steward1);
+//        flight.addSteward(steward2);
+    }
+
     @Test
     public Flight update() throws OverlappingTimeException {
 

@@ -53,6 +53,7 @@ public class FlightFacadeImpl implements FlightFacade {
         flight.setArrival(ZonedDateTime.parse(entity.getArrival(), DateTimeFormatter.RFC_1123_DATE_TIME));
         flight.setDeparture(ZonedDateTime.parse(entity.getDeparture(), DateTimeFormatter.RFC_1123_DATE_TIME));
 
+        Set<Steward> stewards = new HashSet<>();
         Long[] stewardsList = entity.getStewardsList();
 
         if (stewardsList != null && stewardsList.length > 0) {
@@ -62,12 +63,12 @@ public class FlightFacadeImpl implements FlightFacade {
                 if (currentSteward == null) {
                     throw new NonExistentAssignedStewardException("Steward with ID: " + id + " does not exist");
                 }
-                try {
-                    flight.addSteward(currentSteward);
-                } catch (OverlappingTimeException e) {
-                    throw new StewardNotAvailableException("Steward with ID: " + currentSteward.getId() + e.getMessage());
+                if (areOverlappingFlights(flight, currentSteward.getFlights())) {
+                    throw new StewardNotAvailableException("Steward with ID: " + currentSteward.getId() + " is unavailable");
                 }
+                stewards.add(currentSteward);
             }
+            flight.setStewards(stewards);
         }
 
         flight.setOrigin(airportService.findById(entity.getOriginID()));
@@ -77,7 +78,6 @@ public class FlightFacadeImpl implements FlightFacade {
         if (plane == null) {
             throw new NonExistentAssignedPlaneException("Plane with ID: " + entity.getPlaneID() + " does not exist");
         }
-
         try {
             flight.setPlane(plane);
         } catch (OverlappingTimeException e) {
@@ -116,4 +116,25 @@ public class FlightFacadeImpl implements FlightFacade {
         Collection<Flight> flights = flightService.findAll();
         return beanMappingService.mapToList(flights, FlightDTO.class);
     }
+
+    private boolean areOverlappingFlights(Flight flight1, Set<Flight> flights) {
+        if (flights == null) {
+            return false;
+        }
+        for (Flight flight2 : flights) {
+            if (isOverlapping(flight1.getDeparture(),flight1.getArrival(), flight2.getDeparture(), flight2.getArrival())) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    private boolean isOverlapping(ZonedDateTime fl1_departure, ZonedDateTime fl1_arrival,
+            ZonedDateTime fl2_departure, ZonedDateTime fl2_arrival) {
+        return  (fl1_departure.isBefore(fl2_departure) && fl1_arrival.isAfter(fl2_arrival)) ||
+                (fl1_departure.isBefore(fl2_departure) && fl1_arrival.isAfter(fl2_departure) && fl1_arrival.isBefore(fl2_arrival)) ||
+                (fl1_departure.isAfter(fl2_departure) && fl1_arrival.isBefore(fl2_arrival)) ||
+                (fl1_departure.isAfter(fl2_departure) && fl1_arrival.isBefore(fl2_arrival) && fl1_arrival.isAfter(fl2_departure));
+    }
+
 }
