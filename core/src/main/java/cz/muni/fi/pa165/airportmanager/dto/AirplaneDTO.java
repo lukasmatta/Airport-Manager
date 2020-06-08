@@ -55,6 +55,17 @@ public class AirplaneDTO extends BaseDTO {
     }
 
     @Override
+    public String toString() {
+        return "AirplaneDTO{" +
+                "id=" + id +
+                ", flight=" + flight +
+                ", name='" + name + '\'' +
+                ", type=" + type +
+                ", capacity=" + capacity +
+                '}';
+    }
+
+    @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (!(o instanceof AirplaneDTO)) return false;
