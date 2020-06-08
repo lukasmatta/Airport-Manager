@@ -1,6 +1,8 @@
 package cz.muni.fi.pa165.airportmanager.rest.controllers;
 
 import cz.muni.fi.pa165.airportmanager.rest.exceptions.*;
+import org.springframework.core.Ordered;
+import org.springframework.core.annotation.Order;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ExceptionHandler;
@@ -25,6 +27,7 @@ public class ExceptionHandlerController extends ResponseEntityExceptionHandler {
         return getObjectResponseEntity(ex.getMessage());
     }
 
+
     @ExceptionHandler(ResourceNotCreatedException.class)
     public ResponseEntity<Object> handleResourceAlreadyExistingException(ResourceNotCreatedException ex) {
         return getObjectResponseEntity(ex.getMessage());
@@ -37,6 +40,12 @@ public class ExceptionHandlerController extends ResponseEntityExceptionHandler {
 
     @ExceptionHandler(InvalidParameterException.class)
     public ResponseEntity<Object> handleInvalidParameterException(InvalidParameterException ex) {
+        return getObjectResponseEntity(ex.getMessage());
+    }
+
+    @Order(Ordered.LOWEST_PRECEDENCE)
+    @ExceptionHandler(Exception.class)
+    public ResponseEntity<Object> handleUncaughtException(Exception ex) {
         return getObjectResponseEntity(ex.getMessage());
     }
 
