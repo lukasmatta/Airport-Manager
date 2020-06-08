@@ -3,13 +3,15 @@ package cz.muni.fi.pa165.airportmanager.entity;
 import com.sun.istack.NotNull;
 
 import javax.persistence.*;
+import java.io.Serializable;
 import java.util.Objects;
 
 /**
  * Author: Lukas Matta
  */
 @Entity
-public class Airport {
+@Table(name="airports")
+public class Airport implements Serializable {
     public Long getId() {
         return id;
     }

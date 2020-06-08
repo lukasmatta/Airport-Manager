@@ -22,6 +22,7 @@ import java.util.List;
 @Service
 @Transactional
 public class AirplaneFacadeImpl implements AirplaneFacade {
+
     @Autowired
     private AirplaneService airplaneService;
 

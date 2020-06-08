@@ -20,6 +20,7 @@ import java.util.List;
 @Service
 @Transactional
 public class AirportFacadeImpl implements AirportFacade {
+
     @Autowired
     private AirportService airportService;
 

@@ -5,6 +5,7 @@ import com.sun.istack.NotNull;
 import cz.muni.fi.pa165.airportmanager.exceptions.OverlappingTimeException;
 
 import javax.persistence.*;
+import java.io.Serializable;
 import java.time.LocalDateTime;
 import java.time.ZonedDateTime;
 import java.util.Collection;
@@ -16,7 +17,8 @@ import java.util.Set;
  * @author Petr Kantek
  */
 @Entity
-public class Flight {
+@Table(name="flights")
+public class Flight implements Serializable {
 
     @Id
     @NotNull
