@@ -6,6 +6,7 @@ import cz.muni.fi.pa165.airportmanager.entity.Airplane;
 import cz.muni.fi.pa165.airportmanager.entity.Airport;
 import cz.muni.fi.pa165.airportmanager.entity.Flight;
 import cz.muni.fi.pa165.airportmanager.enums.AirplaneType;
+import cz.muni.fi.pa165.airportmanager.exceptions.OverlappingTimeException;
 import org.hibernate.service.spi.ServiceException;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
@@ -45,7 +46,7 @@ public class AirplaneServiceImplTest extends AbstractTestNGSpringContextTests {
     private List<Airplane> airplanes;
 
     @BeforeMethod
-    public void createAirplanesAndFlights() {
+    public void createAirplanesAndFlights() throws OverlappingTimeException {
         Airport dummyAirport = new Airport();
         dummyAirport.setCountry("Slovakia");
         dummyAirport.setCity("KSC");

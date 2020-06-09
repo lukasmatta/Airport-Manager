@@ -7,6 +7,7 @@ import cz.muni.fi.pa165.airportmanager.entity.Airport;
 import cz.muni.fi.pa165.airportmanager.entity.Flight;
 import cz.muni.fi.pa165.airportmanager.entity.Steward;
 import cz.muni.fi.pa165.airportmanager.enums.AirplaneType;
+import cz.muni.fi.pa165.airportmanager.exceptions.OverlappingTimeException;
 import org.hibernate.service.spi.ServiceException;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
@@ -44,7 +45,7 @@ public class StewardServiceImplTest extends AbstractTestNGSpringContextTests {
     private Steward steward2 = new Steward((long) 2);
 
     @BeforeMethod
-    public void initObjects(){
+    public void initObjects() throws OverlappingTimeException {
         MockitoAnnotations.initMocks(this);
         //First Airport
         Airport airport1 = new Airport();

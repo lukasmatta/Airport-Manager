@@ -1,5 +1,6 @@
 package cz.muni.fi.pa165.airportmanager.rest.controllers;
 
+import cz.muni.fi.pa165.airportmanager.entity.Flight;
 import cz.muni.fi.pa165.airportmanager.rest.exceptions.*;
 import org.springframework.core.Ordered;
 import org.springframework.core.annotation.Order;
@@ -44,8 +45,8 @@ public class ExceptionHandlerController extends ResponseEntityExceptionHandler {
     }
 
     @Order(Ordered.LOWEST_PRECEDENCE)
-    @ExceptionHandler(Exception.class)
-    public ResponseEntity<Object> handleUncaughtException(Exception ex) {
+    @ExceptionHandler(IllegalResourceAssignedToFlightException.class)
+    public ResponseEntity<Object> handleIllegalResourceAssignedToFlightException(IllegalResourceAssignedToFlightException ex) {
         return getObjectResponseEntity(ex.getMessage());
     }
 

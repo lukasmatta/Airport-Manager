@@ -13,6 +13,7 @@ import cz.muni.fi.pa165.airportmanager.entity.Airport;
 import cz.muni.fi.pa165.airportmanager.entity.Flight;
 import cz.muni.fi.pa165.airportmanager.entity.Steward;
 import cz.muni.fi.pa165.airportmanager.enums.AirplaneType;
+import cz.muni.fi.pa165.airportmanager.exceptions.OverlappingTimeException;
 import org.hibernate.service.spi.ServiceException;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
@@ -94,7 +95,7 @@ public class FlightFacadeImplTest extends AbstractTestNGSpringContextTests {
     }
 
     @Test
-    public void testCreateFlight() {
+    public void testCreateFlight() throws OverlappingTimeException {
         FlightCreateDTO flightCreateDTO= new FlightCreateDTO();
 
         String dep = "Thu, 31 Mar 2016 06:49:02 GMT";

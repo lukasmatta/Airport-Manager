@@ -3,9 +3,14 @@ package cz.muni.fi.pa165.airportmanager.rest.controllers;
 import cz.muni.fi.pa165.airportmanager.dto.AirportDTO;
 import cz.muni.fi.pa165.airportmanager.dto.FlightCreateDTO;
 import cz.muni.fi.pa165.airportmanager.dto.FlightDTO;
+import cz.muni.fi.pa165.airportmanager.exceptions.NonExistentAssignedPlaneException;
+import cz.muni.fi.pa165.airportmanager.exceptions.NonExistentAssignedStewardException;
+import cz.muni.fi.pa165.airportmanager.exceptions.PlaneNotAvailableException;
+import cz.muni.fi.pa165.airportmanager.exceptions.StewardNotAvailableException;
 import cz.muni.fi.pa165.airportmanager.facade.FlightFacade;
 import cz.muni.fi.pa165.airportmanager.rest.URIs;
 import cz.muni.fi.pa165.airportmanager.rest.assemblers.GenericResourceAssembler;
+import cz.muni.fi.pa165.airportmanager.rest.exceptions.IllegalResourceAssignedToFlightException;
 import cz.muni.fi.pa165.airportmanager.rest.exceptions.ResourceNotCreatedException;
 import cz.muni.fi.pa165.airportmanager.rest.exceptions.ResourceNotFoundException;
 import cz.muni.fi.pa165.airportmanager.rest.exceptions.ResourceNotModifiedException;
@@ -63,6 +68,8 @@ public class FlightController {
         try {
             Long id = flightFacade.create(flight);
             return new ResponseEntity<>(flightResourceAssembler.toModel(flightFacade.findById(id), this.getClass()), HttpStatus.OK);
+        } catch (NonExistentAssignedStewardException | StewardNotAvailableException | PlaneNotAvailableException | NonExistentAssignedPlaneException e) {
+            throw new IllegalResourceAssignedToFlightException(e.getMessage());
         } catch (Exception e) {
             throw new ResourceNotCreatedException("Flight " + flight.toString() + " was not created due to an illegal operation");
         }
