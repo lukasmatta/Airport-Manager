@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { MatTableDataSource } from '@angular/material/table';
 import { DataService } from 'src/app/services/data.service';
+import { AuthService } from 'src/app/services/auth.service';
 
 export interface Airport {
   id: number;
@@ -20,17 +21,19 @@ const AIRPORTS: Airport[] = [
 })
 export class AirportsComponent implements OnInit {
   dataSource = new MatTableDataSource<Airport>();
-  dataColumns = ['id', 'city', 'country'];
+  dataColumns = ['id', 'city', 'country', 'actions'];
   city: string;
   country: string;
   errorMessage: string;
+  isAdmin: boolean;
 
-  constructor(private dataService: DataService) {
+  constructor(private dataService: DataService, private auth: AuthService) {
     this.dataService.fetchAirports().subscribe(
       data => {
         this.dataSource.data = data.content;
       }
     );
+    this.isAdmin = this.auth.isAdmin();
   }
 
   ngOnInit() {
@@ -47,6 +50,14 @@ export class AirportsComponent implements OnInit {
       this.errorMessage = 'City and country are required';
     }
     console.log(this.dataSource.data);
+  }
+
+  removeAirport(id: number) {
+    this.dataService.removeAirport(id).subscribe(
+      res => {
+        this.dataSource.data = this.dataSource.data.filter(f => f.id !== id);
+      }
+    );
   }
 
 }

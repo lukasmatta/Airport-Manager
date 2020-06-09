@@ -4,6 +4,7 @@ import { Airplane } from '../airplanes/airplanes.component';
 import { MatTableDataSource } from '@angular/material/table';
 import { DataService } from 'src/app/services/data.service';
 import { Steward } from '../stewards/stewards.component';
+import { AuthService } from 'src/app/services/auth.service';
 
 export interface Flight {
   id: number;
@@ -22,7 +23,7 @@ export interface Flight {
 })
 export class FlightsComponent implements OnInit {
   dataSource = new MatTableDataSource<Flight>();
-  dataColumns = ['id', 'origin', 'destination', 'departure', 'arrival', 'plane', 'stewards'];
+  dataColumns = ['id', 'origin', 'destination', 'departure', 'arrival', 'plane', 'stewards', 'actions'];
   originID: number;
   destinationID: number;
   departure: string;
@@ -37,8 +38,11 @@ export class FlightsComponent implements OnInit {
   allAirplanes: Airplane[];
   allStewards: Steward[];
   selectedStewards: number[];
+  isAdmin: boolean;
 
-  constructor(private dataService: DataService) {
+  constructor(private dataService: DataService, private auth: AuthService) {
+    this.isAdmin = this.auth.isAdmin();
+
     this.dataService.fetchFlights().subscribe(
       data => {
         this.dataSource.data = data.content;
@@ -101,6 +105,14 @@ export class FlightsComponent implements OnInit {
     }
     console.log(stewards);
     return result.slice(0, -2);
+  }
+
+  removeFlight(id: number) {
+    this.dataService.removeFlight(id).subscribe(
+      res => {
+        this.dataSource.data = this.dataSource.data.filter(f => f.id !== id);
+      }
+    );
   }
 
 }

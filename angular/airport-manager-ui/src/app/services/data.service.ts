@@ -47,5 +47,21 @@ export class DataService {
     const data = {'originID': originID, 'destinationID': destinationID, 'departure': departure, 'arrival': arrival, 'planeID': planeID, 'stewardsList': stewards};
     return this.http.post(environment.restAPI + 'flights/auth/create', data);
   }
+
+  public removeFlight(id: number) {
+    return this.http.delete(environment.restAPI + 'flights/auth/delete/' + id);
+  }
+
+  public removeAirplane(id: number) {
+    return this.http.delete(environment.restAPI + 'airplanes/auth/delete/' + id);
+  }
+
+  public removeAirport(id: number) {
+    return this.http.delete(environment.restAPI + 'airports/auth/delete/' + id);
+  }
+
+  public removeSteward(id: number) {
+    return this.http.delete(environment.restAPI + 'stewards/auth/delete/' + id);
+  }
 }
 

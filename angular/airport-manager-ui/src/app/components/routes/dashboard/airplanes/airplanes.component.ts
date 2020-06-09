@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { MatTableDataSource } from '@angular/material/table';
 import { DataService } from 'src/app/services/data.service';
+import { AuthService } from 'src/app/services/auth.service';
 
 export enum AirplaneType {
   COMMERCIAL,
@@ -23,19 +24,21 @@ export interface Airplane {
 })
 export class AirplanesComponent implements OnInit {
   dataSource = new MatTableDataSource<Airplane>();
-  dataColumns = ['id', 'name', 'type', 'capacity'];
+  dataColumns = ['id', 'name', 'type', 'capacity', 'actions'];
   name: string;
   type: AirplaneType;
   capacity: number;
   errorMessage: string;
   airplaneTypes: string[] = [];
+  isAdmin: boolean;
 
-  constructor(private dataService: DataService) {
+  constructor(private dataService: DataService, private auth: AuthService) {
     this.dataService.fetchAirplanes().subscribe(
       data => {
         this.dataSource.data = data.content;
       }
     );
+    this.isAdmin = this.auth.isAdmin();
   }
 
   ngOnInit() {
@@ -58,6 +61,14 @@ export class AirplanesComponent implements OnInit {
       this.errorMessage = 'Name capacity and type are required';
     }
     console.log(this.dataSource.data);
+  }
+
+  removeAirplane(id: number) {
+    this.dataService.removeAirplane(id).subscribe(
+      res => {
+        this.dataSource.data = this.dataSource.data.filter(f => f.id !== id);
+      }
+    );
   }
 
 }

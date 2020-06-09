@@ -15,9 +15,13 @@ nav {
         }
     }
 
-    a.logout {
+    a.username, a.logout {
         display: block;
         float: right;
         cursor: pointer;
+    }
+
+    a.username {
+        cursor: default;
     }
 }

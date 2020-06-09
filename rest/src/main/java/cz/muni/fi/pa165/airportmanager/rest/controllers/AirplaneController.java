@@ -84,7 +84,7 @@ public class AirplaneController {
         }
     }
 
-    @RequestMapping(value = "/{id}", method = RequestMethod.DELETE, produces = MediaType.APPLICATION_JSON_VALUE)
+    @RequestMapping(value = "/auth/delete/{id}", method = RequestMethod.DELETE, produces = MediaType.APPLICATION_JSON_VALUE)
     public final void deleteAirplane(@PathVariable("id") long id) throws ResourceNotFoundException {
         logger.debug("rest deleteAirplane()");
         try {

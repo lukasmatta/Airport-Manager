@@ -101,4 +101,14 @@ public class FlightController {
             throw new ResourceNotFoundException("Flight could not be found in the database");
         }
     }
+
+    @RequestMapping(value = "/auth/delete/{id}", method = RequestMethod.DELETE, produces = MediaType.APPLICATION_JSON_VALUE)
+    public final void deleteFlightById(@PathVariable("id") long id) throws ResourceNotFoundException {
+        logger.debug("rest deleteFlightById()");
+        try {
+            flightFacade.deleteById(id);
+        } catch (Exception e) {
+            throw new ResourceNotFoundException("Airport with ID: " + id + " could not be found in the database");
+        }
+    }
 }

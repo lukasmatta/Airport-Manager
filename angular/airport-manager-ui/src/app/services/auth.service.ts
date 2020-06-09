@@ -39,4 +39,17 @@ export class AuthService {
     const credentials = `${sessionStorage.getItem('username')}:${sessionStorage.getItem('password')}`;
     return btoa(credentials);
   }
+
+  public isAdmin(): boolean {
+    if (this.isAuthenticated()) {
+      if (sessionStorage.getItem('username') === 'admin') {
+        return true;
+      }
+    }
+    return false;
+  }
+
+  public getUsername(): string {
+    return sessionStorage.getItem('username');
+  }
 }
