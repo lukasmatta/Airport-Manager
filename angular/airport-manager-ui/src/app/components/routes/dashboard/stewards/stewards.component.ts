@@ -17,7 +17,7 @@ export interface Steward {
 export class StewardsComponent implements OnInit {
 
   dataSource = new MatTableDataSource<Steward>();
-  dataColumns = ['id', 'firstName', 'lastName', 'actions'];
+  dataColumns = ['id', 'firstName', 'lastName'];
   firstName: string;
   lastName: string;
   errorMessage: string;
@@ -25,6 +25,9 @@ export class StewardsComponent implements OnInit {
 
   constructor(private dataService: DataService, private auth: AuthService) {
     this.isAdmin = this.auth.isAdmin();
+    if (this.isAdmin) {
+      this.dataColumns.push('actions');
+    }
 
     this.dataService.fetchStewards().subscribe(
       data => {

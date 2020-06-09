@@ -24,7 +24,7 @@ export interface Airplane {
 })
 export class AirplanesComponent implements OnInit {
   dataSource = new MatTableDataSource<Airplane>();
-  dataColumns = ['id', 'name', 'type', 'capacity', 'actions'];
+  dataColumns = ['id', 'name', 'type', 'capacity'];
   name: string;
   type: AirplaneType;
   capacity: number;
@@ -39,6 +39,9 @@ export class AirplanesComponent implements OnInit {
       }
     );
     this.isAdmin = this.auth.isAdmin();
+    if (this.isAdmin) {
+      this.dataColumns.push('actions');
+    }
   }
 
   ngOnInit() {

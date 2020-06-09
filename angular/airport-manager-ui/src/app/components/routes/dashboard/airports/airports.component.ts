@@ -21,7 +21,7 @@ const AIRPORTS: Airport[] = [
 })
 export class AirportsComponent implements OnInit {
   dataSource = new MatTableDataSource<Airport>();
-  dataColumns = ['id', 'city', 'country', 'actions'];
+  dataColumns = ['id', 'city', 'country'];
   city: string;
   country: string;
   errorMessage: string;
@@ -34,6 +34,9 @@ export class AirportsComponent implements OnInit {
       }
     );
     this.isAdmin = this.auth.isAdmin();
+    if (this.isAdmin) {
+      this.dataColumns.push('actions');
+    }
   }
 
   ngOnInit() {

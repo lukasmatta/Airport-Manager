@@ -5,6 +5,8 @@ import { MatTableDataSource } from '@angular/material/table';
 import { DataService } from 'src/app/services/data.service';
 import { Steward } from '../stewards/stewards.component';
 import { AuthService } from 'src/app/services/auth.service';
+import { MatSnackBarRef, MatSnackBar } from '@angular/material/snack-bar';
+import { HttpErrorResponse } from '@angular/common/http';
 
 export interface Flight {
   id: number;
@@ -23,7 +25,7 @@ export interface Flight {
 })
 export class FlightsComponent implements OnInit {
   dataSource = new MatTableDataSource<Flight>();
-  dataColumns = ['id', 'origin', 'destination', 'departure', 'arrival', 'plane', 'stewards', 'actions'];
+  dataColumns = ['id', 'origin', 'destination', 'departure', 'arrival', 'plane', 'stewards'];
   originID: number;
   destinationID: number;
   departure: string;
@@ -40,8 +42,11 @@ export class FlightsComponent implements OnInit {
   selectedStewards: number[];
   isAdmin: boolean;
 
-  constructor(private dataService: DataService, private auth: AuthService) {
+  constructor(private dataService: DataService, private auth: AuthService, private snack: MatSnackBar) {
     this.isAdmin = this.auth.isAdmin();
+    if (this.isAdmin) {
+      this.dataColumns.push('actions');
+    }
 
     this.dataService.fetchFlights().subscribe(
       data => {
@@ -88,6 +93,9 @@ export class FlightsComponent implements OnInit {
         (data: Flight) => {
           this.dataSource.data = this.dataSource.data.concat([{
             id: data.id, origin: data.origin, destination: data.destination, departure: data.departure, arrival: data.arrival, plane: data.plane, stewards: data.stewards}]);
+        },
+        (err: HttpErrorResponse) => {
+          this.snack.open(err.error.message, null, {duration: 4000, panelClass: 'red'});
         }
       );
     } else {
@@ -113,6 +121,16 @@ export class FlightsComponent implements OnInit {
         this.dataSource.data = this.dataSource.data.filter(f => f.id !== id);
       }
     );
+  }
+
+  private pad(d) {
+    return (d < 10) ? '0' + d.toString() : d.toString();
+  }
+
+  public formatDate(input: string) {
+    const date = new Date(input);
+    const dateFormatted = date.getDate() + '. ' + date.getMonth() + '. ' + date.getFullYear() + ' ' + this.pad(date.getHours()) + ':' + this.pad(date.getMinutes());
+    return dateFormatted;
   }
 
 }

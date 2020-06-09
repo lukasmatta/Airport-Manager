@@ -33,3 +33,9 @@ h1 {
         color: red;
     }
 }
+
+::ng-deep snack-bar-container.red{
+    padding: 20px;
+    background-color: red;
+    color: white;
+  }
