@@ -42,13 +42,7 @@ public class ExceptionHandlerController extends ResponseEntityExceptionHandler {
     public ResponseEntity<Object> handleInvalidParameterException(InvalidParameterException ex) {
         return getObjectResponseEntity(ex.getMessage());
     }
-
-    @Order(Ordered.LOWEST_PRECEDENCE)
-    @ExceptionHandler(Exception.class)
-    public ResponseEntity<Object> handleUncaughtException(Exception ex) {
-        return getObjectResponseEntity(ex.getMessage());
-    }
-
+    
     private ResponseEntity<Object> getObjectResponseEntity(String message) {
         Map<String, Object> exBody = new LinkedHashMap<>();
         DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy/MM/dd HH:mm:ss");

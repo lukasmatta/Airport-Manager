@@ -16,7 +16,7 @@ import java.util.Optional;
  */
 
 @Repository
-public class AirplaneDaoImpl implements AirplaneDao{
+public class AirplaneDaoImpl implements AirplaneDao {
 
     @PersistenceContext
     private EntityManager em;

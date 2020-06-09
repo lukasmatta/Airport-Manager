@@ -53,9 +53,10 @@ public class AirplaneServiceImpl implements AirplaneService {
     public Airplane findFreePlaneInTimeInterval(ZonedDateTime from, ZonedDateTime to) {
         List<Airplane> allAirplanes = airplaneDao.findAll();
         Optional<Airplane> result = allAirplanes.stream()
-                .filter(
-                        airplane -> airplane.getFlights()
-                                .stream().anyMatch(flight -> flight.getDeparture().compareTo(from) < 0 && flight.getArrival().compareTo(from) < 0 ||
+                .filter(airplane -> airplane.getFlights()
+                        .stream().anyMatch(flight ->
+                                flight.getDeparture().compareTo(from) < 0 &&
+                                        flight.getArrival().compareTo(from) < 0 ||
                                         flight.getDeparture().compareTo(to) > 0)
                 ).findFirst();
         return result.orElse(null);
